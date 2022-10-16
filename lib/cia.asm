@@ -81,7 +81,7 @@
 }
 
 .macro disableCIAInterrupts() {
-  lda #$7F                     
+  lda #$7f
   sta CIA1_IRQ_CONTROL
   sta CIA2_IRQ_CONTROL
   lda CIA1_IRQ_CONTROL

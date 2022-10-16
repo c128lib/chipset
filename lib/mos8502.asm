@@ -15,13 +15,13 @@
 /*
  * MMU (mirrored from $d500)
  */
-.label MMUCR		    = $ff00 	// bank configuration register
-.label PCRA 		    = $ff01 	// preconfig register A
-.label PCRB 		    = $ff02 	// preconfig register B
-.label PCRC 		    = $ff03 	// preconfig register C
-.label PCRD 		    = $ff04 	// preconfig register D
-.label MMUMCR		    = $ff05 	// cpu mode configuration register
-.label MMURCR 		  = $ff06 	// ram configuration register
+.label MMUCR        = $ff00   // bank configuration register
+.label PCRA         = $ff01   // preconfig register A
+.label PCRB         = $ff02   // preconfig register B
+.label PCRC         = $ff03   // preconfig register C
+.label PCRD         = $ff04   // preconfig register D
+.label MMUMCR        = $ff05   // cpu mode configuration register
+.label MMURCR       = $ff06   // ram configuration register
 
 /*
  * I/O Register bits.
@@ -51,6 +51,9 @@
   sta MOS_8502_IO
 }
 
+/*
+ Disable NMI by pointing NMI vector to rti
+*/
 .macro disableNMI() {
     lda #<nmi
     sta c128lib.NMI_LO
@@ -62,7 +65,7 @@
   end:
 }
 
-/*----------------------------------------------------------
+/*
  Banking, RAM configurations
 
  bits:
@@ -75,83 +78,83 @@
  Setting a bit means RAM, clearing means ROM.
  Use the BASIC Bank configuration numbers.
 
- Syntax:		:SetBankConfiguration(number)
-----------------------------------------------------------*/
+ Syntax:    SetBankConfiguration(number)
+*/
 .macro SetBankConfiguration(id) {
-	.if(id==0) {
-		lda #%00111111 	// no roms, RAM 0
-	}
-	.if(id==1) {
-		lda #%01111111 	// no roms, RAM 1
-	}
-	.if(id==12) {
-		lda #%00000110 	// internal function ROM, Kernal and IO, RAM 0
-	}
-	.if(id==14) {
-		lda #%00000001 	// all roms, char ROM, RAM 0
-	}
-	.if(id==15) {
-		lda #%00000000  // all roms, RAM 0. default setting.
-	}
-	.if(id==99) {
-		lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
-	}
-	sta MMUCR
+  .if(id==0) {
+    lda #%00111111   // no roms, RAM 0
+  }
+  .if(id==1) {
+    lda #%01111111   // no roms, RAM 1
+  }
+  .if(id==12) {
+    lda #%00000110   // internal function ROM, Kernal and IO, RAM 0
+  }
+  .if(id==14) {
+    lda #%00000001   // all roms, char ROM, RAM 0
+  }
+  .if(id==15) {
+    lda #%00000000  // all roms, RAM 0. default setting.
+  }
+  .if(id==99) {
+    lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
+  }
+  sta MMUCR
 }
 
-/*----------------------------------------------------------
+/*
 Configure common RAM amount.
 
 RAM Bank 0 is always the visible RAM bank.
 Valid values are 1,4,8 and 16.
 
-Syntax:		:SetCommonRAM(1)
-----------------------------------------------------------*/
+Syntax:    SetCommonRAM(1)
+*/
 .macro SetCommonRAM(amount) {
-	lda MMURCR
-	and #%11111100 			// clear bits 0 and 1. this is also option 1
-	.if(amount==4) {
-		ora #%00000001
-	}
-	.if(amount==8) {
-		ora #%00000010
-	}
-	.if(amount==16) {
-		ora #%00000011
-	}
-	sta MMURCR
+  lda MMURCR
+  and #%11111100       // clear bits 0 and 1. this is also option 1
+  .if(amount==4) {
+    ora #%00000001
+  }
+  .if(amount==8) {
+    ora #%00000010
+  }
+  .if(amount==16) {
+    ora #%00000011
+  }
+  sta MMURCR
 }
 
-/*----------------------------------------------------------
+/*
 Configure where common RAM is enabled. Top, bottom, or both.
 Valid options are 1, 2 or 3.
 1 = bottom (default)
 2 = top
 3 = bottom and top
 
-Syntax:		:SetCommonEnabled(1)
-----------------------------------------------------------*/
+Syntax:    SetCommonEnabled(1)
+*/
 .macro SetCommonEnabled(option) {
-	lda MMURCR
-	and #%11110011 			// clear bits 2 and 3
-	ora #option*4
-	sta MMURCR
+  lda MMURCR
+  and #%11110011       // clear bits 2 and 3
+  ora #option*4
+  sta MMURCR
 }
 
-/*----------------------------------------------------------
+/*
  Set RAM block that the VIC chip will use, bit 6 of MMUCR.
  Only useful for text display. Pretty useless, really.
  Kernal routines use RAM0, so you need to roll your own routines.
 
  Use SetVICBank() to set the 16k block that the VIC will use in that block.
 
- Syntax:		:SetVICRamBank(0 or 1)
- ----------------------------------------------------------*/
+ Syntax:    SetVICRamBank(0 or 1)
+*/
 .macro SetVICRAMBank(value) {
-	lda MMURCR
-	and #%10111111 			// clear bit 6
-	.if(value==1) {
-		ora #%01111111 		// enable bit 6
-	}
-	sta MMURCR
+  lda MMURCR
+  and #%10111111       // clear bit 6
+  .if(value==1) {
+    ora #%01111111     // enable bit 6
+  }
+  sta MMURCR
 }
