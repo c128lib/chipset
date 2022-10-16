@@ -1,0 +1,20 @@
+# Java Gradle CircleCI 2.0 configuration file
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - develop
+        - master
+    docker:
+      - image: maciejmalecki/c64libci:0.1.4
+
+    working_directory: ~/repo
+
+    environment:
+      JVM_OPTS: -Xms256m -Xmx768m
+      TERM: dumb
+
+    steps:
+      - checkout
+      - run: ./gradlew
