@@ -1,3 +1,4 @@
+#import "common/lib/common.asm"
 
 /*
  * Set of variables, functions and macros
@@ -6,7 +7,6 @@
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
  */
-#import "common/lib/common.asm"
 #importonce
 .filenamespace c128lib
 
