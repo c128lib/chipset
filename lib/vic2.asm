@@ -159,12 +159,12 @@
  * screenMem: location of screen memory: 0..15
  * charSet: location of charset definition: 0..7
  */
-// .function getTextMemory(screenMem, charSet) {
-//   .return charSet<<1 | screenMem<<4
-// }
-// .assert "getTextMemory(0, 0) returns $00",  getTextMemory(0, 0), %00000000
-// .assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
-// .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
+.function getTextMemory(screenMem, charSet) {
+  .return charSet<<1 | screenMem<<4
+}
+.assert "getTextMemory(0, 0) returns $00",  getTextMemory(0, 0), %00000000
+.assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
+.assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
 /*
  * Configures memory for text mode
@@ -175,22 +175,22 @@
  *
  * MOD: A
  */
-// .macro configureTextMemory(video, charSet) {
-//   lda #getTextMemory(video, charSet)
-//   sta MEMORY_CONTROL
-// }
-// .assert "configureTextMemory(0, 0) sets $00 to MEMORY_CONTROL reg",  { :configureTextMemory(0, 0) }, {
-//   lda #%00000000
-//   sta MEMORY_CONTROL
-// }
-// .assert "configureTextMemory(15,7) sets $FE to MEMORY_CONTROL reg", { :configureTextMemory(15, 7) }, {
-//   lda #%11111110
-//   sta MEMORY_CONTROL
-// }
-// .assert "configureTextMemory(4,2) sets %01000100 to MEMORY_CONTROL reg", { :configureTextMemory(4, 2) }, {
-//   lda #%01000100
-//   sta MEMORY_CONTROL
-// }
+.macro configureTextMemory(video, charSet) {
+  lda #getTextMemory(video, charSet)
+  sta MEMORY_CONTROL
+}
+.assert "configureTextMemory(0, 0) sets $00 to MEMORY_CONTROL reg",  { configureTextMemory(0, 0) }, {
+  lda #%00000000
+  sta MEMORY_CONTROL
+}
+.assert "configureTextMemory(15,7) sets $FE to MEMORY_CONTROL reg", { configureTextMemory(15, 7) }, {
+  lda #%11111110
+  sta MEMORY_CONTROL
+}
+.assert "configureTextMemory(4,2) sets %01000100 to MEMORY_CONTROL reg", { configureTextMemory(4, 2) }, {
+  lda #%01000100
+  sta MEMORY_CONTROL
+}
 
 /*
  * Combines video and bitmap slots into value of memory control register.
@@ -199,12 +199,12 @@
  * video: location of video ram: 0..15
  * bitmap: location of bitmap definition: 0..1
  */
-// .function getBitmapMemory(video, bitmap) {
-//   .return bitmap<<3 | video<<4
-// }
-// .assert "getBitmapMemory(0, 0) returns $00", getBitmapMemory(0, 0), %00000000
-// .assert "getBitmapMemory(15, 1) returns %11111000", getBitmapMemory(15, 1), %11111000
-// .assert "getBitmapMemory(4, 1) returns %01001000", getBitmapMemory(4, 1), %01001000
+.function getBitmapMemory(video, bitmap) {
+  .return bitmap<<3 | video<<4
+}
+.assert "getBitmapMemory(0, 0) returns $00", getBitmapMemory(0, 0), %00000000
+.assert "getBitmapMemory(15, 1) returns %11111000", getBitmapMemory(15, 1), %11111000
+.assert "getBitmapMemory(4, 1) returns %01001000", getBitmapMemory(4, 1), %01001000
 
 /*
  * Configure memory for bitmap mode
@@ -215,22 +215,22 @@
  *
  * MOD: A
  */
-// .macro configureBitmapMemory(video, bitmap) {
-//   lda #getBitmapMemory(video, bitmap)
-//   sta MEMORY_CONTROL
-// }
-// .assert "configureBitmapMemory(0, 0) sets $00 to MEMORY_CONTROL reg", { :configureBitmapMemory(0, 0) }, {
-//   lda #%00000000
-//   sta MEMORY_CONTROL
-// }
-// .assert "configureBitmapMemory(15, 1) sets %11111000 to MEMORY_CONTROL reg", { :configureBitmapMemory(15, 1) }, {
-//   lda #%11111000
-//   sta MEMORY_CONTROL
-// }
-// .assert "configureBitmapMemory(4, 1) sets %01001000 to MEMORY_CONTROL reg", { :configureBitmapMemory(4, 1) }, {
-//   lda #%01001000
-//   sta MEMORY_CONTROL
-// }
+.macro configureBitmapMemory(video, bitmap) {
+  lda #getBitmapMemory(video, bitmap)
+  sta MEMORY_CONTROL
+}
+.assert "configureBitmapMemory(0, 0) sets $00 to MEMORY_CONTROL reg", { configureBitmapMemory(0, 0) }, {
+  lda #%00000000
+  sta MEMORY_CONTROL
+}
+.assert "configureBitmapMemory(15, 1) sets %11111000 to MEMORY_CONTROL reg", { configureBitmapMemory(15, 1) }, {
+  lda #%11111000
+  sta MEMORY_CONTROL
+}
+.assert "configureBitmapMemory(4, 1) sets %01001000 to MEMORY_CONTROL reg", { configureBitmapMemory(4, 1) }, {
+  lda #%01001000
+  sta MEMORY_CONTROL
+}
 
 /*
  * Calculates set bits for control 1 reg and specified gfx mode
