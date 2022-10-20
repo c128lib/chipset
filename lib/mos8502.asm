@@ -65,6 +65,43 @@
   end:
 }
 
+// Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
+// bit 0 - controls io active on $d000-$dfff
+.label IO_ROM             = %00000000
+.label IO_RAM             = %00000001
+
+// bit 1 - controls rom low space $4000-$7fff (Basic low rom)
+.label ROM_LOW_ROM        = %00000000
+.label ROM_LOW_RAM        = %00000010
+
+// bit 2-3 - controls rom mid space $8000-$bfff (Basic hi rom, ML monitor rom)
+.label ROM_MID_ROM        = %00000000   // Upper portion of BASIC ROM ($8000-$AFFF), plus monitor ROM ($BOOO-$BFFF)
+.label ROM_MID_INT        = %00000100   // Internal function ROM: refers to ROM in the free ROM socket on the 128 circuit board
+.label ROM_MID_EXT        = %00001000   // External function ROM: refers to ROM in a cartridge plugged into the expansion port.
+.label ROM_MID_RAM        = %00001100
+
+// bit 4-5 - controls rom mid space $c000-$ffff (Screen editor rom, kernal rom)
+.label ROM_HI             = %00000000   // Screen editor ROM ($c000-$cfff), character ROM ($d000-$Ddfff), Kemal ROM ($e000-$ffff)
+.label ROM_HI_INT         = %00010000   // Internal function ROM: refers to ROM in the free ROM socket on the 128 circuit board.
+.label ROM_HI_EXT         = %00100000   // External function ROM: refers to ROM in a cartridge plugged into the expansion port. 
+.label ROM_HI_RAM         = %00110000
+
+// bit 6
+.label RAM0               = %00000000
+.label RAM1               = %01000000
+
+/*
+  Banking, RAM configurations
+
+  Refer to IO_*, ROM_*, RAM* label to generate input value
+
+  Syntax:    SetMMUConfiguration(number)
+*/
+.macro SetMMUConfiguration(config) {
+    lda #config
+    sta MMUCR
+}
+
 /*
  Banking, RAM configurations
 
