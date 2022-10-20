@@ -78,8 +78,11 @@ Translates between VIC and VDC color codes.
 Syntax:    GetVDCColor(0)
 */
 .macro GetVDCColor(viccolor) {
-  ldx viccolor
+  ldx #viccolor
   lda COLOR80,x
+}
+.assert "GetVDCColor(0)", { GetVDCColor(0) }, {
+  ldx #0; lda COLOR80,x
 }
 
 .macro WriteVDC() {

@@ -102,6 +102,9 @@ Syntax:    SetMMUConfiguration(RAM0 | ROM_HI | ROM_MID_RAM | ROM_LOW_ROM | IO_RO
     lda #config
     sta MMUCR
 }
+.assert "SetMMUConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) sets accumulator to 7f", { SetMMUConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) }, {
+  lda #%01111111; sta MMUCR
+}
 
 /*
 Banking, RAM configurations
@@ -166,6 +169,9 @@ Syntax:    SetCommonRAM(COMMON_RAM_4K | COMMON_RAM_BOTH)
     lda #config
     sta MMURCR
 }
+.assert "SetCommonRAM(COMMON_RAM_16K | COMMON_RAM_BOTH) sets accumulator to 0f", { SetCommonRAM(COMMON_RAM_16K | COMMON_RAM_BOTH) }, {
+  lda #%00001111; sta MMURCR
+}
 
 /*
 Set RAM block that the VIC chip will use, bit 6 of MMUCR.
@@ -183,4 +189,10 @@ Syntax:    SetVICRamBank(0 or 1)
       ora #%01111111     // enable bit 6
     }
     sta MMURCR
+}
+.assert "SetVICRAMBank(0) sets accumulator to 0f", { SetVICRAMBank(0) }, {
+  lda MMURCR;and #%10111111;sta MMURCR
+}
+.assert "SetVICRAMBank(1) sets accumulator to 0f", { SetVICRAMBank(1) }, {
+  lda MMURCR;and #%10111111;ora #%01111111;sta MMURCR
 }
