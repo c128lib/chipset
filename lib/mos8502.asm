@@ -1,13 +1,15 @@
 /*
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
+ *
+ * Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
  */
 #importonce
 
 .filenamespace c128lib
 
 /*
- * MOS8502 Registers.
+ * MOS8502 Registers
  */
 .label MOS_8502_DIRECTION       = $00
 .label MOS_8502_IO              = $01
@@ -45,10 +47,10 @@
 .label BASIC_IO_KERNAL          = PLA_CHAREN | PLA_LORAM | PLA_HIRAM
 
 .macro configureMemory(config) {
-  lda MOS_8502_IO
-  and #%11111000
-  ora #[config & %00000111]
-  sta MOS_8502_IO
+    lda MOS_8502_IO
+    and #%11111000
+    ora #[config & %00000111]
+    sta MOS_8502_IO
 }
 
 /*
@@ -65,7 +67,6 @@
   end:
 }
 
-// Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
 // bit 0 - controls io active on $d000-$dfff
 .label IO_ROM             = %00000000
 .label IO_RAM             = %00000001
@@ -91,11 +92,11 @@
 .label RAM1               = %01000000
 
 /*
-  Banking, RAM configurations
+Banking, RAM configurations
 
-  Refer to IO_*, ROM_*, RAM* label to generate input value
+Refer to IO_*, ROM_*, RAM* label to generate input value
 
-  Syntax:    SetMMUConfiguration(number)
+Syntax:    SetMMUConfiguration(RAM0 | ROM_HI | ROM_MID_RAM | ROM_LOW_ROM | IO_ROM)
 */
 .macro SetMMUConfiguration(config) {
     lda #config
@@ -103,40 +104,40 @@
 }
 
 /*
- Banking, RAM configurations
+Banking, RAM configurations
 
- bits:
- 0:   $d000-$dfff (i/o block, ram or rom)
- 1:   $4000-$7fff (lower basic rom)
- 2-3: $8000-$bfff (upper basic rom, monitor, internal/external ROM)
- 4-5: $c000-$ffff (char ROM, kernal, internal/external ROM, RAM)
- 6:   select RAM block
+bits:
+0:   $d000-$dfff (i/o block, ram or rom)
+1:   $4000-$7fff (lower basic rom)
+2-3: $8000-$bfff (upper basic rom, monitor, internal/external ROM)
+4-5: $c000-$ffff (char ROM, kernal, internal/external ROM, RAM)
+6:   select RAM block
 
- Setting a bit means RAM, clearing means ROM.
- Use the BASIC Bank configuration numbers.
+Setting a bit means RAM, clearing means ROM.
+Use the BASIC Bank configuration numbers.
 
- Syntax:    SetBankConfiguration(number)
+Syntax:    SetBankConfiguration(number)
 */
 .macro SetBankConfiguration(id) {
-  .if(id==0) {
-    lda #%00111111   // no roms, RAM 0
-  }
-  .if(id==1) {
-    lda #%01111111   // no roms, RAM 1
-  }
-  .if(id==12) {
-    lda #%00000110   // internal function ROM, Kernal and IO, RAM 0
-  }
-  .if(id==14) {
-    lda #%00000001   // all roms, char ROM, RAM 0
-  }
-  .if(id==15) {
-    lda #%00000000  // all roms, RAM 0. default setting.
-  }
-  .if(id==99) {
-    lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
-  }
-  sta MMUCR
+    .if(id==0) {
+      lda #%00111111   // no roms, RAM 0
+    }
+    .if(id==1) {
+      lda #%01111111   // no roms, RAM 1
+    }
+    .if(id==12) {
+      lda #%00000110   // internal function ROM, Kernal and IO, RAM 0
+    }
+    .if(id==14) {
+      lda #%00000001   // all roms, char ROM, RAM 0
+    }
+    .if(id==15) {
+      lda #%00000000  // all roms, RAM 0. default setting.
+    }
+    .if(id==99) {
+      lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
+    }
+    sta MMUCR
 }
 
 // bit 0-1 Amount of common ram
@@ -157,29 +158,29 @@ Configure common RAM amount.
 RAM Bank 0 is always the visible RAM bank.
 Valid values are 1,4,8 and 16.
 For ex. if you choose 4K common ram at top and bottom
-means 4K up and 4K bottom.
+you'll have 4K up and 4K bottom.
 
-Syntax:    SetCommonRAM(config)
+Syntax:    SetCommonRAM(COMMON_RAM_4K | COMMON_RAM_BOTH)
 */
 .macro SetCommonRAM(config) {
-  lda #config
-  sta MMURCR
+    lda #config
+    sta MMURCR
 }
 
 /*
- Set RAM block that the VIC chip will use, bit 6 of MMUCR.
- Only useful for text display. Pretty useless, really.
- Kernal routines use RAM0, so you need to roll your own routines.
+Set RAM block that the VIC chip will use, bit 6 of MMUCR.
+Only useful for text display. Pretty useless, really.
+Kernal routines use RAM0, so you need to roll your own routines.
 
- Use SetVICBank() to set the 16k block that the VIC will use in that block.
+Use SetVICBank() to set the 16k block that the VIC will use in that block.
 
- Syntax:    SetVICRamBank(0 or 1)
+Syntax:    SetVICRamBank(0 or 1)
 */
 .macro SetVICRAMBank(value) {
-  lda MMURCR
-  and #%10111111       // clear bit 6
-  .if(value==1) {
-    ora #%01111111     // enable bit 6
-  }
-  sta MMURCR
+    lda MMURCR
+    and #%10111111       // clear bit 6
+    .if(value==1) {
+      ora #%01111111     // enable bit 6
+    }
+    sta MMURCR
 }
