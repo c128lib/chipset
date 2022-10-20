@@ -6,3 +6,4 @@
 .macro @c128lib_SetMMUConfiguration(config) { SetMMUConfiguration(config) }
 .macro @c128lib_SetBankConfiguration(config) { SetBankConfiguration(config) }
 .macro @c128lib_SetCommonRAM(config) { SetCommonRAM(config) }
+.macro @c128lib_SetVICRAMBank(value) { SetVICRAMBank(value) }

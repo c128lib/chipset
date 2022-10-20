@@ -23,8 +23,8 @@
 .label SWAPPER     = $ff5f   // switch between 40 or 80 colums
 
 /*
-  * Go to 80 columns mode
- */
+Go to 80 columns mode
+*/
 .macro Go80() {
   lda MODE        // are we in 80 columns mode?
   bmi !+          // bit 7 set? then yes
@@ -33,12 +33,12 @@
 }
 
 /*
- Returns the address start of VDC display memory data. This
- is stored in VDC register 12 and 13.
- The 16-bit value is stored in $FB and $FC.
+Returns the address start of VDC display memory data. This
+is stored in VDC register 12 and 13.
+The 16-bit value is stored in $FB and $FC.
 
- Syntax:    GetVDCDisplayStart()
- */
+Syntax:    GetVDCDisplayStart()
+*/
 .macro GetVDCDisplayStart() {
   ldx #12
   ReadVDC()
@@ -50,14 +50,14 @@
 }
 
 /*
- Set the pointer to the RAM area that is to be updated.
- The update pointer is stored in VDC register 18 and 19.
+Set the pointer to the RAM area that is to be updated.
+The update pointer is stored in VDC register 18 and 19.
 
- Syntax:    SetVDCUpdateAddress($1200)
+Syntax:    SetVDCUpdateAddress($1200)
 
- This will point register 18 and 19 to $1200. This area
- can then be written to using WriteVDCRAM()
- */
+This will point register 18 and 19 to $1200. This area
+can then be written to using WriteVDCRAM()
+*/
 .macro SetVDCUpdateAddress(address) {
   ldx #18
   lda #>address
@@ -73,10 +73,10 @@
 }
 
 /*
- Translates between VIC and VDC color codes.
+Translates between VIC and VDC color codes.
 
- Syntax:    GetVDCColor(0)
- */
+Syntax:    GetVDCColor(0)
+*/
 .macro GetVDCColor(viccolor) {
   ldx viccolor
   lda COLOR80,x
