@@ -20,7 +20,7 @@
 .label PCRB         = $ff02   // preconfig register B
 .label PCRC         = $ff03   // preconfig register C
 .label PCRD         = $ff04   // preconfig register D
-.label MMUMCR        = $ff05   // cpu mode configuration register
+.label MMUMCR       = $ff05   // cpu mode configuration register
 .label MMURCR       = $ff06   // ram configuration register
 
 /*
@@ -139,42 +139,30 @@
   sta MMUCR
 }
 
+// bit 0-1 Amount of common ram
+.label COMMON_RAM_1K      = %00000000
+.label COMMON_RAM_4K      = %00000001
+.label COMMON_RAM_8K      = %00000010
+.label COMMON_RAM_16K     = %00000011
+
+// bit 2-3 Position of common ram
+.label COMMON_RAM_UNUSED  = %00000000
+.label COMMON_RAM_BOTTOM  = %00000100
+.label COMMON_RAM_TOP     = %00001000
+.label COMMON_RAM_BOTH    = COMMON_RAM_BOTTOM | COMMON_RAM_TOP
+
 /*
 Configure common RAM amount.
 
 RAM Bank 0 is always the visible RAM bank.
 Valid values are 1,4,8 and 16.
+For ex. if you choose 4K common ram at top and bottom
+means 4K up and 4K bottom.
 
-Syntax:    SetCommonRAM(1)
+Syntax:    SetCommonRAM(config)
 */
-.macro SetCommonRAM(amount) {
-  lda MMURCR
-  and #%11111100       // clear bits 0 and 1. this is also option 1
-  .if(amount==4) {
-    ora #%00000001
-  }
-  .if(amount==8) {
-    ora #%00000010
-  }
-  .if(amount==16) {
-    ora #%00000011
-  }
-  sta MMURCR
-}
-
-/*
-Configure where common RAM is enabled. Top, bottom, or both.
-Valid options are 1, 2 or 3.
-1 = bottom (default)
-2 = top
-3 = bottom and top
-
-Syntax:    SetCommonEnabled(1)
-*/
-.macro SetCommonEnabled(option) {
-  lda MMURCR
-  and #%11110011       // clear bits 2 and 3
-  ora #option*4
+.macro SetCommonRAM(config) {
+  lda #config
   sta MMURCR
 }
 
