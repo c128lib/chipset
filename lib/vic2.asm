@@ -167,6 +167,7 @@
 .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
 .label VIC_SHADOW_1         = $02AC
+.label VIC_SHADOW_2         = $02AD
 
 .label CHAR_MEM_0000        = %00000000
 .label CHAR_MEM_0800        = %00000010
@@ -201,6 +202,18 @@
 .assert "SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) sets char to $3800 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) }, {
   lda #%11111110; sta VIC_SHADOW_1
 }
+
+.label BITMAP_MEM_0000      = %00000000
+.label BITMAP_MEM_2000      = %00001000
+
+.macro SetScreenMemoryAndBitmapPointer(config) {
+    lda #config
+    sta VIC_SHADOW_2
+}
+.assert "SetScreenMemoryAndBitmapPointer(BITMAP_MEM_2000 | SCREEN_MEM_3C00) sets bitmap to $2000 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenMemoryAndBitmapPointer(BITMAP_MEM_2000 | SCREEN_MEM_3C00) }, {
+  lda #%11111000; sta VIC_SHADOW_2
+}
+
 /*
  * Configures memory for text mode
  *
