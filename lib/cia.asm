@@ -51,29 +51,29 @@
 .label JOY_FIRE         = %10000
 
 // VIC-II memory banks
-.label BANK_0           = %00000011
-.label BANK_1           = %00000010
-.label BANK_2           = %00000001
-.label BANK_3           = %00000000
+.label BANK_0           = %00000011   // $0000-$3FFF
+.label BANK_1           = %00000010   // $4000-$7FFF
+.label BANK_2           = %00000001   // $8000-$BFFF
+.label BANK_3           = %00000000   // $C000-$FFFF
 
 /*
  * Configures memory "bank" (16K) which is directly addressable by VIC2 chip.
  *
  * MOD: A
  */
-.macro setVICBank(bank) {
+.macro SetVICBank(bank) {
   lda CIA2_DATA_PORT_A
   and #%11111100
   ora #[bank & %00000011]
   sta CIA2_DATA_PORT_A
 }
-.assert "setVICBank(BANK_0) sets 11", { :setVICBank(BANK_0) }, {
+.assert "SetVICBank(BANK_0) sets 11", { SetVICBank(BANK_0) }, {
   lda $DD00
   and #%11111100
   ora #%00000011
   sta $DD00
 }
-.assert "setVICBank(BANK_3) sets 00", { :setVICBank(BANK_3) }, {
+.assert "SetVICBank(BANK_3) sets 00", { SetVICBank(BANK_3) }, {
   lda $DD00
   and #%11111100
   ora #%00000000
