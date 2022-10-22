@@ -6,7 +6,10 @@
  *
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
- */
+ *
+ * Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
+ * Ref: https://www.cubic.org/~doj/c64/c128ProgrammersReferenceGuide.pdf
+*/
 #importonce
 .filenamespace c128lib
 
@@ -166,8 +169,25 @@
 .assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
 .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
-.label VIC_SHADOW_1         = $02AC
-.label VIC_SHADOW_2         = $02AD
+.label DISPLAYMODE_FLAG     = $D8     // GRAPHM
+
+/*
+  Disable screen editor IRQ routine. This gives you direct control over the
+  VIC chip register settings (D018), but disables BASIC'S ability to change
+  display modes.
+*/
+.macro DisableScreenEditorIrq() {
+    lda #$ff
+    sta DISPLAYMODE_FLAG
+}
+.assert "DisableScreenEditorIrq() sets $FF to $D8",  { DisableScreenEditorIrq() }, {
+  lda #$ff; sta $D8
+}
+
+// TIP(intoinside): c128ProgrammersReferenceGuide has a wrong example on page 231
+// (manual page 223). $0A2C and $0A2D is wrongly written as $02AC and $02AC
+.label VIC_SCREEN_CHAR_SHADOW   = $0A2C       // VIC text screen and character base
+.label VIC_BITMAP_VIDEO_SHADOW  = $0A2D       // VIC bitmap and video matrix base
 
 .label CHAR_MEM_0000        = %00000000
 .label CHAR_MEM_0800        = %00000010
@@ -195,23 +215,35 @@
 .label SCREEN_MEM_3800      = %11100000
 .label SCREEN_MEM_3C00      = %11110000
 
+/*
+  Set screen memory and charset memory position by
+  using shadow register.
+
+  Params: CHAR_MEM_X | SCREEN_MEM_X
+*/
 .macro SetScreenAndCharacterMemory(config) {
     lda #config
-    sta VIC_SHADOW_1
+    sta VIC_SCREEN_CHAR_SHADOW
 }
 .assert "SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) sets char to $3800 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) }, {
-  lda #%11111110; sta VIC_SHADOW_1
+  lda #%11111110; sta $0A2C
 }
 
 .label BITMAP_MEM_0000      = %00000000
 .label BITMAP_MEM_2000      = %00001000
 
+/*
+  Set screen memory and bitmap memory pointer by
+  using shadow register.
+
+  Params: BITMAP_MEM_X | SCREEN_MEM_X
+*/
 .macro SetScreenMemoryAndBitmapPointer(config) {
     lda #config
-    sta VIC_SHADOW_2
+    sta VIC_BITMAP_VIDEO_SHADOW
 }
 .assert "SetScreenMemoryAndBitmapPointer(BITMAP_MEM_2000 | SCREEN_MEM_3C00) sets bitmap to $2000 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenMemoryAndBitmapPointer(BITMAP_MEM_2000 | SCREEN_MEM_3C00) }, {
-  lda #%11111000; sta VIC_SHADOW_2
+  lda #%11111000; sta $0A2D
 }
 
 /*
