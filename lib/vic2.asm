@@ -166,6 +166,41 @@
 .assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
 .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
+.label VIC_SHADOW_1         = $02AC
+
+.label CHAR_MEM_0000        = %00000000
+.label CHAR_MEM_0800        = %00000010
+.label CHAR_MEM_1000        = %00000100
+.label CHAR_MEM_1800        = %00000110
+.label CHAR_MEM_2000        = %00001000
+.label CHAR_MEM_2800        = %00001010
+.label CHAR_MEM_3000        = %00001100
+.label CHAR_MEM_3800        = %00001110
+
+.label SCREEN_MEM_0000      = %00000000
+.label SCREEN_MEM_0400      = %00010000
+.label SCREEN_MEM_0800      = %00100000
+.label SCREEN_MEM_0C00      = %00110000
+.label SCREEN_MEM_1000      = %01000000
+.label SCREEN_MEM_1400      = %01010000
+.label SCREEN_MEM_1800      = %01100000
+.label SCREEN_MEM_1C00      = %01110000
+.label SCREEN_MEM_2000      = %10000000
+.label SCREEN_MEM_2400      = %10010000
+.label SCREEN_MEM_2800      = %10100000
+.label SCREEN_MEM_2C00      = %10110000
+.label SCREEN_MEM_3000      = %11000000
+.label SCREEN_MEM_3400      = %11010000
+.label SCREEN_MEM_3800      = %11100000
+.label SCREEN_MEM_3C00      = %11110000
+
+.macro SetScreenAndCharacterMemory(config) {
+    lda #config
+    sta VIC_SHADOW_1
+}
+.assert "SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) sets char to $3800 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) }, {
+  lda #%11111110; sta VIC_SHADOW_1
+}
 /*
  * Configures memory for text mode
  *
