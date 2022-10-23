@@ -169,19 +169,53 @@
 .assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
 .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
-.label DISPLAYMODE_FLAG     = $D8     // GRAPHM
+.label BASIC_IRQ_FLAG     = $12FD     // IR9_WRAP_FLAG
 
 /*
-  Disable screen editor IRQ routine. This gives you direct control over the
-  VIC chip register settings (D018), but disables BASIC'S ability to change
-  display modes.
+  Set Basic IRQ routine active or not. Turning off the BASIC
+  IRQ routine will give you direct access to the hardware registers,
+  you should keep in mind that it will also effectively disable the
+  BASIC statements MOVSPR, COLLISION, SOUND and PLAY
+
+  Params: bool
 */
-.macro DisableScreenEditorIrq() {
-    lda #$ff
-    sta DISPLAYMODE_FLAG
+.macro SetBasicIrqActivity(active) {
+  .if (active == 0) {
+    lda #1
+  } else {
+    lda #0
+  }
+    sta BASIC_IRQ_FLAG
 }
-.assert "DisableScreenEditorIrq() sets $FF to $D8",  { DisableScreenEditorIrq() }, {
+.assert "SetBasicIrqActivity() sets 1 to $12FD",  { SetBasicIrqActivity(0) }, {
+  lda #1; sta $12FD
+}
+.assert "SetBasicIrqActivity() sets 0 to $12FD",  { SetBasicIrqActivity(1) }, {
+  lda #0; sta $12FD
+}
+
+.label SCREEN_EDITOR_IRQ_FLAG     = $D8     // GRAPHM
+
+/*
+  Set screen editor IRQ routine active or not. This gives you direct control
+  over the VIC chip register settings (D018), but disables BASIC'S ability
+  to change display modes.
+
+  Params: bool
+*/
+.macro SetScreenEditorIrq(active) {
+  .if (active == 0) {
+    lda #$ff
+  } else {
+    lda #0
+  }
+    sta SCREEN_EDITOR_IRQ_FLAG
+}
+.assert "SetScreenEditorIrq() sets $ff to $D8",  { SetScreenEditorIrq(0) }, {
   lda #$ff; sta $D8
+}
+.assert "SetScreenEditorIrq() sets 0 to $D8",  { SetScreenEditorIrq(1) }, {
+  lda #0; sta $D8
 }
 
 // TIP(intoinside): c128ProgrammersReferenceGuide has a wrong example on page 231
