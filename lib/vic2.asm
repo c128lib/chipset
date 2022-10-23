@@ -65,6 +65,32 @@
 .label SPRITE_6_COLOR       = VIC2 + $2D
 .label SPRITE_7_COLOR       = VIC2 + $2E
 
+/* ------------------------------------
+ * VIC-II shadow registers.
+ * ------------------------------------ */
+.label SHADOW_VIC2          = $11D6
+.label SHADOW_SPRITE_0_X    = SHADOW_VIC2 + $00
+.label SHADOW_SPRITE_0_Y    = SHADOW_VIC2 + $01
+.label SHADOW_SPRITE_1_X    = SHADOW_VIC2 + $02
+.label SHADOW_SPRITE_1_Y    = SHADOW_VIC2 + $03
+.label SHADOW_SPRITE_2_X    = SHADOW_VIC2 + $04
+.label SHADOW_SPRITE_2_Y    = SHADOW_VIC2 + $05
+.label SHADOW_SPRITE_3_X    = SHADOW_VIC2 + $06
+.label SHADOW_SPRITE_3_Y    = SHADOW_VIC2 + $07
+.label SHADOW_SPRITE_4_X    = SHADOW_VIC2 + $08
+.label SHADOW_SPRITE_4_Y    = SHADOW_VIC2 + $09
+.label SHADOW_SPRITE_5_X    = SHADOW_VIC2 + $0A
+.label SHADOW_SPRITE_5_Y    = SHADOW_VIC2 + $0B
+.label SHADOW_SPRITE_6_X    = SHADOW_VIC2 + $0C
+.label SHADOW_SPRITE_6_Y    = SHADOW_VIC2 + $0D
+.label SHADOW_SPRITE_7_X    = SHADOW_VIC2 + $0E
+.label SHADOW_SPRITE_7_Y    = SHADOW_VIC2 + $0F
+.label SHADOW_SPRITE_MSB_X  = SHADOW_VIC2 + $10
+.label SHADOW_SPRITE_2S_COLLISION = SHADOW_VIC2 + $11
+.label SHADOW_SPRITE_2B_COLLISION = SHADOW_VIC2 + $12
+.label SHADOW_LIGHTPEN_X    = SHADOW_VIC2 + $13
+.label SHADOW_LIGHTPEN_Y    = SHADOW_VIC2 + $14
+
 .label COLOR_RAM            = $D800
 .label TOP_SCREEN_RASTER_POS = 50
 
