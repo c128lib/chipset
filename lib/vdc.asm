@@ -73,6 +73,16 @@
 }
 
 /*
+  Go to 40 columns mode
+*/
+.macro Go40() {
+  lda MODE        // are we in 40 columns mode?
+  bpl !+          // bit 7 unset? then yes
+  jsr SWAPPER     // swap mode to 40 columns
+!:
+}
+
+/*
   Returns the address start of VDC display memory data. This
   is stored in VDC register 12 and 13.
   The 16-bit value is stored in $FB and $FC.
