@@ -80,7 +80,7 @@
   Syntax:    GetVDCDisplayStart()
 */
 .macro GetVDCDisplayStart() {
-  ldx #12
+  ldx #SCREEN_MEMORY_STARTING_HIGH_ADDRESS
   ReadVDC()
 
   sta $fb
@@ -99,7 +99,7 @@
   can then be written to using WriteVDCRAM()
 */
 .macro SetVDCUpdateAddress(address) {
-  ldx #18
+  ldx #CURRENT_MEMORY_HIGH_ADDRESS
   lda #>address
   WriteVDC();
 
@@ -131,10 +131,16 @@
     bpl !-
     sta VDCDAT
 }
+.assert "WriteVDC()", { WriteVDC() }, {
+  stx $d600; bit $d600; bpl *-3; sta $d601
+}
 
 .macro ReadVDC() {
     stx VDCADR
 !:  bit VDCADR
     bpl !-
     lda VDCDAT
+}
+.assert "ReadVDC()", { ReadVDC() }, {
+  stx $d600; bit $d600; bpl *-3; lda $d601
 }
