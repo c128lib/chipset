@@ -80,6 +80,24 @@
   sta $DD00
 }
 
+/*
+  Check if joystick port 1 fire button is pressed.
+  Accumulator will be 0 if button is not pressed
+ */
+.macro GetFirePressedPort1() {
+  lda CIA1_DATA_PORT_B
+  and #JOY_FIRE
+}
+
+/*
+  Check if joystick port 2 fire button is pressed.
+  Accumulator will be 0 if button is not pressed
+ */
+.macro GetFirePressedPort2() {
+  lda CIA1_DATA_PORT_A
+  and #JOY_FIRE
+}
+
 .macro disableCIAInterrupts() {
   lda #$7f
   sta CIA1_IRQ_CONTROL

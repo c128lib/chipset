@@ -8,3 +8,5 @@
 .filenamespace c128lib
 
 .macro @c128lib_SetVICBank(bank) { SetVICBank(bank) }
+.macro @c128lib_GetFirePressedPort1() { GetFirePressedPort1() }
+.macro @c128lib_GetFirePressedPort2() { GetFirePressedPort2() }
