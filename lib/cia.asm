@@ -82,6 +82,14 @@
 
 /*
   Check if joystick port 1 fire button is pressed.
+  
+  TIP: using control port 1 for joystick input can have an undesiderable
+  side effect. Since the input lines of that port are also used for
+  reading the keyboard, the keyscan routine ($C55D) has no way to tell
+  whether the port lines are beign grounded by keypresses of joystick
+  presses. As a result, moving a joystick effectively generates a keypress,
+  and certain keypresses produce the same effect as moving the joystick.
+
   Accumulator will be 0 if button is not pressed
  */
 .macro GetFirePressedPort1() {
