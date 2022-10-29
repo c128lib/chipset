@@ -65,9 +65,9 @@
 // .label = $e987	Get Tape Buffer Start & End Addrs
 // .label = $e99a	Find Specific Header
 // .label = $e9be	Bump Tape Pointer
-// .label = $e9c8	Print 'press play on tape'
+.label KERNAL_PLAY_ON_TAPE = $e9c8
 // .label = $e9df	Check Tape Status
-// .label = $e9e9	Print 'press record ...'
+.label KERNAL_RECORD_PLAY_ON_TAPE = $e9e9
 // .label = $e9f2	Initiate Tape Read
 // .label = $ea15	Initiate Tape Write
 // .label = $ea26	Common Tape Code
