@@ -16,6 +16,15 @@
 .assert "Reg address for sprite0 X pos", spriteXReg(0), SPRITE_0_X
 .assert "Reg address for sprite7 X pos", spriteXReg(7), SPRITE_7_X
 
+/* 
+ * Calculates sprite X position shadow register address
+ */
+.function spriteShadowXReg(spriteNo) {
+  .return SHADOW_VIC2 + spriteNo * 2
+}
+.assert "Shadow reg address for sprite0 X pos", spriteShadowXReg(0), SHADOW_SPRITE_0_X
+.assert "Shadow reg address for sprite7 X pos", spriteShadowXReg(7), SHADOW_SPRITE_7_X
+
 
 /* 
  * Calculates sprite Y position register address
@@ -25,6 +34,15 @@
 }
 .assert "Reg address for sprite0 Y pos", spriteYReg(0), SPRITE_0_Y
 .assert "Reg address for sprite7 Y pos", spriteYReg(7), SPRITE_7_Y
+
+/* 
+ * Calculates sprite Y position shadow register address
+ */
+.function spriteShadowYReg(spriteNo) {
+  .return spriteShadowXReg(spriteNo) + 1
+}
+.assert "Shadow reg address for sprite0 Y pos", spriteShadowYReg(0), SHADOW_SPRITE_0_Y
+.assert "Shadow reg address for sprite7 Y pos", spriteShadowYReg(7), SHADOW_SPRITE_7_Y
 
 
 /* 
@@ -76,6 +94,35 @@
 }
 
 /* 
+ * Sets X position of given sprite (uses sprite MSB register if necessary)
+ * with shadow registers.
+ * MOD: A
+ */
+.macro locateWithShadowSpriteX(x, spriteNo) {
+  .if (x > 255) {
+    lda #<x
+    sta spriteShadowXReg(spriteNo)
+    lda SPRITE_MSB_X
+    ora #spriteMask(spriteNo)
+    sta SPRITE_MSB_X
+  } else {
+    lda #x
+    sta spriteShadowXReg(spriteNo)
+  }
+}
+.assert "locateWithShadowSpriteX stores X in SPRITE_X reg", { locateWithShadowSpriteX(5, 3) }, { 
+  lda #$05
+  sta SHADOW_SPRITE_3_X 
+}
+.assert "locateWithShadowSpriteX stores X in SPRITE_X and MSB regs", { locateWithShadowSpriteX(257, 3) },  {
+  lda #$01
+  sta SHADOW_SPRITE_3_X
+  lda SPRITE_MSB_X
+  ora #%00001000
+  sta SPRITE_MSB_X
+}
+
+/* 
  * Sets Y position of given sprite
  * MOD: A
  */
@@ -89,12 +136,34 @@
 }
 
 /* 
+ * Sets Y position of given sprite with shadow registers
+ * MOD: A
+ */
+.macro locateWithShadowSpriteY(y, spriteNo) {
+  lda #y
+  sta spriteShadowYReg(spriteNo)
+}
+.assert "locateWithShadowSpriteY stores Y in SPRITE_Y reg", { locateWithShadowSpriteY(5, 3) },  {
+  lda #$05
+  sta SHADOW_SPRITE_3_Y
+}
+
+/* 
  * Sets X,Y position of given sprite
  * MOD A
  */
 .macro locateSprite(x, y, spriteNo) {
   locateSpriteX(x, spriteNo)
   locateSpriteY(y, spriteNo)
+}
+
+/* 
+ * Sets X,Y position of given sprite with shadow registers
+ * MOD A
+ */
+.macro locateSpriteWithShadow(x, y, spriteNo) {
+  locateWithShadowSpriteX(x, spriteNo)
+  locateWithShadowSpriteY(y, spriteNo)
 }
 
 .macro sh(data) {
