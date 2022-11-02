@@ -22,6 +22,9 @@
   ldx #bankname
   jsr SETBNK
 }
+.assert "SetIOBank(1, 2)", { SetIOBank(1, 2) }, {
+  lda #1; ldx #2; jsr $FF68
+}
 
 /*
  Opens IO channel.
@@ -33,6 +36,9 @@
   ldx #devicenumber
   ldy #secondary
   jsr SETLFS
+}
+.assert "OpenIOChannel(15, 8, 15)", { OpenIOChannel(15, 8, 15) }, {
+  lda #15; ldx #8; ldy #15; jsr $FFBA
 }
 
 /*
@@ -46,6 +52,9 @@
   ldy #>address
   jsr SETNAM
 }
+.assert "SetIOName(5, $beef)", { SetIOName(5, $beef) }, {
+  lda #5; ldx #$ef; ldy #$be; jsr $FFBD
+}
 
 /*
  Sets IO input channel. Use logical file number.
@@ -56,6 +65,9 @@
   ldx #parameter
   jsr CHKIN
 }
+.assert "SetInputChannel(5)", { SetInputChannel(5) }, {
+  ldx #5; jsr $FFC7
+}
 
 /*
  Sets IO output channel. Use logical file number.
@@ -65,4 +77,7 @@
 .macro SetOutputChannel(parameter) {
   ldx #parameter
   jsr CHKOUT
+}
+.assert "SetOutputChannel(5)", { SetOutputChannel(5) }, {
+  ldx #5; jsr $FFC9
 }
