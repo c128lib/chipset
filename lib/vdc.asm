@@ -63,22 +63,22 @@
 .label SWAPPER     = $ff5f   // switch between 40 or 80 colums
 
 /*
-  Go to 80 columns mode
-*/
-.macro Go80() {
-  lda MODE        // are we in 80 columns mode?
-  bmi !+          // bit 7 set? then yes
-  jsr SWAPPER     // swap mode to 80 columns
-!:
-}
-
-/*
   Go to 40 columns mode
 */
 .macro Go40() {
   lda MODE        // are we in 40 columns mode?
   bpl !+          // bit 7 unset? then yes
   jsr SWAPPER     // swap mode to 40 columns
+!:
+}
+
+/*
+  Go to 80 columns mode
+*/
+.macro Go80() {
+  lda MODE        // are we in 80 columns mode?
+  bmi !+          // bit 7 set? then yes
+  jsr SWAPPER     // swap mode to 80 columns
 !:
 }
 
