@@ -6,16 +6,16 @@
 .filenamespace c128lib
 
 // CIA1
-.label CIA1               = $DC00 
+.label CIA1               = $DC00
 .label CIA1_DATA_PORT_A   = CIA1 + $00
 .label CIA1_DATA_PORT_B   = CIA1 + $01
 .label CIA1_DATA_DIR_A    = CIA1 + $02
 .label CIA1_DATA_DIR_B    = CIA1 + $03
-.label CIA1_TIMER_A_LO    = CIA1 + $04 
-.label CIA1_TIMER_A_HI    = CIA1 + $05 
-.label CIA1_TIMER_B_LO    = CIA1 + $06 
-.label CIA1_TIMER_B_HI    = CIA1 + $07 
-.label CIA1_TOD_SEC10     = CIA1 + $08 
+.label CIA1_TIMER_A_LO    = CIA1 + $04
+.label CIA1_TIMER_A_HI    = CIA1 + $05
+.label CIA1_TIMER_B_LO    = CIA1 + $06
+.label CIA1_TIMER_B_HI    = CIA1 + $07
+.label CIA1_TOD_SEC10     = CIA1 + $08
 .label CIA1_TOD_SEC       = CIA1 + $09
 .label CIA1_TOD_MIN       = CIA1 + $0A
 .label CIA1_TOD_HOUR      = CIA1 + $0B
@@ -30,11 +30,11 @@
 .label CIA2_DATA_PORT_B   = CIA2 + $01
 .label CIA2_DATA_DIR_A    = CIA2 + $02
 .label CIA2_DATA_DIR_B    = CIA2 + $03
-.label CIA2_TIMER_A_LO    = CIA2 + $04 
-.label CIA2_TIMER_A_HI    = CIA2 + $05 
-.label CIA2_TIMER_B_LO    = CIA2 + $06 
-.label CIA2_TIMER_B_HI    = CIA2 + $07 
-.label CIA2_TOD_SEC10     = CIA2 + $08 
+.label CIA2_TIMER_A_LO    = CIA2 + $04
+.label CIA2_TIMER_A_HI    = CIA2 + $05
+.label CIA2_TIMER_B_LO    = CIA2 + $06
+.label CIA2_TIMER_B_HI    = CIA2 + $07
+.label CIA2_TOD_SEC10     = CIA2 + $08
 .label CIA2_TOD_SEC       = CIA2 + $09
 .label CIA2_TOD_MIN       = CIA2 + $0A
 .label CIA2_TOD_HOUR      = CIA2 + $0B
@@ -57,10 +57,10 @@
 .label BANK_3           = %00000000   // $C000-$FFFF
 
 /*
- * Configures memory "bank" (16K) which is directly addressable by VIC2 chip.
- *
- * MOD: A
- */
+  Configures memory "bank" (16K) which is directly addressable by VIC2 chip.
+ 
+  MOD: A
+*/
 .macro SetVICBank(bank) {
   lda CIA2_DATA_PORT_A
   and #%11111100
@@ -82,7 +82,7 @@
 
 /*
   Check if joystick port 1 fire button is pressed.
-  
+
   TIP: using control port 1 for joystick input can have an undesiderable
   side effect. Since the input lines of that port are also used for
   reading the keyboard, the keyscan routine ($C55D) has no way to tell
@@ -91,7 +91,7 @@
   and certain keypresses produce the same effect as moving the joystick.
 
   Accumulator will be 0 if button is not pressed
- */
+*/
 .macro GetFirePressedPort1() {
   lda CIA1_DATA_PORT_B
   and #JOY_FIRE
@@ -100,7 +100,7 @@
 /*
   Check if joystick port 2 fire button is pressed.
   Accumulator will be 0 if button is not pressed
- */
+*/
 .macro GetFirePressedPort2() {
   lda CIA1_DATA_PORT_A
   and #JOY_FIRE

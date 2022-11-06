@@ -5,7 +5,9 @@
 #importonce
 .filenamespace c128lib
 
-// SID
+/*
+  SID
+*/
 .label SID = $D400
 .label VOICE1_FREQ_REGISTER_LOW = SID
 .label VOICE1_FREQ_REGISTER_HI = SID + 1

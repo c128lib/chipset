@@ -11,12 +11,12 @@
 .filenamespace c128lib
 
 /*
- Sets RAM bank that will be involved in I/O.
- Also sets bank where the filename will be found.
- Use the Basic bank definitions. (0-15)
+  Sets RAM bank that will be involved in I/O.
+  Also sets bank where the filename will be found.
+  Use the Basic bank definitions. (0-15)
 
- Syntax:    SetIOBank(15,15)
- */
+  Syntax:    SetIOBank(15,15)
+*/
 .macro SetIOBank(bank, bankname) {
   lda #bank
   ldx #bankname
@@ -27,10 +27,10 @@
 }
 
 /*
- Opens IO channel.
+  Opens IO channel.
 
- Syntax:    OpenIOChannel(15,8,15)
- */
+  Syntax:    OpenIOChannel(15,8,15)
+*/
 .macro OpenIOChannel(filenumber, devicenumber,secondary) {
   lda #filenumber
   ldx #devicenumber
@@ -42,10 +42,10 @@
 }
 
 /*
- Sets IO filename
+  Sets IO filename
 
- Syntax:    SetIOName(4,$2000)
- */
+  Syntax:    SetIOName(4,$2000)
+*/
 .macro SetIOName(length, address) {
   lda #length
   ldx #<address
@@ -57,10 +57,10 @@
 }
 
 /*
- Sets IO input channel. Use logical file number.
+  Sets IO input channel. Use logical file number.
 
- Syntax:    SetInputChannel(1)
- */
+  Syntax:    SetInputChannel(1)
+*/
 .macro SetInputChannel(parameter) {
   ldx #parameter
   jsr CHKIN
@@ -70,10 +70,10 @@
 }
 
 /*
- Sets IO output channel. Use logical file number.
+  Sets IO output channel. Use logical file number.
 
- Syntax:    SetOutputChannel(1)
- */
+  Syntax:    SetOutputChannel(1)
+*/
 .macro SetOutputChannel(parameter) {
   ldx #parameter
   jsr CHKOUT

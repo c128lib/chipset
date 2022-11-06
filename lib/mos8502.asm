@@ -9,14 +9,14 @@
 .filenamespace c128lib
 
 /*
- * MOS8502 Registers
- */
+  MOS8502 Registers
+*/
 .label MOS_8502_DIRECTION       = $00
 .label MOS_8502_IO              = $01
 
 /*
- * MMU (mirrored from $d500)
- */
+  MMU (mirrored from $d500)
+*/
 .label MMUCR        = $ff00   // bank configuration register
 .label PCRA         = $ff01   // preconfig register A
 .label PCRB         = $ff02   // preconfig register B
@@ -26,8 +26,8 @@
 .label MMURCR       = $ff06   // ram configuration register
 
 /*
- * I/O Register bits.
- */
+  I/O Register bits.
+*/
 .label CASETTE_MOTOR_OFF        = %00100000
 .label CASETTE_SWITCH_CLOSED    = %00010000
 .label CASETTE_DATA             = %00001000
@@ -36,8 +36,8 @@
 .label PLA_LORAM                = %00000001
 
 /*
- * Possible I/O & PLA configurations.
- */
+  Possible I/O & PLA configurations.
+*/
 .label RAM_RAM_RAM              = %000
 .label RAM_CHAR_RAM             = PLA_LORAM
 .label RAM_CHAR_KERNAL          = PLA_HIRAM
@@ -54,7 +54,7 @@
 }
 
 /*
- Disable NMI by pointing NMI vector to rti
+  Disable NMI by pointing NMI vector to rti
 */
 .macro disableNMI() {
     lda #<nmi
@@ -92,11 +92,11 @@
 .label RAM1               = %01000000
 
 /*
-Banking, RAM configurations
+  Banking, RAM configurations
 
-Refer to IO_*, ROM_*, RAM* label to generate input value
+  Refer to IO_*, ROM_*, RAM* label to generate input value
 
-Syntax:    SetMMUConfiguration(RAM0 | ROM_HI | ROM_MID_RAM | ROM_LOW_ROM | IO_ROM)
+  Syntax:    SetMMUConfiguration(RAM0 | ROM_HI | ROM_MID_RAM | ROM_LOW_ROM | IO_ROM)
 */
 .macro SetMMUConfiguration(config) {
     lda #config
@@ -107,19 +107,19 @@ Syntax:    SetMMUConfiguration(RAM0 | ROM_HI | ROM_MID_RAM | ROM_LOW_ROM | IO_RO
 }
 
 /*
-Banking, RAM configurations
+  Banking, RAM configurations
 
-bits:
-0:   $d000-$dfff (i/o block, ram or rom)
-1:   $4000-$7fff (lower basic rom)
-2-3: $8000-$bfff (upper basic rom, monitor, internal/external ROM)
-4-5: $c000-$ffff (char ROM, kernal, internal/external ROM, RAM)
-6:   select RAM block
+  bits:
+  0:   $d000-$dfff (i/o block, ram or rom)
+  1:   $4000-$7fff (lower basic rom)
+  2-3: $8000-$bfff (upper basic rom, monitor, internal/external ROM)
+  4-5: $c000-$ffff (char ROM, kernal, internal/external ROM, RAM)
+  6:   select RAM block
 
-Setting a bit means RAM, clearing means ROM.
-Use the BASIC Bank configuration numbers.
+  Setting a bit means RAM, clearing means ROM.
+  Use the BASIC Bank configuration numbers.
 
-Syntax:    SetBankConfiguration(number)
+  Syntax:    SetBankConfiguration(number)
 */
 .macro SetBankConfiguration(id) {
     .if(id==0) {
@@ -156,14 +156,14 @@ Syntax:    SetBankConfiguration(number)
 .label COMMON_RAM_BOTH    = COMMON_RAM_BOTTOM | COMMON_RAM_TOP
 
 /*
-Configure common RAM amount.
+  Configure common RAM amount.
 
-RAM Bank 0 is always the visible RAM bank.
-Valid values are 1,4,8 and 16.
-For ex. if you choose 4K common ram at top and bottom
-you'll have 4K up and 4K bottom.
+  RAM Bank 0 is always the visible RAM bank.
+  Valid values are 1,4,8 and 16.
+  For ex. if you choose 4K common ram at top and bottom
+  you'll have 4K up and 4K bottom.
 
-Syntax:    SetCommonRAM(COMMON_RAM_4K | COMMON_RAM_BOTH)
+  Syntax:    SetCommonRAM(COMMON_RAM_4K | COMMON_RAM_BOTH)
 */
 .macro SetCommonRAM(config) {
     lda #config
@@ -174,13 +174,13 @@ Syntax:    SetCommonRAM(COMMON_RAM_4K | COMMON_RAM_BOTH)
 }
 
 /*
-Set RAM block that the VIC chip will use, bit 6 of MMUCR.
-Only useful for text display. Pretty useless, really.
-Kernal routines use RAM0, so you need to roll your own routines.
+  Set RAM block that the VIC chip will use, bit 6 of MMUCR.
+  Only useful for text display. Pretty useless, really.
+  Kernal routines use RAM0, so you need to roll your own routines.
 
-Use SetVICBank() to set the 16k block that the VIC will use in that block.
+  Use SetVICBank() to set the 16k block that the VIC will use in that block.
 
-Syntax:    SetVICRamBank(0 or 1)
+  Syntax:    SetVICRamBank(0 or 1)
 */
 .macro SetVICRAMBank(value) {
     lda MMURCR
@@ -191,8 +191,8 @@ Syntax:    SetVICRamBank(0 or 1)
     sta MMURCR
 }
 .assert "SetVICRAMBank(0) sets accumulator to 0f", { SetVICRAMBank(0) }, {
-  lda MMURCR;and #%10111111;sta MMURCR
+  lda $ff06;and #%10111111;sta $ff06
 }
 .assert "SetVICRAMBank(1) sets accumulator to 0f", { SetVICRAMBank(1) }, {
-  lda MMURCR;and #%10111111;ora #%01111111;sta MMURCR
+  lda $ff06;and #%10111111;ora #%01111111;sta $ff06
 }

@@ -13,9 +13,9 @@
 #importonce
 .filenamespace c128lib
 
-/* ------------------------------------
- * VIC-II registers.
- * ------------------------------------ */
+/*
+  Vic-II
+*/
 .label VIC2                 = $D000
 .label SPRITE_0_X           = VIC2 + $00
 .label SPRITE_0_Y           = VIC2 + $01
@@ -65,9 +65,9 @@
 .label SPRITE_6_COLOR       = VIC2 + $2D
 .label SPRITE_7_COLOR       = VIC2 + $2E
 
-/* ------------------------------------
- * VIC-II shadow registers.
- * ------------------------------------ */
+/*
+  Vic-II shadow registers
+*/
 .label SHADOW_VIC2          = $11D6
 .label SHADOW_SPRITE_0_X    = SHADOW_VIC2 + $00
 .label SHADOW_SPRITE_0_Y    = SHADOW_VIC2 + $01
@@ -97,42 +97,32 @@
 .label RASTER_MAX_PAL       = 312
 .label RASTER_MAX_NTSC      = 263
 
-/* ------------------------------------
- * CONTROL_1 bits
- * ------------------------------------ */
+// CONTROL_1 bits
 .label CONTROL_1_RASTER8  = %10000000
 .label CONTROL_1_ECM      = %01000000
 .label CONTROL_1_BMM      = %00100000
 .label CONTROL_1_DEN      = %00010000
 .label CONTROL_1_RSEL     = %00001000
 
-/* ------------------------------------
- * CONTROL_2 bits
- * ------------------------------------ */
+// CONTROL_2 bits
 .label CONTROL_2_RES      = %00100000
 .label CONTROL_2_MCM      = %00010000
 .label CONTROL_2_CSEL     = %00001000
 
-/* ------------------------------------
- * IRR bits
- * ------------------------------------ */
+// IRR bits
 .label IRR_IRQ            = %10000000
 .label IRR_LIGHTPEN       = %00001000
 .label IRR_SPR_SPR        = %00000100
 .label IRR_SPR_BG         = %00000010
 .label IRR_RASTER         = %00000001
 
-/* ------------------------------------
- * IMR bits
- * ------------------------------------ */
+// IMR bits
 .label IMR_LIGHTPEN       = %00001000
 .label IMR_SPR_SPR        = %00000100
 .label IMR_SPR_BG         = %00000010
 .label IMR_RASTER         = %00000001
 
-/* ------------------------------------
- * Graphic modes
- * ------------------------------------ */
+// Graphic modes
 .label STANDARD_TEXT_MODE     = %000
 .label MULTICOLOR_TEXT_MODE   = %001
 .label STANDARD_BITMAP_MODE   = %010
@@ -143,19 +133,17 @@
 .label MODE_BMM               = %010
 .label MODE_MCM               = %001
 
-/* ------------------------------------
- * Misc. constants
- */
+// Misc. constants
 .label TEXT_SCREEN_WIDTH = 40
 .label TEXT_SCREEN_80_COL_WIDTH = 80
 
 /*
- * Calculates memory offset of text cell specified by given coordinates.
- *
- * Params:
- * xPos - X coord
- * yPos - Y coord
- */
+  Calculates memory offset of text cell specified by given coordinates.
+
+  Params:
+  xPos - X coord
+  yPos - Y coord
+*/
 .function getTextOffset(xPos, yPos) {
   .return xPos + TEXT_SCREEN_WIDTH * yPos
 }
@@ -166,12 +154,12 @@
 .assert "getTextOffset(39,24) gives 999", getTextOffset(39, 24), 999
 
 /*
- * Calculates memory offset of text cell specified by given coordinates.
- *
- * Params:
- * xPos - X coord
- * yPos - Y coord
- */
+  Calculates memory offset of text cell specified by given coordinates.
+
+  Params:
+  xPos - X coord
+  yPos - Y coord
+*/
 .function getTextOffset80Col(xPos, yPos) {
   .return xPos + TEXT_SCREEN_80_COL_WIDTH * yPos
 }
@@ -182,12 +170,12 @@
 .assert "getTextOffset80Col(79,24) gives 1959", getTextOffset80Col(79, 24), 1999
 
 /*
- * Combines screen and charset slots for memory control register.
- *
- * Params:
- * screenMem: location of screen memory: 0..15
- * charSet: location of charset definition: 0..7
- */
+  Combines screen and charset slots for memory control register.
+
+  Params:
+  screenMem: location of screen memory: 0..15
+  charSet: location of charset definition: 0..7
+*/
 .function getTextMemory(screenMem, charSet) {
   .return charSet<<1 | screenMem<<4
 }
@@ -307,14 +295,14 @@
 }
 
 /*
- * Configures memory for text mode
- *
- * Params:
- * video: location of video ram: 0..15
- * charSet: location of charset definition: 0..7
- *
- * MOD: A
- */
+  Configures memory for text mode
+
+  Params:
+  video: location of video ram: 0..15
+  charSet: location of charset definition: 0..7
+
+  MOD: A
+*/
 .macro configureTextMemory(video, charSet) {
   lda #getTextMemory(video, charSet)
   sta MEMORY_CONTROL
@@ -333,12 +321,12 @@
 }
 
 /*
- * Combines video and bitmap slots into value of memory control register.
- *
- * Params:
- * video: location of video ram: 0..15
- * bitmap: location of bitmap definition: 0..1
- */
+  Combines video and bitmap slots into value of memory control register.
+
+  Params:
+  video: location of video ram: 0..15
+  bitmap: location of bitmap definition: 0..1
+*/
 .function getBitmapMemory(video, bitmap) {
   .return bitmap<<3 | video<<4
 }
@@ -347,14 +335,14 @@
 .assert "getBitmapMemory(4, 1) returns %01001000", getBitmapMemory(4, 1), %01001000
 
 /*
- * Configure memory for bitmap mode
- *
- * Params:
- * video: location of video ram: 0..15
- * bitmap: location of bitmap definition: 0..1
- *
- * MOD: A
- */
+  Configure memory for bitmap mode
+
+  Params:
+  video: location of video ram: 0..15
+  bitmap: location of bitmap definition: 0..1
+
+  MOD: A
+*/
 .macro configureBitmapMemory(video, bitmap) {
   lda #getBitmapMemory(video, bitmap)
   sta MEMORY_CONTROL
@@ -373,11 +361,11 @@
 }
 
 /*
- * Calculates set bits for control 1 reg and specified gfx mode
- *
- * Params:
- * mode mode designator according to predefined labels
- */
+  Calculates set bits for control 1 reg and specified gfx mode
+
+  Params:
+  mode mode designator according to predefined labels
+*/
 // .function calculateControl1ForMode(mode) {
 //   .var result = $00
 //   .if ((mode & MODE_ECM) == MODE_ECM) .eval result = result | CONTROL_1_ECM
@@ -391,11 +379,11 @@
 // .assert "calculateControl1ForMode(EXTENDED_TEXT_MODE) returns %01000000", calculateControl1ForMode(EXTENDED_TEXT_MODE), %01000000
 
 /*
- * Calculates set bits for control 2 reg and specified gfx mode
- *
- * Params:
- * mode mode designator according to predefined labels
- */
+  Calculates set bits for control 2 reg and specified gfx mode
+
+  Params:
+  mode mode designator according to predefined labels
+*/
 // .function calculateControl2ForMode(mode) {
 //   .var result = $00
 //   .if ((mode & MODE_MCM) == MODE_MCM) .eval result = result | CONTROL_2_MCM
@@ -408,15 +396,15 @@
 // .assert "calculateControl2ForMode(EXTENDED_TEXT_MODE) returns 0", calculateControl2ForMode(EXTENDED_TEXT_MODE), %00000000
 
 /*
- * Sets given video mode according to predefined labels. Works in each and every case
- * but might be not so optimal if modification of both CONTROL_1 and CONTROL_2 regs is
- * not required. Use when precise timing is not critical.
- *
- * Params:
- * mode: VIC-II video mode designator according to predefined labels
- *
- * MOD: A
- */
+  Sets given video mode according to predefined labels. Works in each and every case
+  but might be not so optimal if modification of both CONTROL_1 and CONTROL_2 regs is
+  not required. Use when precise timing is not critical.
+
+  Params:
+  mode: VIC-II video mode designator according to predefined labels
+
+  MOD: A
+*/
 // .macro setVideoMode(mode) {                // 24
 //   lda CONTROL_2                             // 4
 //   and #neg(CONTROL_2_MCM)                   // 2
@@ -450,10 +438,10 @@
 // }
 
 /*
- * Configures VIC-II so that it fire IRQ when given "rasterLine" is drawn.
- *
- * MOD: A
- */
+  Configures VIC-II so that it fire IRQ when given "rasterLine" is drawn.
+
+  MOD: A
+*/
 .macro setRaster(rasterLine) {
   lda #<rasterLine
   sta RASTER
@@ -482,10 +470,10 @@
 }
 
 /*
- * Call it when entering raster interrupt.
- *
- * MOD: A
- */
+  Call it when entering raster interrupt.
+
+  MOD: A
+*/
 .macro irqEnter() {
   pha
   tya
@@ -495,12 +483,12 @@
 }
 
 /*
- * Call it at the end of raster interrupt.
- *
- * intVector - address of next interrupt handling routine
- * rasterLine - at which raster line should we fire next interrupt
- * memory - if true, rasterLine is taken from memory address, if false - absolute addressing is used
- */
+  Call it at the end of raster interrupt.
+
+  intVector - address of next interrupt handling routine
+  rasterLine - at which raster line should we fire next interrupt
+  memory - if true, rasterLine is taken from memory address, if false - absolute addressing is used
+*/
 .macro irqExit(intVector, rasterLine, memory) {
   ldx #>intVector
   ldy #<intVector
@@ -551,17 +539,17 @@
 }
 
 /*
- * NTSC detection routine written by J0X (https://csdb.dk/scener/?id=1221).
- * It is so short and will be called only once so that I will code it as simple
- * macro and not subroutine.
- *
- * This macro takes callback addresses for PAL and NTSC events as parameters. Callback
- * will be ignored (not jumped into) if its value is 0 or less.
- *
- * Params:
- *   onPalCallback   subroutine address, it will be called (JSR) when PAL is detected
- *   onNtscCallback  subroutine address, it will be called (JSR) when NTSC is detected
- */
+  NTSC detection routine written by J0X (https://csdb.dk/scener/?id=1221).
+  It is so short and will be called only once so that I will code it as simple
+  macro and not subroutine.
+
+  This macro takes callback addresses for PAL and NTSC events as parameters. Callback
+  will be ignored (not jumped into) if its value is 0 or less.
+
+  Params:
+    onPalCallback   subroutine address, it will be called (JSR) when PAL is detected
+    onNtscCallback  subroutine address, it will be called (JSR) when NTSC is detected
+*/
 // .macro detectNtsc(onPalCallback, onNtscCallback) {
 //   nextLine:
 //     lda RASTER
@@ -582,16 +570,16 @@
 //   end:
 // }
 
-/**
- * Rotates pointed character to the right.
- * This is a hosted subroutine.
- * This subroutine should be first installed by calling this macro with appropriate parameter (see below).
- *
- * Parameters:
- * charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
- *
- * Mod: A, Y
- */
+/*
+  Rotates pointed character to the right.
+  This is a hosted subroutine.
+  This subroutine should be first installed by calling this macro with appropriate parameter (see below).
+
+  Parameters:
+  charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
+
+  Mod: A, Y
+*/
 .macro rotateCharRight(charPointer) {
   ldy #0
   !:
@@ -607,17 +595,17 @@
   bne !-
 }
 
-/**
- * Rotates pointed character to the bottom.
- * This is a hosted subroutine.
- * This subroutine should be first installed by calling this macro with appropriate parameter (see below).
- *
- * Parameters:
- * charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
- * store - should point to zero or non-zero location (1 byte). This location is used internaly, it's content will be destroyed after calling the subroutine.
- *
- * Mod: A, Y
- */
+/*
+  Rotates pointed character to the bottom.
+  This is a hosted subroutine.
+  This subroutine should be first installed by calling this macro with appropriate parameter (see below).
+
+  Parameters:
+  charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
+  store - should point to zero or non-zero location (1 byte). This location is used internaly, it's content will be destroyed after calling the subroutine.
+
+  Mod: A, Y
+*/
 .macro rotateCharBottom(charPointer, store) {
   ldy #7
   lda (charPointer),y

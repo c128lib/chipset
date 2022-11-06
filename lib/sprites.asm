@@ -8,8 +8,8 @@
 .filenamespace c128lib
 
 /* 
- * Calculates sprite X position register address
- */
+  Calculates sprite X position register address
+*/
 .function spriteXReg(spriteNo) {
   .return VIC2 + spriteNo * 2
 }
@@ -17,8 +17,8 @@
 .assert "Reg address for sprite7 X pos", spriteXReg(7), SPRITE_7_X
 
 /* 
- * Calculates sprite X position shadow register address
- */
+  Calculates sprite X position shadow register address
+*/
 .function spriteShadowXReg(spriteNo) {
   .return SHADOW_VIC2 + spriteNo * 2
 }
@@ -27,8 +27,8 @@
 
 
 /* 
- * Calculates sprite Y position register address
- */
+  Calculates sprite Y position register address
+*/
 .function spriteYReg(spriteNo) {
   .return spriteXReg(spriteNo) + 1
 }
@@ -36,8 +36,8 @@
 .assert "Reg address for sprite7 Y pos", spriteYReg(7), SPRITE_7_Y
 
 /* 
- * Calculates sprite Y position shadow register address
- */
+  Calculates sprite Y position shadow register address
+*/
 .function spriteShadowYReg(spriteNo) {
   .return spriteShadowXReg(spriteNo) + 1
 }
@@ -46,8 +46,8 @@
 
 
 /* 
- * Calculates sprite bit position
- */
+  Calculates sprite bit position
+*/
 .function spriteMask(spriteNo) {
   .return pow(2, spriteNo)
 }
@@ -56,8 +56,8 @@
 
 
 /* 
- * Calculate sprite color register address
- */
+  Calculate sprite color register address
+*/
 .function spriteColorReg(spriteNo) {
   .return SPRITE_0_COLOR + spriteNo
 }
@@ -66,9 +66,9 @@
 
 
 /* 
- * Sets X position of given sprite (uses sprite MSB register if necessary)
- * MOD: A
- */
+  Sets X position of given sprite (uses sprite MSB register if necessary)
+  MOD: A
+*/
 .macro locateSpriteX(x, spriteNo) {
   .if (x > 255) {
     lda #<x
@@ -94,10 +94,10 @@
 }
 
 /* 
- * Sets X position of given sprite (uses sprite MSB register if necessary)
- * with shadow registers.
- * MOD: A
- */
+  Sets X position of given sprite (uses sprite MSB register if necessary)
+  with shadow registers.
+  MOD: A
+*/
 .macro locateWithShadowSpriteX(x, spriteNo) {
   .if (x > 255) {
     lda #<x
@@ -123,9 +123,9 @@
 }
 
 /* 
- * Sets Y position of given sprite
- * MOD: A
- */
+  Sets Y position of given sprite
+  MOD: A
+*/
 .macro locateSpriteY(y, spriteNo) {
   lda #y
   sta spriteYReg(spriteNo)
@@ -136,9 +136,9 @@
 }
 
 /* 
- * Sets Y position of given sprite with shadow registers
- * MOD: A
- */
+  Sets Y position of given sprite with shadow registers
+  MOD: A
+*/
 .macro locateWithShadowSpriteY(y, spriteNo) {
   lda #y
   sta spriteShadowYReg(spriteNo)
@@ -149,18 +149,18 @@
 }
 
 /* 
- * Sets X,Y position of given sprite
- * MOD A
- */
+  Sets X,Y position of given sprite
+  MOD A
+*/
 .macro locateSprite(x, y, spriteNo) {
   locateSpriteX(x, spriteNo)
   locateSpriteY(y, spriteNo)
 }
 
 /* 
- * Sets X,Y position of given sprite with shadow registers
- * MOD A
- */
+  Sets X,Y position of given sprite with shadow registers
+  MOD A
+*/
 .macro locateSpriteWithShadow(x, y, spriteNo) {
   locateWithShadowSpriteX(x, spriteNo)
   locateWithShadowSpriteY(y, spriteNo)
