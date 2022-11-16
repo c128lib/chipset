@@ -15,7 +15,7 @@
   Also sets bank where the filename will be found.
   Use the Basic bank definitions. (0-15)
 
-  Syntax:    SetIOBank(15,15)
+  Syntax:    SetIOBank(15, 15)
 */
 .macro SetIOBank(bank, bankname) {
   lda #bank
@@ -29,9 +29,9 @@
 /*
   Opens IO channel.
 
-  Syntax:    OpenIOChannel(15,8,15)
+  Syntax:    OpenIOChannel(15, 8, 15)
 */
-.macro OpenIOChannel(filenumber, devicenumber,secondary) {
+.macro OpenIOChannel(filenumber, devicenumber, secondary) {
   lda #filenumber
   ldx #devicenumber
   ldy #secondary
@@ -44,7 +44,7 @@
 /*
   Sets IO filename
 
-  Syntax:    SetIOName(4,$2000)
+  Syntax:    SetIOName(4, $2000)
 */
 .macro SetIOName(length, address) {
   lda #length
