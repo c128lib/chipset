@@ -1,4 +1,5 @@
 #import "common/lib/common.asm"
+#import "common/lib/kernal.asm"
 
 /*
  * Requires KickAssembler v5.x
@@ -59,8 +60,6 @@
 .label BEGINNING_POSITION_FOR_HORIZONTAL_BLANKING         = $22
 .label ENDING_POSITION_FOR_HORIZONTAL_BLANKING            = $23
 .label NUMBER_OF_MEMORY_REFRESH_CYCLER_PER_SCANLINE       = $24
-
-.label SWAPPER     = $ff5f   // switch between 40 or 80 colums
 
 /*
   Go to 40 columns mode
