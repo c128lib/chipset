@@ -7,3 +7,4 @@
 .macro @c128lib_SetIOName(length, address) { SetIOName(length, address) }
 .macro @c128lib_SetInputChannel(parameter) { SetInputChannel(parameter) }
 .macro @c128lib_SetOutputChannel(parameter) { SetOutputChannel(parameter) }
+.macro @c128lib_OpenFile(length, address, filenumber, devicenumber, secondary) { OpenFile(length, address, filenumber, devicenumber, secondary) }

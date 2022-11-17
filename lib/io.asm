@@ -61,12 +61,12 @@
 
   Syntax:    SetInputChannel(1)
 */
-.macro SetInputChannel(parameter) {
-  ldx #parameter
+.macro SetInputChannel(filenumber) {
+  ldx #filenumber
   jsr CHKIN
 }
 .assert "SetInputChannel(5)", { SetInputChannel(5) }, {
-  ldx #5; jsr $FFC7
+  ldx #5; jsr $FFC6
 }
 
 /*
@@ -74,10 +74,23 @@
 
   Syntax:    SetOutputChannel(1)
 */
-.macro SetOutputChannel(parameter) {
-  ldx #parameter
+.macro SetOutputChannel(filenumber) {
+  ldx #filenumber
   jsr CHKOUT
 }
 .assert "SetOutputChannel(5)", { SetOutputChannel(5) }, {
   ldx #5; jsr $FFC9
+}
+
+.macro OpenFile(length, address, filenumber, devicenumber, secondary) {
+  SetIOName(length, address)
+  OpenIOChannel(filenumber, devicenumber, secondary)
+  jsr OPEN
+  SetInputChannel(filenumber)
+}
+.assert "OpenFile(5, $beef, 1, 2, 3)", { OpenFile(5, $beef, 1, 2, 3) }, {
+  lda #5; ldx #$ef; ldy #$be; jsr $FFBD;
+  lda #1; ldx #2; ldy #3; jsr $FFBA;
+  jsr $FFC0
+  ldx #1; jsr $FFC6
 }
