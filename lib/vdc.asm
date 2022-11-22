@@ -10,6 +10,26 @@
 #importonce
 .filenamespace c128lib
 
+/*
+  VDC color codes
+*/
+.label VDC_BLACK = 0
+.label VDC_DARK_GRAY = 1
+.label VDC_DARK_BLUE = 2
+.label VDC_LIGHT_BLUE = 3
+.label VDC_DARK_GREEN = 4
+.label VDC_LIGHT_GREEN = 5
+.label VDC_DARK_CYAN = 6
+.label VDC_LIGHT_CYAN = 7
+.label VDC_DARK_RED = 8
+.label VDC_LIGHT_RED = 9
+.label VDC_DARK_PURPLE = 10
+.label VDC_LIGHT_PURPLE = 11
+.label VDC_DARK_YELLOW = 12
+.label VDC_LIGHT_YELLOW = 13
+.label VDC_LIGHT_GRAY = 14
+.label VDC_WHITE = 15
+
 .label COLOR80    = $ce5c
 
 .label MODE       = $d7 
