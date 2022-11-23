@@ -102,6 +102,34 @@
 }
 
 /*
+  Set background and foreground color, also disable bit 6 of 
+  HORIZONTAL_SMOOTH_SCROLLING register
+*/
+.macro SetBackgroundForegroundColor(background, foreground) {
+    lda #0
+    ldx #HORIZONTAL_SMOOTH_SCROLLING
+    ReadVDC()
+    
+    and #%10111111
+    WriteVDC()
+
+    lda #((foreground << 4) + background)
+    ldx #FOREGROUND_BACKGROUND_COLOR
+    WriteVDC()
+}
+.assert "SetBackgroundForegroundColor(background, foreground)()", {
+    SetBackgroundForegroundColor(4, 5)
+  }, {
+    lda #0; ldx #$19;
+    stx $d600; bit $d600; bpl *-3; lda $d601
+    and #%10111111;
+    stx $d600; bit $d600; bpl *-3; sta $d601
+    lda #$54
+    ldx #$1A
+    stx $d600; bit $d600; bpl *-3; sta $d601
+}
+
+/*
   Returns the address start of VDC display memory data. This
   is stored in VDC register 12 and 13.
   The 16-bit value is stored in $FB and $FC.
