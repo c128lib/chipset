@@ -9,3 +9,6 @@
 .macro @c128lib_GetVDCColor(viccolor) { GetVDCColor(viccolor) }
 .macro @c128lib_WriteVDC() { WriteVDC() }
 .macro @c128lib_ReadVDC() { ReadVDC() }
+.macro @c128lib_SetBackgroundForegroundColor(background, foreground) { SetBackgroundForegroundColor(background, foreground) }
+.macro @c128lib_WriteVDCWithKernal(register, value) { WriteVDCWithKernal(register, value) }
+.macro @c128lib_ReadVDCWithKernal(register, value) { ReadVDCWithKernal(register, value) }

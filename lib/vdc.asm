@@ -10,9 +10,33 @@
 #importonce
 .filenamespace c128lib
 
+/*
+  VDC color codes
+*/
+.label VDC_BLACK = 0
+.label VDC_DARK_GRAY = 1
+.label VDC_DARK_BLUE = 2
+.label VDC_LIGHT_BLUE = 3
+.label VDC_DARK_GREEN = 4
+.label VDC_LIGHT_GREEN = 5
+.label VDC_DARK_CYAN = 6
+.label VDC_LIGHT_CYAN = 7
+.label VDC_DARK_RED = 8
+.label VDC_LIGHT_RED = 9
+.label VDC_DARK_PURPLE = 10
+.label VDC_LIGHT_PURPLE = 11
+.label VDC_DARK_YELLOW = 12
+.label VDC_LIGHT_YELLOW = 13
+.label VDC_LIGHT_GRAY = 14
+.label VDC_WHITE = 15
+
 .label COLOR80    = $ce5c
 
-.label MODE       = $d7 
+.label MODE       = $d7
+
+// TODO(intoinside): move to common lib
+.label WRITE_VDC = $CDCC
+.label READ_VDC  = $CDDA
 
 /*
   VDC registers
@@ -82,6 +106,42 @@
 }
 
 /*
+  Calculate byte with hi nibble to foreground color and low nibble
+  to background color.
+*/
+.function CalculateBackgroundAndForeground(background, foreground) {
+  .return ((foreground << 4) + background)
+}
+
+/*
+  Set background and foreground color, also disable bit 6 of
+  HORIZONTAL_SMOOTH_SCROLLING register
+*/
+.macro SetBackgroundForegroundColor(background, foreground) {
+    lda #0
+    ldx #HORIZONTAL_SMOOTH_SCROLLING
+    ReadVDC()
+
+    and #%10111111
+    WriteVDC()
+
+    lda #CalculateBackgroundAndForeground(background, foreground)
+    ldx #FOREGROUND_BACKGROUND_COLOR
+    WriteVDC()
+}
+.assert "SetBackgroundForegroundColor(background, foreground)()", {
+    SetBackgroundForegroundColor(4, 5)
+  }, {
+    lda #0; ldx #$19;
+    stx $d600; bit $d600; bpl *-3; lda $d601
+    and #%10111111;
+    stx $d600; bit $d600; bpl *-3; sta $d601
+    lda #$54
+    ldx #$1A
+    stx $d600; bit $d600; bpl *-3; sta $d601
+}
+
+/*
   Returns the address start of VDC display memory data. This
   is stored in VDC register 12 and 13.
   The 16-bit value is stored in $FB and $FC.
@@ -134,6 +194,14 @@
   ldx #0; lda COLOR80,x
 }
 
+/*
+  Write a value into Vdc register without using kernal
+  routine instead of pure instruction. It needs register
+  number in X and value to write in A.
+  It costs 11 byte.
+
+  Syntax:    WriteVDC()
+*/
 .macro WriteVDC() {
     stx VDCADR
 !:  bit VDCADR
@@ -144,6 +212,14 @@
   stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
+/*
+  Read a value from Vdc register without using kernal
+  routine instead of pure instruction. It needs register
+  number in X and value is written in A.
+  It costs 11 byte.
+
+  Syntax:    ReadVDC()
+*/
 .macro ReadVDC() {
     stx VDCADR
 !:  bit VDCADR
@@ -152,4 +228,36 @@
 }
 .assert "ReadVDC()", { ReadVDC() }, {
   stx $d600; bit $d600; bpl *-3; lda $d601
+}
+
+/*
+  Write a value into Vdc register. It uses kernal
+  routine instead of pure instruction.
+  It costs 7 byte.
+
+  Syntax:    WriteVDCWithKernal(FOREGROUND_BACKGROUND_COLOR, 11)
+*/
+.macro WriteVDCWithKernal(register, value) {
+    ldx #register
+    lda #value
+    jsr WRITE_VDC
+}
+.assert "WriteVDCWithKernal()", { WriteVDCWithKernal(1, 2) }, {
+  ldx #1; lda #2; jsr $CDCC
+}
+
+/*
+  Read a value from Vdc register. It uses kernal
+  routine instead of pure instruction.
+  It costs 7 byte.
+
+  Syntax:    WriteVDCWithKernal(FOREGROUND_BACKGROUND_COLOR, 11)
+*/
+.macro ReadVDCWithKernal(register, value) {
+    ldx #register
+    lda #value
+    jsr READ_VDC
+}
+.assert "ReadVDCWithKernal()", { ReadVDCWithKernal(1, 2) }, {
+  ldx #1; lda #2; jsr $CDDA
 }
