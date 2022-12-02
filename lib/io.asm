@@ -11,22 +11,6 @@
 .filenamespace c128lib
 
 /*
-  Sets RAM bank that will be involved in I/O.
-  Also sets bank where the filename will be found.
-  Use the Basic bank definitions. (0-15)
-
-  Syntax:    SetIOBank(15, 15)
-*/
-.macro SetIOBank(bank, bankname) {
-  lda #bank
-  ldx #bankname
-  jsr SETBNK
-}
-.assert "SetIOBank(1, 2)", { SetIOBank(1, 2) }, {
-  lda #1; ldx #2; jsr $FF68
-}
-
-/*
   Opens IO channel.
 
   Syntax:    OpenIOChannel(15, 8, 15)
