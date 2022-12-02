@@ -11,6 +11,6 @@ retroProject {
     dialectVersion = "5.25"
     libDirs = ["..", ".ra/deps/c128lib"]
 
-    libFromGitHub "c128lib/common", "0.4.3"
+    libFromGitHub "c128lib/common", "0.5.0"
 }
 

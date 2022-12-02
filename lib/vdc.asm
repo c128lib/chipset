@@ -91,7 +91,7 @@
 .macro Go40() {
   lda MODE        // are we in 40 columns mode?
   bpl !+          // bit 7 unset? then yes
-  jsr SWAPPER     // swap mode to 40 columns
+  jsr c128lib.Kernal.SWAPPER     // swap mode to 40 columns
 !:
 }
 
@@ -101,7 +101,7 @@
 .macro Go80() {
   lda MODE        // are we in 80 columns mode?
   bmi !+          // bit 7 set? then yes
-  jsr SWAPPER     // swap mode to 80 columns
+  jsr c128lib.Kernal.SWAPPER     // swap mode to 80 columns
 !:
 }
 

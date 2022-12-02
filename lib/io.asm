@@ -35,7 +35,7 @@
   lda #filenumber
   ldx #devicenumber
   ldy #secondary
-  jsr SETLFS
+  jsr c128lib.Kernal.SETLFS
 }
 .assert "OpenIOChannel(15, 8, 15)", { OpenIOChannel(15, 8, 15) }, {
   lda #15; ldx #8; ldy #15; jsr $FFBA
@@ -50,7 +50,7 @@
   lda #length
   ldx #<address
   ldy #>address
-  jsr SETNAM
+  jsr c128lib.Kernal.SETNAM
 }
 .assert "SetIOName(5, $beef)", { SetIOName(5, $beef) }, {
   lda #5; ldx #$ef; ldy #$be; jsr $FFBD
@@ -63,7 +63,7 @@
 */
 .macro SetInputChannel(filenumber) {
   ldx #filenumber
-  jsr CHKIN
+  jsr c128lib.Kernal.CHKIN
 }
 .assert "SetInputChannel(5)", { SetInputChannel(5) }, {
   ldx #5; jsr $FFC6
@@ -76,7 +76,7 @@
 */
 .macro SetOutputChannel(filenumber) {
   ldx #filenumber
-  jsr CHKOUT
+  jsr c128lib.Kernal.CHKOUT
 }
 .assert "SetOutputChannel(5)", { SetOutputChannel(5) }, {
   ldx #5; jsr $FFC9
@@ -85,7 +85,7 @@
 .macro OpenFile(length, address, filenumber, devicenumber, secondary) {
   SetIOName(length, address)
   OpenIOChannel(filenumber, devicenumber, secondary)
-  jsr OPEN
+  jsr c128lib.Kernal.OPEN
   SetInputChannel(filenumber)
 }
 .assert "OpenFile(5, $beef, 1, 2, 3)", { OpenFile(5, $beef, 1, 2, 3) }, {
