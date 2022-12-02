@@ -12,18 +12,30 @@
 
 .filenamespace c128lib
 
-/*
-  MMU (mirrored from $d500)
-*/
-// TODO(intoinside): remove when available on common
-.label MMUCR        = $ff00   // bank configuration register
-.label PCRA         = $ff01   // preconfig register A
-.label PCRB         = $ff02   // preconfig register B
-.label PCRC         = $ff03   // preconfig register C
-.label PCRD         = $ff04   // preconfig register D
-.label MMUMCR       = $ff05   // cpu mode configuration register
-.label MMURCR       = $ff06   // ram configuration register
+.namespace Mmu {
 
+.label CONFIGURATION        = $D500
+.label PRECONFIG_A          = $D501
+.label PRECONFIG_B          = $D502
+.label PRECONFIG_C          = $D503
+.label PRECONFIG_D          = $D504
+.label MODE_CONFIG          = $D505
+.label RAM_CONFIG           = $D506
+.label PAGE0_PAGE_POINTER   = $D507
+.label PAGE0_BLOCK_POINTER  = $D508
+.label PAGE1_PAGE_POINTER   = $D509
+.label PAGE1_BLOCK_POINTER  = $D50A
+.label MMU_VERSION          = $D50B
+
+.label MMUCR                = $FF00   // bank configuration register
+.label LOAD_CONFIG_A        = $FF01
+.label LOAD_CONFIG_B        = $FF02
+.label LOAD_CONFIG_C        = $FF03
+.label LOAD_CONFIG_D        = $FF04
+.label MMUMCR               = $FF05   // cpu mode configuration register
+.label MMURCR               = $FF06   // ram configuration register
+
+// MMUCR bit handling
 // bit 0 - controls io active on $d000-$dfff
 .label IO_ROM             = %00000000
 .label IO_RAM             = %00000001
@@ -48,6 +60,21 @@
 .label RAM0               = %00000000
 .label RAM1               = %01000000
 
+// MMURCR bit handling
+// bit 0-1 Amount of common ram
+.label COMMON_RAM_1K      = %00000000
+.label COMMON_RAM_4K      = %00000001
+.label COMMON_RAM_8K      = %00000010
+.label COMMON_RAM_16K     = %00000011
+
+// bit 2-3 Position of common ram
+.label COMMON_RAM_UNUSED  = %00000000
+.label COMMON_RAM_BOTTOM  = %00000100
+.label COMMON_RAM_TOP     = %00001000
+.label COMMON_RAM_BOTH    = COMMON_RAM_BOTTOM | COMMON_RAM_TOP
+
+}
+
 /*
   Banking, RAM configurations
 
@@ -57,10 +84,10 @@
 */
 .macro SetMMUConfiguration(config) {
     lda #config
-    sta MMUCR
+    sta Mmu.MMUCR
 }
-.assert "SetMMUConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) sets accumulator to 7f", { SetMMUConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) }, {
-  lda #%01111111; sta MMUCR
+.assert "SetMMUConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) sets accumulator to 7f", { SetMMUConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM) }, {
+  lda #%01111111; sta $ff00
 }
 
 /*
@@ -97,20 +124,8 @@
     .if(id==99) {
       lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
     }
-    sta MMUCR
+    sta Mmu.MMUCR
 }
-
-// bit 0-1 Amount of common ram
-.label COMMON_RAM_1K      = %00000000
-.label COMMON_RAM_4K      = %00000001
-.label COMMON_RAM_8K      = %00000010
-.label COMMON_RAM_16K     = %00000011
-
-// bit 2-3 Position of common ram
-.label COMMON_RAM_UNUSED  = %00000000
-.label COMMON_RAM_BOTTOM  = %00000100
-.label COMMON_RAM_TOP     = %00001000
-.label COMMON_RAM_BOTH    = COMMON_RAM_BOTTOM | COMMON_RAM_TOP
 
 /*
   Configure common RAM amount.
@@ -124,10 +139,10 @@
 */
 .macro SetCommonRAM(config) {
     lda #config
-    sta MMURCR
+    sta Mmu.MMURCR
 }
-.assert "SetCommonRAM(COMMON_RAM_16K | COMMON_RAM_BOTH) sets accumulator to 0f", { SetCommonRAM(COMMON_RAM_16K | COMMON_RAM_BOTH) }, {
-  lda #%00001111; sta MMURCR
+.assert "SetCommonRAM(COMMON_RAM_16K | COMMON_RAM_BOTH) sets accumulator to 0f", { SetCommonRAM(Mmu.COMMON_RAM_16K | Mmu.COMMON_RAM_BOTH) }, {
+  lda #%00001111; sta $ff06
 }
 
 /*
@@ -140,12 +155,12 @@
   Syntax:    SetVICRamBank(0 or 1)
 */
 .macro SetVICRAMBank(value) {
-    lda MMURCR
+    lda Mmu.MMURCR
     and #%10111111       // clear bit 6
     .if(value==1) {
       ora #%01111111     // enable bit 6
     }
-    sta MMURCR
+    sta Mmu.MMURCR
 }
 .assert "SetVICRAMBank(0) sets accumulator to 0f", { SetVICRAMBank(0) }, {
   lda $ff06;and #%10111111;sta $ff06
