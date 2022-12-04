@@ -7,8 +7,9 @@
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
  *
- * Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
- * Ref: https://www.cubic.org/~doj/c64/c128ProgrammersReferenceGuide.pdf
+ * References available at
+ * https://c128lib.github.io/Reference/Vic
+ * https://c128lib.github.io/Reference/D000
 */
 #importonce
 .filenamespace c128lib

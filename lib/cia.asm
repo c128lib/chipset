@@ -1,6 +1,11 @@
 /*
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
+ *
+ * References available at
+ * https://c128lib.github.io/Reference/Cia
+ * https://c128lib.github.io/Reference/DC00
+ * https://c128lib.github.io/Reference/DD00
  */
 #importonce
 .filenamespace c128lib
