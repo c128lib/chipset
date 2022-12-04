@@ -1,14 +1,18 @@
-#import "common/lib/common.asm"
 #import "common/lib/kernal.asm"
+#import "common/lib/screen-editor.asm"
 
 /*
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
  *
- * Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
+ * References available at
+ * https://c128lib.github.io/Reference/Vdc
+ * https://c128lib.github.io/Reference/D600
 */
 #importonce
 .filenamespace c128lib
+
+.namespace Vdc {
 
 /*
   VDC color codes
@@ -33,10 +37,6 @@
 .label COLOR80    = $ce5c
 
 .label MODE       = $d7
-
-// TODO(intoinside): move to common lib
-.label WRITE_VDC = $CDCC
-.label READ_VDC  = $CDDA
 
 /*
   VDC registers
@@ -85,24 +85,34 @@
 .label ENDING_POSITION_FOR_HORIZONTAL_BLANKING            = $23
 .label NUMBER_OF_MEMORY_REFRESH_CYCLER_PER_SCANLINE       = $24
 
+}
+
 /*
   Go to 40 columns mode
 */
 .macro Go40() {
-  lda MODE        // are we in 40 columns mode?
-  bpl !+          // bit 7 unset? then yes
-  jsr c128lib.Kernal.SWAPPER     // swap mode to 40 columns
+  lda Vdc.MODE                // are we in 40 columns mode?
+  bpl !+                      // bit 7 unset? then yes
+  jsr c128lib.Kernal.SWAPPER  // swap mode to 40 columns
 !:
+}
+.assert "Go40()", { Go40() },
+{
+  lda $d7; bpl *+5; jsr $FF5F
 }
 
 /*
   Go to 80 columns mode
 */
 .macro Go80() {
-  lda MODE        // are we in 80 columns mode?
-  bmi !+          // bit 7 set? then yes
-  jsr c128lib.Kernal.SWAPPER     // swap mode to 80 columns
+  lda Vdc.MODE                // are we in 80 columns mode?
+  bmi !+                      // bit 7 set? then yes
+  jsr c128lib.Kernal.SWAPPER  // swap mode to 80 columns
 !:
+}
+.assert "Go80()", { Go80() },
+{
+  lda $d7; bmi *+5; jsr $FF5F
 }
 
 /*
@@ -119,14 +129,14 @@
 */
 .macro SetBackgroundForegroundColor(background, foreground) {
     lda #0
-    ldx #HORIZONTAL_SMOOTH_SCROLLING
+    ldx #Vdc.HORIZONTAL_SMOOTH_SCROLLING
     ReadVDC()
 
     and #%10111111
     WriteVDC()
 
     lda #CalculateBackgroundAndForeground(background, foreground)
-    ldx #FOREGROUND_BACKGROUND_COLOR
+    ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
     WriteVDC()
 }
 .assert "SetBackgroundForegroundColor(background, foreground)()", {
@@ -149,7 +159,7 @@
   Syntax:    GetVDCDisplayStart()
 */
 .macro GetVDCDisplayStart() {
-  ldx #SCREEN_MEMORY_STARTING_HIGH_ADDRESS
+  ldx #Vdc.SCREEN_MEMORY_STARTING_HIGH_ADDRESS
   ReadVDC()
 
   sta $fb
@@ -168,7 +178,7 @@
   can then be written to using WriteVDCRAM()
 */
 .macro SetVDCUpdateAddress(address) {
-  ldx #CURRENT_MEMORY_HIGH_ADDRESS
+  ldx #Vdc.CURRENT_MEMORY_HIGH_ADDRESS
   lda #>address
   WriteVDC();
 
@@ -188,10 +198,10 @@
 */
 .macro GetVDCColor(viccolor) {
   ldx #viccolor
-  lda COLOR80,x
+  lda Vdc.COLOR80,x
 }
 .assert "GetVDCColor(0)", { GetVDCColor(0) }, {
-  ldx #0; lda COLOR80,x
+  ldx #0; lda $ce5c,x
 }
 
 /*
@@ -203,10 +213,10 @@
   Syntax:    WriteVDC()
 */
 .macro WriteVDC() {
-    stx VDCADR
-!:  bit VDCADR
+    stx Vdc.VDCADR
+!:  bit Vdc.VDCADR
     bpl !-
-    sta VDCDAT
+    sta Vdc.VDCDAT
 }
 .assert "WriteVDC()", { WriteVDC() }, {
   stx $d600; bit $d600; bpl *-3; sta $d601
@@ -221,10 +231,10 @@
   Syntax:    ReadVDC()
 */
 .macro ReadVDC() {
-    stx VDCADR
-!:  bit VDCADR
+    stx Vdc.VDCADR
+!:  bit Vdc.VDCADR
     bpl !-
-    lda VDCDAT
+    lda Vdc.VDCDAT
 }
 .assert "ReadVDC()", { ReadVDC() }, {
   stx $d600; bit $d600; bpl *-3; lda $d601
@@ -240,7 +250,7 @@
 .macro WriteVDCWithKernal(register, value) {
     ldx #register
     lda #value
-    jsr WRITE_VDC
+    jsr c128lib.ScreenEditor.WRITEREG
 }
 .assert "WriteVDCWithKernal()", { WriteVDCWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDCC
@@ -256,7 +266,7 @@
 .macro ReadVDCWithKernal(register, value) {
     ldx #register
     lda #value
-    jsr READ_VDC
+    jsr c128lib.ScreenEditor.READREG
 }
 .assert "ReadVDCWithKernal()", { ReadVDCWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDDA
