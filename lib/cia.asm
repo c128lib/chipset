@@ -5,6 +5,8 @@
 #importonce
 .filenamespace c128lib
 
+.namespace Cia {
+
 // CIA1
 .label CIA1               = $DC00
 .label CIA1_DATA_PORT_A   = CIA1 + $00
@@ -56,24 +58,26 @@
 .label BANK_2           = %00000001   // $8000-$BFFF
 .label BANK_3           = %00000000   // $C000-$FFFF
 
+}
+
 /*
   Configures memory "bank" (16K) which is directly addressable by VIC2 chip.
  
   MOD: A
 */
 .macro SetVICBank(bank) {
-  lda CIA2_DATA_PORT_A
+  lda Cia.CIA2_DATA_PORT_A
   and #%11111100
   ora #[bank & %00000011]
-  sta CIA2_DATA_PORT_A
+  sta Cia.CIA2_DATA_PORT_A
 }
-.assert "SetVICBank(BANK_0) sets 11", { SetVICBank(BANK_0) }, {
+.assert "SetVICBank(BANK_0) sets 11", { SetVICBank(Cia.BANK_0) }, {
   lda $DD00
   and #%11111100
   ora #%00000011
   sta $DD00
 }
-.assert "SetVICBank(BANK_3) sets 00", { SetVICBank(BANK_3) }, {
+.assert "SetVICBank(BANK_3) sets 00", { SetVICBank(Cia.BANK_3) }, {
   lda $DD00
   and #%11111100
   ora #%00000000
@@ -93,8 +97,8 @@
   Accumulator will be 0 if button is not pressed
 */
 .macro GetFirePressedPort1() {
-  lda CIA1_DATA_PORT_B
-  and #JOY_FIRE
+  lda Cia.CIA1_DATA_PORT_B
+  and #Cia.JOY_FIRE
 }
 
 /*
@@ -102,14 +106,14 @@
   Accumulator will be 0 if button is not pressed
 */
 .macro GetFirePressedPort2() {
-  lda CIA1_DATA_PORT_A
-  and #JOY_FIRE
+  lda Cia.CIA1_DATA_PORT_A
+  and #Cia.JOY_FIRE
 }
 
 .macro disableCIAInterrupts() {
   lda #$7f
-  sta CIA1_IRQ_CONTROL
-  sta CIA2_IRQ_CONTROL
-  lda CIA1_IRQ_CONTROL
-  lda CIA2_IRQ_CONTROL
+  sta Cia.CIA1_IRQ_CONTROL
+  sta Cia.CIA2_IRQ_CONTROL
+  lda Cia.CIA1_IRQ_CONTROL
+  lda Cia.CIA2_IRQ_CONTROL
 }
