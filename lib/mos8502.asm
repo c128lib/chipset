@@ -8,6 +8,8 @@
 
 .filenamespace c128lib
 
+.namespace Mos8502 {
+  
 /*
   MOS8502 Registers
 */
@@ -35,11 +37,13 @@
 .label RAM_IO_KERNAL            = PLA_CHAREN | PLA_HIRAM
 .label BASIC_IO_KERNAL          = PLA_CHAREN | PLA_LORAM | PLA_HIRAM
 
+}
+
 .macro configureMemory(config) {
-    lda MOS_8502_IO
+    lda Mos8502.MOS_8502_IO
     and #%11111000
     ora #[config & %00000111]
-    sta MOS_8502_IO
+    sta Mos8502.MOS_8502_IO
 }
 
 /*
