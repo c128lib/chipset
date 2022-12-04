@@ -13,9 +13,8 @@
 #importonce
 .filenamespace c128lib
 
-/*
-  Vic-II
-*/
+.namespace Vic2 {
+
 .label VIC2                 = $D000
 .label SPRITE_0_X           = VIC2 + $00
 .label SPRITE_0_Y           = VIC2 + $01
@@ -137,6 +136,12 @@
 .label TEXT_SCREEN_WIDTH = 40
 .label TEXT_SCREEN_80_COL_WIDTH = 80
 
+.label BASIC_IRQ_FLAG         = $12FD     // IRQ_WRAP_FLAG
+
+.label SCREEN_EDITOR_IRQ_FLAG = $D8
+
+}
+
 /*
   Calculates memory offset of text cell specified by given coordinates.
 
@@ -145,7 +150,7 @@
   yPos - Y coord
 */
 .function getTextOffset(xPos, yPos) {
-  .return xPos + TEXT_SCREEN_WIDTH * yPos
+  .return xPos + Vic2.TEXT_SCREEN_WIDTH * yPos
 }
 .assert "getTextOffset(0,0) gives 0", getTextOffset(0, 0), 0
 .assert "getTextOffset(39,0) gives 39", getTextOffset(39, 0), 39
@@ -161,7 +166,7 @@
   yPos - Y coord
 */
 .function getTextOffset80Col(xPos, yPos) {
-  .return xPos + TEXT_SCREEN_80_COL_WIDTH * yPos
+  .return xPos + Vic2.TEXT_SCREEN_80_COL_WIDTH * yPos
 }
 .assert "getTextOffset80Col(0,0) gives 0", getTextOffset80Col(0, 0), 0
 .assert "getTextOffset80Col(79,0) gives 39", getTextOffset80Col(79, 0), 79
@@ -183,8 +188,6 @@
 .assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
 .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
-.label BASIC_IRQ_FLAG     = $12FD     // IR9_WRAP_FLAG
-
 /*
   Set Basic IRQ routine active or not. Turning off the BASIC
   IRQ routine will give you direct access to the hardware registers,
@@ -199,7 +202,7 @@
   } else {
     lda #0
   }
-    sta BASIC_IRQ_FLAG
+    sta Vic2.BASIC_IRQ_FLAG
 }
 .assert "SetBasicIrqActivity() sets 1 to $12FD",  { SetBasicIrqActivity(0) }, {
   lda #1; sta $12FD
@@ -207,8 +210,6 @@
 .assert "SetBasicIrqActivity() sets 0 to $12FD",  { SetBasicIrqActivity(1) }, {
   lda #0; sta $12FD
 }
-
-.label SCREEN_EDITOR_IRQ_FLAG     = $D8     // GRAPHM
 
 /*
   Set screen editor IRQ routine active or not. This gives you direct control
@@ -223,7 +224,7 @@
   } else {
     lda #0
   }
-    sta SCREEN_EDITOR_IRQ_FLAG
+    sta Vic2.SCREEN_EDITOR_IRQ_FLAG
 }
 .assert "SetScreenEditorIrq() sets $ff to $D8",  { SetScreenEditorIrq(0) }, {
   lda #$ff; sta $D8
@@ -305,19 +306,19 @@
 */
 .macro configureTextMemory(video, charSet) {
   lda #getTextMemory(video, charSet)
-  sta MEMORY_CONTROL
+  sta Vic2.MEMORY_CONTROL
 }
 .assert "configureTextMemory(0, 0) sets $00 to MEMORY_CONTROL reg",  { configureTextMemory(0, 0) }, {
   lda #%00000000
-  sta MEMORY_CONTROL
+  sta $D018
 }
 .assert "configureTextMemory(15,7) sets $FE to MEMORY_CONTROL reg", { configureTextMemory(15, 7) }, {
   lda #%11111110
-  sta MEMORY_CONTROL
+  sta $D018
 }
 .assert "configureTextMemory(4,2) sets %01000100 to MEMORY_CONTROL reg", { configureTextMemory(4, 2) }, {
   lda #%01000100
-  sta MEMORY_CONTROL
+  sta $D018
 }
 
 /*
@@ -345,19 +346,19 @@
 */
 .macro configureBitmapMemory(video, bitmap) {
   lda #getBitmapMemory(video, bitmap)
-  sta MEMORY_CONTROL
+  sta Vic2.MEMORY_CONTROL
 }
 .assert "configureBitmapMemory(0, 0) sets $00 to MEMORY_CONTROL reg", { configureBitmapMemory(0, 0) }, {
   lda #%00000000
-  sta MEMORY_CONTROL
+  sta $D018
 }
 .assert "configureBitmapMemory(15, 1) sets %11111000 to MEMORY_CONTROL reg", { configureBitmapMemory(15, 1) }, {
   lda #%11111000
-  sta MEMORY_CONTROL
+  sta $D018
 }
 .assert "configureBitmapMemory(4, 1) sets %01001000 to MEMORY_CONTROL reg", { configureBitmapMemory(4, 1) }, {
   lda #%01001000
-  sta MEMORY_CONTROL
+  sta $D018
 }
 
 /*
@@ -444,29 +445,29 @@
 */
 .macro setRaster(rasterLine) {
   lda #<rasterLine
-  sta RASTER
-  lda CONTROL_1
+  sta Vic2.RASTER
+  lda Vic2.CONTROL_1
   .if (rasterLine > 255) {
-    ora #CONTROL_1_RASTER8
+    ora #Vic2.CONTROL_1_RASTER8
   } else {
-    and #neg(CONTROL_1_RASTER8)
+    and #neg(Vic2.CONTROL_1_RASTER8)
   }
-  sta CONTROL_1
+  sta Vic2.CONTROL_1
 }
-.assert "setRaster(0)", { :setRaster(0) }, {
-  lda #0; sta RASTER; lda CONTROL_1; and #neg(CONTROL_1_RASTER8); sta CONTROL_1
+.assert "setRaster(0)", { setRaster(0) }, {
+  lda #0; sta $d012; lda $d011; and #%01111111; sta $d011
 }
-.assert "setRaster($FF)", { :setRaster($FF) }, {
-  lda #$FF; sta RASTER; lda CONTROL_1; and #neg(CONTROL_1_RASTER8); sta CONTROL_1
+.assert "setRaster($FF)", { setRaster($FF) }, {
+  lda #$FF; sta $d012; lda $d011; and #%01111111; sta $d011
 }
-.assert "setRaster($100)", { :setRaster($100) }, {
-  lda #00; sta RASTER; lda CONTROL_1; ora #CONTROL_1_RASTER8; sta CONTROL_1
+.assert "setRaster($100)", { setRaster($100) }, {
+  lda #00; sta $d012; lda $d011; ora #%10000000; sta $d011
 }
-.assert "setRaster($1F7)", { :setRaster($1F7) }, {
-  lda #$F7; sta RASTER; lda CONTROL_1; ora #CONTROL_1_RASTER8; sta CONTROL_1
+.assert "setRaster($1F7)", { setRaster($1F7) }, {
+  lda #$F7; sta $d012; lda $d011; ora #%10000000; sta $d011
 }
-.assert "setRaster($1FF)", { :setRaster($1FF) }, {
-  lda #$FF; sta RASTER; lda CONTROL_1; ora #CONTROL_1_RASTER8; sta CONTROL_1
+.assert "setRaster($1FF)", { setRaster($1FF) }, {
+  lda #$FF; sta $d012; lda $d011; ora #%10000000; sta $d011
 }
 
 /*
@@ -496,21 +497,21 @@
   sty $FFFE
   .if (memory) {
     lda rasterLine
-    sta RASTER
-    lda CONTROL_1
+    sta Vic2.RASTER
+    lda Vic2.CONTROL_1
     ror rasterLine+1
     bcc doAnd
-    ora #CONTROL_1_RASTER8
+    ora #Vic2.CONTROL_1_RASTER8
     jmp next
   doAnd:
-    and #neg(CONTROL_1_RASTER8)
+    and #neg(Vic2.CONTROL_1_RASTER8)
   next:
-    sta CONTROL_1
+    sta Vic2.CONTROL_1
   } else {
     :setRaster(rasterLine)
   }
   sec
-  dec IRR
+  dec Vic2.IRR
   pla
   tax
   pla

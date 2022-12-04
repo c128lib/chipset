@@ -11,19 +11,19 @@
   Calculates sprite X position register address
 */
 .function spriteXReg(spriteNo) {
-  .return VIC2 + spriteNo * 2
+  .return Vic2.VIC2 + spriteNo * 2
 }
-.assert "Reg address for sprite0 X pos", spriteXReg(0), SPRITE_0_X
-.assert "Reg address for sprite7 X pos", spriteXReg(7), SPRITE_7_X
+.assert "Reg address for sprite0 X pos", spriteXReg(0), $d000
+.assert "Reg address for sprite7 X pos", spriteXReg(7), $d00e
 
 /* 
   Calculates sprite X position shadow register address
 */
 .function spriteShadowXReg(spriteNo) {
-  .return SHADOW_VIC2 + spriteNo * 2
+  .return Vic2.SHADOW_VIC2 + spriteNo * 2
 }
-.assert "Shadow reg address for sprite0 X pos", spriteShadowXReg(0), SHADOW_SPRITE_0_X
-.assert "Shadow reg address for sprite7 X pos", spriteShadowXReg(7), SHADOW_SPRITE_7_X
+.assert "Shadow reg address for sprite0 X pos", spriteShadowXReg(0), $11d6
+.assert "Shadow reg address for sprite7 X pos", spriteShadowXReg(7), $11e4
 
 
 /* 
@@ -32,8 +32,8 @@
 .function spriteYReg(spriteNo) {
   .return spriteXReg(spriteNo) + 1
 }
-.assert "Reg address for sprite0 Y pos", spriteYReg(0), SPRITE_0_Y
-.assert "Reg address for sprite7 Y pos", spriteYReg(7), SPRITE_7_Y
+.assert "Reg address for sprite0 Y pos", spriteYReg(0), $d001
+.assert "Reg address for sprite7 Y pos", spriteYReg(7), $d00f
 
 /* 
   Calculates sprite Y position shadow register address
@@ -41,8 +41,8 @@
 .function spriteShadowYReg(spriteNo) {
   .return spriteShadowXReg(spriteNo) + 1
 }
-.assert "Shadow reg address for sprite0 Y pos", spriteShadowYReg(0), SHADOW_SPRITE_0_Y
-.assert "Shadow reg address for sprite7 Y pos", spriteShadowYReg(7), SHADOW_SPRITE_7_Y
+.assert "Shadow reg address for sprite0 Y pos", spriteShadowYReg(0), $11d7
+.assert "Shadow reg address for sprite7 Y pos", spriteShadowYReg(7), $11e5
 
 
 /* 
@@ -59,10 +59,10 @@
   Calculate sprite color register address
 */
 .function spriteColorReg(spriteNo) {
-  .return SPRITE_0_COLOR + spriteNo
+  .return Vic2.SPRITE_0_COLOR + spriteNo
 }
-.assert "Reg address for sprite0 color", spriteColorReg(0), SPRITE_0_COLOR
-.assert "Reg address for sprite7 color", spriteColorReg(7), SPRITE_7_COLOR
+.assert "Reg address for sprite0 color", spriteColorReg(0), $d027
+.assert "Reg address for sprite7 color", spriteColorReg(7), $d02e
 
 
 /* 
@@ -73,9 +73,9 @@
   .if (x > 255) {
     lda #<x
     sta spriteXReg(spriteNo)
-    lda SPRITE_MSB_X
+    lda Vic2.SPRITE_MSB_X
     ora #spriteMask(spriteNo)
-    sta SPRITE_MSB_X
+    sta Vic2.SPRITE_MSB_X
   } else {
     lda #x
     sta spriteXReg(spriteNo)
@@ -83,14 +83,14 @@
 }
 .assert "locateSpriteX stores X in SPRITE_X reg", { locateSpriteX(5, 3) }, { 
   lda #$05
-  sta SPRITE_3_X 
+  sta $d006 
 }
 .assert "locateSpriteX stores X in SPRITE_X and MSB regs", { locateSpriteX(257, 3) },  {
   lda #$01
-  sta SPRITE_3_X
-  lda SPRITE_MSB_X
+  sta $d006 
+  lda $d010
   ora #%00001000
-  sta SPRITE_MSB_X
+  sta $d010
 }
 
 /* 
@@ -102,9 +102,9 @@
   .if (x > 255) {
     lda #<x
     sta spriteShadowXReg(spriteNo)
-    lda SPRITE_MSB_X
+    lda Vic2.SPRITE_MSB_X
     ora #spriteMask(spriteNo)
-    sta SPRITE_MSB_X
+    sta Vic2.SPRITE_MSB_X
   } else {
     lda #x
     sta spriteShadowXReg(spriteNo)
@@ -112,14 +112,14 @@
 }
 .assert "locateWithShadowSpriteX stores X in SPRITE_X reg", { locateWithShadowSpriteX(5, 3) }, { 
   lda #$05
-  sta SHADOW_SPRITE_3_X 
+  sta $11dc 
 }
 .assert "locateWithShadowSpriteX stores X in SPRITE_X and MSB regs", { locateWithShadowSpriteX(257, 3) },  {
   lda #$01
-  sta SHADOW_SPRITE_3_X
-  lda SPRITE_MSB_X
+  sta $11dc 
+  lda $d010
   ora #%00001000
-  sta SPRITE_MSB_X
+  sta $d010
 }
 
 /* 
@@ -132,7 +132,7 @@
 }
 .assert "locateSpriteY stores Y in SPRITE_Y reg", { locateSpriteY(5, 3) },  {
   lda #$05
-  sta SPRITE_3_Y
+  sta $D007
 }
 
 /* 
@@ -145,7 +145,7 @@
 }
 .assert "locateWithShadowSpriteY stores Y in SPRITE_Y reg", { locateWithShadowSpriteY(5, 3) },  {
   lda #$05
-  sta SHADOW_SPRITE_3_Y
+  sta $11dd
 }
 
 /* 
