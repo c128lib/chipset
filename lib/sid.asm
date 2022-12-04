@@ -1,13 +1,16 @@
 /*
  * Requires KickAssembler v5.x
  * (c) 2022 Raffaele Intorcia
+ *
+ * References available at
+ * https://c128lib.github.io/Reference/Sid
+ * https://c128lib.github.io/Reference/D400
  */
 #importonce
 .filenamespace c128lib
 
-/*
-  SID
-*/
+.namespace Sid {
+  
 .label SID = $D400
 .label VOICE1_FREQ_REGISTER_LOW = SID
 .label VOICE1_FREQ_REGISTER_HI = SID + 1
@@ -38,3 +41,5 @@
 .label PADDLE_Y_POSITION = SID + 26
 .label VOICE3_OSCILLATOR = SID + 27
 .label VOICE3_ENVELOPE = SID + 28
+
+}
