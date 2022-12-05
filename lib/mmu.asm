@@ -103,7 +103,7 @@
 
   Refer to IO_*, ROM_*, RAM* label to generate input value
 
-  Syntax: SetMMUConfiguration(Mmu.RAM0 | Mmu.ROM_HI | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_ROM | Mmu.IO_ROM)
+  Syntax: SetMMUConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM)
 */
 .macro SetMMUConfiguration(config) {
     lda #config

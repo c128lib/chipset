@@ -139,8 +139,8 @@
     ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
     WriteVDC()
 }
-.assert "SetBackgroundForegroundColor(background, foreground)()", {
-    SetBackgroundForegroundColor(4, 5)
+.assert "SetBackgroundForegroundColor(background, foreground)", {
+    SetBackgroundForegroundColor(Vdc.VDC_DARK_GREEN, Vdc.VDC_LIGHT_GREEN)
   }, {
     lda #0; ldx #$19;
     stx $d600; bit $d600; bpl *-3; lda $d601
