@@ -89,7 +89,7 @@ Labels $D600-$D601 and internal register $00-$24
 
 https://en.wikipedia.org/wiki/MOS_Technology_VIC-II
 
-Namespace **Vic**
+Namespace **Vic2**
 
 Labels $D000-$D030
 
