@@ -38,6 +38,8 @@
 
 .label MODE       = $d7
 
+.label TEXT_SCREEN_80_COL_WIDTH = 80
+
 /*
   VDC registers
 */
@@ -150,6 +152,23 @@
     ldx #$1A
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
+
+/*
+  Calculates memory offset of text cell specified by given coordinates
+  on 80 cols screen
+
+  Params:
+  xPos - X coord
+  yPos - Y coord
+*/
+.function getTextOffset80Col(xPos, yPos) {
+  .return xPos + Vdc.TEXT_SCREEN_80_COL_WIDTH * yPos
+}
+.assert "getTextOffset80Col(0,0) gives 0", getTextOffset80Col(0, 0), 0
+.assert "getTextOffset80Col(79,0) gives 39", getTextOffset80Col(79, 0), 79
+.assert "getTextOffset80Col(0,1) gives 80", getTextOffset80Col(0, 1), 80
+.assert "getTextOffset80Col(19,12) gives 979", getTextOffset80Col(19, 12), 979
+.assert "getTextOffset80Col(79,24) gives 1959", getTextOffset80Col(79, 24), 1999
 
 /*
   Returns the address start of VDC display memory data. This
