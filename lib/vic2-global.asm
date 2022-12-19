@@ -2,6 +2,9 @@
 #importonce
 .filenamespace c128lib
 
+.macro @c128lib_SetBorderAndBackgroundColor(borderColor, backgroundColor) { SetBorderAndBackgroundColor(borderColor, backgroundColor) }
+.macro @c128lib_SetBorderColor(borderColor) { SetBorderColor(borderColor) }
+.macro @c128lib_SetBackgroundColor(backgroundColor) { SetBackgroundColor(backgroundColor) }
 .function @c128lib_getTextOffset(xPos, yPos) { .return getTextOffset(xPos, yPos) }
 .function @c128lib_getTextOffset80Col(xPos, yPos) { .return getTextOffset80Col(xPos, yPos) }
 .macro @c128lib_SetBasicIrqActivity(active) { SetBasicIrqActivity(active) }

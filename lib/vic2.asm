@@ -177,7 +177,7 @@
   lda #color
   sta Vic2.BORDER_COL
 }
-.assert "SetBorderColor(borderColor) different color",  { SetBorderColor(1) }, {
+.assert "SetBorderColor(borderColor)",  { SetBorderColor(1) }, {
   lda #1; sta $D020
 }
 
@@ -192,7 +192,7 @@
   lda #color
   sta Vic2.BG_COL_0
 }
-.assert "SetBackgroundColor(borderColor) different color",  { SetBackgroundColor(1) }, {
+.assert "SetBackgroundColor(color)",  { SetBackgroundColor(1) }, {
   lda #1; sta $D021
 }
 
