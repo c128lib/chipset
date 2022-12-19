@@ -144,6 +144,59 @@
 }
 
 /*
+  Set border and background color with optimization if possible.
+
+  Params:
+  borderColor - borderColor to be set
+  backgroundColor - backgroundColor to be set
+
+*/
+.macro SetBorderAndBackgroundColor(borderColor, backgroundColor) {
+  lda #borderColor
+  sta Vic2.BORDER_COL
+  .if (borderColor != backgroundColor) {
+    lda #backgroundColor
+  }
+  sta Vic2.BG_COL_0
+}
+.assert "SetBorderAndBackgroundColor(borderColor, backgroundColor) different color",  { SetBorderAndBackgroundColor(1, 2) }, {
+  lda #1; sta $D020; lda #2; sta $D021
+}
+.assert "SetBorderAndBackgroundColor(borderColor, backgroundColor) same color",  { SetBorderAndBackgroundColor(3, 3) }, {
+  lda #3; sta $D020; sta $D021
+}
+
+/*
+  Set border color
+
+  Params:
+  color - color to be set
+
+*/
+.macro SetBorderColor(color) {
+  lda #color
+  sta Vic2.BORDER_COL
+}
+.assert "SetBorderColor(borderColor) different color",  { SetBorderColor(1) }, {
+  lda #1; sta $D020
+}
+
+/*
+  Set background color
+
+  Params:
+  color - color to be set
+
+*/
+.macro SetBackgroundColor(color) {
+  lda #color
+  sta Vic2.BG_COL_0
+}
+.assert "SetBackgroundColor(borderColor) different color",  { SetBackgroundColor(1) }, {
+  lda #1; sta $D021
+}
+
+/*
   Calculates memory offset of text cell specified by given coordinates.
 
   Params:

@@ -83,7 +83,7 @@
 .label COLS_80            = %00000000
 .label COLS_40            = %10000000
 
-// MMURCR bit handling
+// RAM_CONFIG bit handling
 // bit 0-1 Amount of common ram
 .label COMMON_RAM_1K      = %00000000
 .label COMMON_RAM_4K      = %00000001
