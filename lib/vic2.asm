@@ -135,7 +135,6 @@
 
 // Misc. constants
 .label TEXT_SCREEN_WIDTH = 40
-.label TEXT_SCREEN_80_COL_WIDTH = 80
 
 .label BASIC_IRQ_FLAG         = $12FD     // IRQ_WRAP_FLAG
 
@@ -177,7 +176,7 @@
   lda #color
   sta Vic2.BORDER_COL
 }
-.assert "SetBorderColor(borderColor) different color",  { SetBorderColor(1) }, {
+.assert "SetBorderColor(borderColor)",  { SetBorderColor(1) }, {
   lda #1; sta $D020
 }
 
@@ -192,7 +191,7 @@
   lda #color
   sta Vic2.BG_COL_0
 }
-.assert "SetBackgroundColor(borderColor) different color",  { SetBackgroundColor(1) }, {
+.assert "SetBackgroundColor(color)",  { SetBackgroundColor(1) }, {
   lda #1; sta $D021
 }
 
@@ -211,22 +210,6 @@
 .assert "getTextOffset(0,1) gives 40", getTextOffset(0, 1), 40
 .assert "getTextOffset(19,12) gives 499", getTextOffset(19, 12), 499
 .assert "getTextOffset(39,24) gives 999", getTextOffset(39, 24), 999
-
-/*
-  Calculates memory offset of text cell specified by given coordinates.
-
-  Params:
-  xPos - X coord
-  yPos - Y coord
-*/
-.function getTextOffset80Col(xPos, yPos) {
-  .return xPos + Vic2.TEXT_SCREEN_80_COL_WIDTH * yPos
-}
-.assert "getTextOffset80Col(0,0) gives 0", getTextOffset80Col(0, 0), 0
-.assert "getTextOffset80Col(79,0) gives 39", getTextOffset80Col(79, 0), 79
-.assert "getTextOffset80Col(0,1) gives 80", getTextOffset80Col(0, 1), 80
-.assert "getTextOffset80Col(19,12) gives 979", getTextOffset80Col(19, 12), 979
-.assert "getTextOffset80Col(79,24) gives 1959", getTextOffset80Col(79, 24), 1999
 
 /*
   Combines screen and charset slots for memory control register.

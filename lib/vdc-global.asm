@@ -4,6 +4,7 @@
 
 .macro @c128lib_Go40() { Go40() }
 .macro @c128lib_Go80() { Go80() }
+.function @c128lib_getTextOffset80Col(xPos, yPos) { .return getTextOffset80Col(xPos, yPos) }
 .macro @c128lib_GetVDCDisplayStart() { GetVDCDisplayStart() }
 .macro @c128lib_SetVDCUpdateAddress(address) { SetVDCUpdateAddress(address) }
 .macro @c128lib_GetVDCColor(viccolor) { GetVDCColor(viccolor) }
