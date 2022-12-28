@@ -66,6 +66,24 @@
 .label SPRITE_7_COLOR       = VIC2 + $2E
 
 /*
+  Vic-II sprite movement
+*/
+.label SPRITE_MOTION_0      = $117E
+.label SPRITE_MOTION_1      = $1189
+.label SPRITE_MOTION_2      = $1194
+.label SPRITE_MOTION_3      = $119F
+.label SPRITE_MOTION_4      = $11AA
+.label SPRITE_MOTION_5      = $11B5
+.label SPRITE_MOTION_6      = $11C0
+.label SPRITE_MOTION_7      = $11CB
+.label SPRITE_MOTION_OFFSET = $0B
+
+.label SPRITE_MAIN_DIR_UP   = $00
+.label SPRITE_MAIN_DIR_LEFT = $01
+.label SPRITE_MAIN_DIR_DOWN = $02
+.label SPRITE_MAIN_DIR_RIGHT = $03
+
+/*
   Vic-II shadow registers
 */
 .label SHADOW_VIC2          = $11D6
@@ -657,4 +675,44 @@
   bne !-
   lda store
   sta (charPointer),y
+}
+
+.function GetSpriteMovementStartingAddress(spriteNo) {
+  .return Vic2.SPRITE_MOTION_0 + (Vic2.SPRITE_MOTION_OFFSET * spriteNo);
+}
+
+/*
+  Define sprite movement
+
+  Params:
+  spriteNo - number of sprite (0..7)
+  speed - speed of sprite
+  quadrant - determines main direction of sprite (use SPRITE_MAIN_DIR_* labels)
+  deltaX - move sprite on X each interrupt
+  deltaY - move sprite on Y each interrupt
+
+*/
+.macro SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) {
+    lda #speed
+    sta GetSpriteMovementStartingAddress(spriteNo)
+    lda #quadrant
+    sta GetSpriteMovementStartingAddress(spriteNo) + 2
+    lda #(<deltaX)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 3
+    lda #(>deltaX)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 4
+    lda #(<deltaY)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 5
+    lda #(>deltaY)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 6
+    lda #0
+    sta GetSpriteMovementStartingAddress(spriteNo) + 1
+    sta GetSpriteMovementStartingAddress(spriteNo) + 7
+    sta GetSpriteMovementStartingAddress(spriteNo) + 8
+    sta GetSpriteMovementStartingAddress(spriteNo) + 9
+    sta GetSpriteMovementStartingAddress(spriteNo) + 10
+}
+.assert "SpriteMove(0, 1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(0, 1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }, {
+  lda #1; sta $117E; lda #0; sta $1180; lda #$34; sta $1181; lda #$12; sta $1182; lda #$ef; sta $1183; lda #$be; sta $1184;
+  lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188 
 }

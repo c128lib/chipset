@@ -21,3 +21,4 @@
 .macro @c128lib_irqExit(intVector, rasterLine, memory) { irqExit(intVector, rasterLine, memory) }
 .macro @c128lib_rotateCharRight(charPointer) { rotateCharRight(charPointer) }
 .macro @c128lib_rotateCharBottom(charPointer, store) { rotateCharBottom(charPointer, store) }
+.macro @c128lib_SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) { SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) }
