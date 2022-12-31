@@ -79,9 +79,9 @@
 .label SPRITE_MOTION_OFFSET = $0B
 
 .label SPRITE_MAIN_DIR_UP   = $00
-.label SPRITE_MAIN_DIR_LEFT = $01
+.label SPRITE_MAIN_DIR_RIGHT = $01
 .label SPRITE_MAIN_DIR_DOWN = $02
-.label SPRITE_MAIN_DIR_RIGHT = $03
+.label SPRITE_MAIN_DIR_LEFT = $03
 
 /*
   Vic-II shadow registers
