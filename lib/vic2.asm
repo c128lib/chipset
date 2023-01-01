@@ -84,6 +84,18 @@
 .label SPRITE_MAIN_DIR_LEFT = $03
 
 /*
+  Mask for sprite, used SPRITE_ENABLE, SPRITE_COL_MODE etc...
+*/
+.label SPRITE_MASK_0 = %00000001
+.label SPRITE_MASK_1 = %00000010
+.label SPRITE_MASK_2 = %00000100
+.label SPRITE_MASK_3 = %00001000
+.label SPRITE_MASK_4 = %00010000
+.label SPRITE_MASK_5 = %00100000
+.label SPRITE_MASK_6 = %01000000
+.label SPRITE_MASK_7 = %10000000
+
+/*
   Vic-II shadow registers
 */
 .label SHADOW_VIC2          = $11D6
