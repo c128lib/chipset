@@ -729,38 +729,66 @@
   lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188 
 }
 
+/*
+  Enable one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to enable more sprite at once)
+
+*/
 .macro SpriteEnable(mask) {
     lda Vic2.SPRITE_ENABLE
     ora #mask
     sta Vic2.SPRITE_ENABLE
 }
-.assert "SpriteEnable(%11111111)", { SpriteEnable(%11111111) }, {
-  lda $D015; ora #%11111111; sta $D015
+.assert "SpriteEnable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteEnable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D015; ora #%10001001; sta $D015
 }
 
+/*
+  Disable one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to disable more sprite at once)
+
+*/
 .macro SpriteDisable(mask) {
     lda Vic2.SPRITE_ENABLE
     and #neg(mask)
     sta Vic2.SPRITE_ENABLE
 }
-.assert "SpriteDisable(%11111111)", { SpriteDisable(%11111111) }, {
-  lda $D015; and #%00000000; sta $D015
+.assert "SpriteDisable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteDisable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D015; and #%01110110; sta $D015
 }
 
+/*
+  Enable multicolor setting for one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to enable setting for more sprite at once)
+
+*/
 .macro SpriteEnableMulticolor(mask) {
     lda Vic2.SPRITE_COL_MODE
     ora #mask
     sta Vic2.SPRITE_COL_MODE
 }
-.assert "SpriteEnableMulticolor(%11111111)", { SpriteEnableMulticolor(%11111111) }, {
-  lda $D01C; ora #%11111111; sta $D01C
+.assert "SpriteEnableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteEnableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D01C; ora #%10001001; sta $D01C
 }
 
+/*
+  Disable multicolor setting for one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to disable setting for more sprite at once)
+
+*/
 .macro SpriteDisableMulticolor(mask) {
     lda Vic2.SPRITE_COL_MODE
     and #neg(mask)
     sta Vic2.SPRITE_COL_MODE
 }
-.assert "SpriteDisableMulticolor(%11111111)", { SpriteDisableMulticolor(%11111111) }, {
-  lda $D01C; and #%00000000; sta $D01C
+.assert "SpriteDisableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteDisableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D01C; and #%01110110; sta $D01C
 }

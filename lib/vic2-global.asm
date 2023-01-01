@@ -23,3 +23,7 @@
 .macro @c128lib_rotateCharRight(charPointer) { rotateCharRight(charPointer) }
 .macro @c128lib_rotateCharBottom(charPointer, store) { rotateCharBottom(charPointer, store) }
 .macro @c128lib_SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) { SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) }
+.macro @c128lib_SpriteEnable(mask) { SpriteEnable(mask) }
+.macro @c128lib_SpriteDisable(mask) { SpriteDisable(mask) }
+.macro @c128lib_SpriteEnableMulticolor(mask) { SpriteEnableMulticolor(mask) }
+.macro @c128lib_SpriteDisableMulticolor(mask) { SpriteDisableMulticolor(mask) }
