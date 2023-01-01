@@ -746,3 +746,21 @@
 .assert "SpriteDisable(%11111111)", { SpriteDisable(%11111111) }, {
   lda $D015; and #%00000000; sta $D015
 }
+
+.macro SpriteEnableMulticolor(mask) {
+    lda Vic2.SPRITE_COL_MODE
+    ora #mask
+    sta Vic2.SPRITE_COL_MODE
+}
+.assert "SpriteEnableMulticolor(%11111111)", { SpriteEnableMulticolor(%11111111) }, {
+  lda $D01C; ora #%11111111; sta $D01C
+}
+
+.macro SpriteDisableMulticolor(mask) {
+    lda Vic2.SPRITE_COL_MODE
+    and #neg(mask)
+    sta Vic2.SPRITE_COL_MODE
+}
+.assert "SpriteDisableMulticolor(%11111111)", { SpriteDisableMulticolor(%11111111) }, {
+  lda $D01C; and #%00000000; sta $D01C
+}
