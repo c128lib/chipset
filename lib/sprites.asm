@@ -69,7 +69,7 @@
   Sets X position of given sprite (uses sprite MSB register if necessary)
   MOD: A
 */
-.macro locateSpriteX(x, spriteNo) {
+.macro SetSpriteXPosition(spriteNo, x) {
   .if (x > 255) {
     lda #<x
     sta spriteXReg(spriteNo)
@@ -81,11 +81,11 @@
     sta spriteXReg(spriteNo)
   }
 }
-.assert "locateSpriteX stores X in SPRITE_X reg", { locateSpriteX(5, 3) }, { 
+.assert "SetSpriteXPosition stores X in SPRITE_X reg", { SetSpriteXPosition(3, 5) }, { 
   lda #$05
   sta $d006 
 }
-.assert "locateSpriteX stores X in SPRITE_X and MSB regs", { locateSpriteX(257, 3) },  {
+.assert "SetSpriteXPosition stores X in SPRITE_X and MSB regs", { SetSpriteXPosition(3, 257) },  {
   lda #$01
   sta $d006 
   lda $d010
@@ -98,39 +98,39 @@
   with shadow registers.
   MOD: A
 */
-.macro locateWithShadowSpriteX(x, spriteNo) {
+.macro SetSpriteXPositionWithShadow(spriteNo, x) {
   .if (x > 255) {
     lda #<x
     sta spriteShadowXReg(spriteNo)
-    lda Vic2.SPRITE_MSB_X
+    lda Vic2.SHADOW_SPRITE_MSB_X
     ora #spriteMask(spriteNo)
-    sta Vic2.SPRITE_MSB_X
+    sta Vic2.SHADOW_SPRITE_MSB_X
   } else {
     lda #x
     sta spriteShadowXReg(spriteNo)
   }
 }
-.assert "locateWithShadowSpriteX stores X in SPRITE_X reg", { locateWithShadowSpriteX(5, 3) }, { 
+.assert "SetSpriteXPositionWithShadow stores X in SPRITE_X reg", { SetSpriteXPositionWithShadow(3, 5) }, { 
   lda #$05
   sta $11dc 
 }
-.assert "locateWithShadowSpriteX stores X in SPRITE_X and MSB regs", { locateWithShadowSpriteX(257, 3) },  {
+.assert "SetSpriteXPositionWithShadow stores X in SPRITE_X and MSB regs", { SetSpriteXPositionWithShadow(3, 257) },  {
   lda #$01
   sta $11dc 
-  lda $d010
+  lda $11e6
   ora #%00001000
-  sta $d010
+  sta $11e6
 }
 
 /* 
   Sets Y position of given sprite
   MOD: A
 */
-.macro locateSpriteY(y, spriteNo) {
+.macro SetSpriteYPosition(spriteNo, y) {
   lda #y
   sta spriteYReg(spriteNo)
 }
-.assert "locateSpriteY stores Y in SPRITE_Y reg", { locateSpriteY(5, 3) },  {
+.assert "SetSpriteYPosition stores Y in SPRITE_Y reg", { SetSpriteYPosition(3, 5) },  {
   lda #$05
   sta $D007
 }
@@ -139,11 +139,11 @@
   Sets Y position of given sprite with shadow registers
   MOD: A
 */
-.macro locateWithShadowSpriteY(y, spriteNo) {
+.macro SetSpriteYPositionWithShadow(spriteNo, y) {
   lda #y
   sta spriteShadowYReg(spriteNo)
 }
-.assert "locateWithShadowSpriteY stores Y in SPRITE_Y reg", { locateWithShadowSpriteY(5, 3) },  {
+.assert "SetSpriteYPositionWithShadow stores Y in SPRITE_Y reg", { SetSpriteYPositionWithShadow(3, 5) },  {
   lda #$05
   sta $11dd
 }
@@ -152,18 +152,206 @@
   Sets X,Y position of given sprite
   MOD A
 */
-.macro locateSprite(x, y, spriteNo) {
-  locateSpriteX(x, spriteNo)
-  locateSpriteY(y, spriteNo)
+.macro SetSpritePosition(spriteNo, x, y) {
+  .if (x <= 255) {
+    lda #x
+    sta spriteXReg(spriteNo)
+    .if (x != y) {
+      lda #y
+    }
+    sta spriteYReg(spriteNo)
+  } else {
+    lda #<x
+    sta spriteXReg(spriteNo)
+    lda Vic2.SPRITE_MSB_X
+    ora #spriteMask(spriteNo)
+    sta Vic2.SPRITE_MSB_X
+    lda #y
+    sta spriteYReg(spriteNo)
+  }
+}
+.assert "SetSpritePosition stores position in SPRITE_* reg (x and y equals)", { SetSpritePosition(3, 5, 5) }, { 
+  lda #$05
+  sta $d006 
+  sta $d007 
+}
+.assert "SetSpritePosition stores position in SPRITE_* reg (x and y not equals)", { SetSpritePosition(3, 5, 15) }, { 
+  lda #$05
+  sta $d006 
+  lda #15
+  sta $d007 
+}
+.assert "SetSpritePosition stores position in SPRITE_* and MSB regs", { SetSpritePosition(3, 300, 15) },  {
+  lda #44
+  sta $d006 
+  lda $d010
+  ora #%00001000
+  sta $d010
+  lda #15
+  sta $d007 
 }
 
 /* 
   Sets X,Y position of given sprite with shadow registers
   MOD A
 */
-.macro locateSpriteWithShadow(x, y, spriteNo) {
-  locateWithShadowSpriteX(x, spriteNo)
-  locateWithShadowSpriteY(y, spriteNo)
+.macro SetSpritePositionWithShadow(spriteNo, x, y) {
+  .if (x <= 255) {
+    lda #x
+    sta spriteShadowXReg(spriteNo)
+    .if (x != y) {
+      lda #y
+    }
+    sta spriteShadowYReg(spriteNo)
+  } else {
+    lda #<x
+    sta spriteShadowXReg(spriteNo)
+    lda Vic2.SHADOW_SPRITE_MSB_X
+    ora #spriteMask(spriteNo)
+    sta Vic2.SHADOW_SPRITE_MSB_X
+    lda #y
+    sta spriteShadowYReg(spriteNo)
+  }
+}
+.assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y equals)", { SetSpritePositionWithShadow(3, 5, 5) }, { 
+  lda #$05
+  sta $11dc 
+  sta $11dd 
+}
+.assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y not equals)", { SetSpritePositionWithShadow(3, 5, 15) }, { 
+  lda #$05
+  sta $11dc 
+  lda #15
+  sta $11dd 
+}
+.assert "SetSpritePositionWithShadow stores position in SPRITE_* and MSB regs", { SetSpritePositionWithShadow(3, 300, 15) },  {
+  lda #44
+  sta $11dc 
+  lda $11e6
+  ora #%00001000
+  sta $11e6
+  lda #15
+  sta $11dd 
+}
+
+.function GetSpriteMovementStartingAddress(spriteNo) {
+  .return Vic2.SPRITE_MOTION_0 + (Vic2.SPRITE_MOTION_OFFSET * spriteNo);
+}
+
+/*
+  Define sprite movement
+
+  Params:
+  spriteNo - number of sprite (0..7)
+  speed - speed of sprite
+  quadrant - determines main direction of sprite (use SPRITE_MAIN_DIR_* labels)
+  deltaX - move sprite on X each interrupt
+  deltaY - move sprite on Y each interrupt
+
+*/
+.macro SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) {
+    lda #speed
+    sta GetSpriteMovementStartingAddress(spriteNo)
+    lda #quadrant
+    sta GetSpriteMovementStartingAddress(spriteNo) + 2
+    lda #(<deltaX)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 3
+    lda #(>deltaX)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 4
+    lda #(<deltaY)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 5
+    lda #(>deltaY)
+    sta GetSpriteMovementStartingAddress(spriteNo) + 6
+    lda #0
+    sta GetSpriteMovementStartingAddress(spriteNo) + 1
+    sta GetSpriteMovementStartingAddress(spriteNo) + 7
+    sta GetSpriteMovementStartingAddress(spriteNo) + 8
+    sta GetSpriteMovementStartingAddress(spriteNo) + 9
+    sta GetSpriteMovementStartingAddress(spriteNo) + 10
+}
+.assert "SpriteMove(0, 1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(0, 1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }, {
+  lda #1; sta $117E; lda #0; sta $1180; lda #$34; sta $1181; lda #$12; sta $1182; lda #$ef; sta $1183; lda #$be; sta $1184;
+  lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188 
+}
+
+/*
+  Enable one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to enable more sprite at once)
+
+*/
+.macro SpriteEnable(mask) {
+    lda Vic2.SPRITE_ENABLE
+    ora #mask
+    sta Vic2.SPRITE_ENABLE
+}
+.assert "SpriteEnable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteEnable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D015; ora #%10001001; sta $D015
+}
+
+/*
+  Disable one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to disable more sprite at once)
+
+*/
+.macro SpriteDisable(mask) {
+    lda Vic2.SPRITE_ENABLE
+    and #neg(mask)
+    sta Vic2.SPRITE_ENABLE
+}
+.assert "SpriteDisable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteDisable(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D015; and #%01110110; sta $D015
+}
+
+/*
+  Enable multicolor setting for one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to enable setting for more sprite at once)
+
+*/
+.macro SpriteEnableMulticolor(mask) {
+    lda Vic2.SPRITE_COL_MODE
+    ora #mask
+    sta Vic2.SPRITE_COL_MODE
+}
+.assert "SpriteEnableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteEnableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D01C; ora #%10001001; sta $D01C
+}
+
+/*
+  Disable multicolor setting for one or more sprite.
+
+  Params:
+  mask - sprite mask (use SPRITE_MASK_* eventually with | to disable setting for more sprite at once)
+
+*/
+.macro SpriteDisableMulticolor(mask) {
+    lda Vic2.SPRITE_COL_MODE
+    and #neg(mask)
+    sta Vic2.SPRITE_COL_MODE
+}
+.assert "SpriteDisableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteDisableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
+  lda $D01C; and #%01110110; sta $D01C
+}
+
+/*
+  Set main color for a sprite
+
+  Params:
+  spriteNo - sprite number (from 0 to 7)
+  color - color to set
+
+*/
+.macro SpriteColor(spriteNo, color) {
+    lda #color
+    sta Vic2.SPRITE_0_COLOR + spriteNo
+}
+.assert "SpriteColor(2, WHITE)", { SpriteColor(2, WHITE) }, {
+  lda #1; sta $D029
 }
 
 .macro sh(data) {
