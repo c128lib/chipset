@@ -728,3 +728,21 @@
   lda #1; sta $117E; lda #0; sta $1180; lda #$34; sta $1181; lda #$12; sta $1182; lda #$ef; sta $1183; lda #$be; sta $1184;
   lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188 
 }
+
+.macro SpriteEnable(mask) {
+    lda Vic2.SPRITE_ENABLE
+    ora #mask
+    sta Vic2.SPRITE_ENABLE
+}
+.assert "SpriteEnable(%11111111)", { SpriteEnable(%11111111) }, {
+  lda $D015; ora #%11111111; sta $D015
+}
+
+.macro SpriteDisable(mask) {
+    lda Vic2.SPRITE_ENABLE
+    and #neg(mask)
+    sta Vic2.SPRITE_ENABLE
+}
+.assert "SpriteDisable(%11111111)", { SpriteDisable(%11111111) }, {
+  lda $D015; and #%00000000; sta $D015
+}
