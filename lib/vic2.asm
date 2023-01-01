@@ -792,3 +792,19 @@
 .assert "SpriteDisableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7)", { SpriteDisableMulticolor(Vic2.SPRITE_MASK_0 | Vic2.SPRITE_MASK_3 | Vic2.SPRITE_MASK_7) }, {
   lda $D01C; and #%01110110; sta $D01C
 }
+
+/*
+  Set main color for a sprite
+
+  Params:
+  spriteNo - sprite number (from 0 to 7)
+  color - color to set
+
+*/
+.macro SpriteColor(spriteNo, color) {
+    lda #color
+    sta Vic2.SPRITE_0_COLOR + spriteNo
+}
+.assert "SpriteColor(2, WHITE)", { SpriteColor(2, WHITE) }, {
+  lda #1; sta $D029
+}

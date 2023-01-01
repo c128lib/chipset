@@ -27,3 +27,4 @@
 .macro @c128lib_SpriteDisable(mask) { SpriteDisable(mask) }
 .macro @c128lib_SpriteEnableMulticolor(mask) { SpriteEnableMulticolor(mask) }
 .macro @c128lib_SpriteDisableMulticolor(mask) { SpriteDisableMulticolor(mask) }
+.macro @c128lib_SpriteColor(spriteNo, color) { SpriteColor(spriteNo, color) }
