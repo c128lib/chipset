@@ -354,6 +354,36 @@
   lda #1; sta $D029
 }
 
+/*
+  Set sprite multi color 0
+
+  Params:
+  color - color to set
+
+*/
+.macro SpriteMultiColor0(color) {
+    lda #color
+    sta Vic2.SPRITE_COL_0
+}
+.assert "SpriteMultiColor0(WHITE)", { SpriteMultiColor0(WHITE) }, {
+  lda #1; sta $D025
+}
+
+/*
+  Set sprite multi color 1
+
+  Params:
+  color - color to set
+
+*/
+.macro SpriteMultiColor1(color) {
+    lda #color
+    sta Vic2.SPRITE_COL_1
+}
+.assert "SpriteMultiColor1(WHITE)", { SpriteMultiColor1(WHITE) }, {
+  lda #1; sta $D026
+}
+
 .macro sh(data) {
   .assert "Hires sprite line length must be 24", data.size(), 24
   .byte convertHires(data.substring(0, 8)), convertHires(data.substring(8, 16)), convertHires(data.substring(16,24))

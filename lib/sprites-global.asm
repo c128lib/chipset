@@ -14,5 +14,8 @@
 .macro @c128lib_SpriteEnableMulticolor(mask) { SpriteEnableMulticolor(mask) }
 .macro @c128lib_SpriteDisableMulticolor(mask) { SpriteDisableMulticolor(mask) }
 .macro @c128lib_SpriteColor(spriteNo, color) { SpriteColor(spriteNo, color) }
+.macro @c128lib_SpriteMultiColor0(color) { SpriteMultiColor0(color) }
+.macro @c128lib_SpriteMultiColor1(color) { SpriteMultiColor1(color) }
+
 .macro @c128lib_sh(data) { sh(data) }
 .macro @c128lib_sm(data) { sm(data) }
