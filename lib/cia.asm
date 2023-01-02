@@ -99,7 +99,7 @@
   presses. As a result, moving a joystick effectively generates a keypress,
   and certain keypresses produce the same effect as moving the joystick.
 
-  Accumulator will be 0 if button is not pressed
+  Accumulator will be 0 if button is pressed
 */
 .macro GetFirePressedPort1() {
   lda Cia.CIA1_DATA_PORT_B
@@ -108,7 +108,7 @@
 
 /*
   Check if joystick port 2 fire button is pressed.
-  Accumulator will be 0 if button is not pressed
+  Accumulator will be 0 if button is pressed
 */
 .macro GetFirePressedPort2() {
   lda Cia.CIA1_DATA_PORT_A
