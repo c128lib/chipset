@@ -154,6 +154,43 @@
 }
 
 /*
+  Set background and foreground color, also disable bit 6 of
+  HORIZONTAL_SMOOTH_SCROLLING register. Use vars instead of labels.
+  Warning: high nibble of background must be 0, it's up to developer
+  to check this.
+*/
+.macro SetBackgroundForegroundColorWithVars(background, foreground) {
+    lda #0
+    ldx #Vdc.HORIZONTAL_SMOOTH_SCROLLING
+    ReadVDC()
+
+    and #%10111111
+    WriteVDC()
+
+    lda foreground
+    asl
+    asl
+    asl
+    asl
+    ora background
+    ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
+    WriteVDC()
+}
+.assert "SetBackgroundForegroundColorWithVars(background, foreground)", {
+    SetBackgroundForegroundColorWithVars($beef, $b00b)
+  }, {
+    lda #0; ldx #$19;
+    stx $d600; bit $d600; bpl *-3; lda $d601
+    and #%10111111;
+    stx $d600; bit $d600; bpl *-3; sta $d601
+    lda $b00b;
+    asl; asl; asl; asl;
+    ora $beef;
+    ldx #$1A;
+    stx $d600; bit $d600; bpl *-3; sta $d601
+}
+
+/*
   Calculates memory offset of text cell specified by given coordinates
   on 80 cols screen
 
