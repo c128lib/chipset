@@ -190,6 +190,31 @@
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
+.macro WriteToVdcMemory(source, xPos, yPos) {
+  // .errorif CheckWriteToVdcMemory(source, xPos, yPos) != true, "Error in parameters of WriteToVdcMemory"
+  .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
+  .errorif (xPos != -1 && yPos == -1), "xPos and yPos must be -1 at same time"
+  .errorif (xPos < -1 || yPos < -1), "xPos and yPos can't be lower than -1"
+  .if (xPos != -1 && yPos != -1) {
+    ldx #$12
+    lda #>getTextOffset80Col(xPos, yPos)
+    jsr c128lib.ScreenEditor.WRITEREG
+    lda #<getTextOffset80Col(xPos, yPos)
+    inx
+    jsr c128lib.ScreenEditor.WRITEREG
+  }
+    ldy #0
+  CopyLoop:
+    lda source, y
+    jsr c128lib.ScreenEditor.WRITE80
+    iny
+    bne CopyLoop
+}
+.asserterror "WriteToVdcMemory($beef, -1, 0)", { WriteToVdcMemory($beef, -1, 0) }
+.asserterror "WriteToVdcMemory($beef, 0, -1)", { WriteToVdcMemory($beef, 0, -1) }
+.asserterror "WriteToVdcMemory($beef, -2, 0)", { WriteToVdcMemory($beef, -2, 0) }
+.asserterror "WriteToVdcMemory($beef, 0, -2)", { WriteToVdcMemory($beef, 0, -2) }
+
 /*
   Calculates memory offset of text cell specified by given coordinates
   on 80 cols screen
