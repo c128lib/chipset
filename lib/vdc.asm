@@ -190,10 +190,12 @@
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
-.macro WriteToVdcMemoryByCoordinates(source, xPos, yPos) {
+.macro WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) {
   .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
   .errorif (xPos != -1 && yPos == -1), "xPos and yPos must be -1 at same time"
   .errorif (xPos < -1 || yPos < -1), "xPos and yPos can't be lower than -1"
+  .errorif (qty <= 0), "qty must be greater than 0"
+  .errorif (qty > 255), "qty must be lower than 256"
   .if (xPos != -1 && yPos != -1) {
     ldx #$12
     lda #>getTextOffset80Col(xPos, yPos)
@@ -202,29 +204,38 @@
     inx
     jsr c128lib.ScreenEditor.WRITEREG
   }
-    ldy #0
+    ldy #(qty+1)
   CopyLoop:
     lda source, y
     jsr c128lib.ScreenEditor.WRITE80
-    iny
+    dey
     bne CopyLoop
 }
-.asserterror "WriteToVdcMemoryByCoordinates($beef, -1, 0)", { WriteToVdcMemoryByCoordinates($beef, -1, 0) }
-.asserterror "WriteToVdcMemoryByCoordinates($beef, 0, -1)", { WriteToVdcMemoryByCoordinates($beef, 0, -1) }
-.asserterror "WriteToVdcMemoryByCoordinates($beef, -2, 0)", { WriteToVdcMemoryByCoordinates($beef, -2, 0) }
-.asserterror "WriteToVdcMemoryByCoordinates($beef, 0, -2)", { WriteToVdcMemoryByCoordinates($beef, 0, -2) }
-.asserterror "WriteToVdcMemoryByCoordinates($beef, -2, -2)", { WriteToVdcMemoryByCoordinates($beef, -2, -2) }
-.assert "WriteToVdcMemoryByCoordinates($beef, -1, -1)", { WriteToVdcMemoryByCoordinates($beef, -1, -1) },
+.asserterror "WriteToVdcMemoryByCoordinates($beef, -1, 0, 100)", { WriteToVdcMemoryByCoordinates($beef, -1, 0, 100) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, 0, -1, 100)", { WriteToVdcMemoryByCoordinates($beef, 0, -1, 100) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, -2, 0, 100)", { WriteToVdcMemoryByCoordinates($beef, -2, 0, 100) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, 0, -2, 100)", { WriteToVdcMemoryByCoordinates($beef, 0, -2, 100) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, -2, -2, 100)", { WriteToVdcMemoryByCoordinates($beef, -2, -2, 100) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, 2, 2, 0)", { WriteToVdcMemoryByCoordinates($beef, 2, 2, 0) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, 2, 2, 256)", { WriteToVdcMemoryByCoordinates($beef, 2, 2, 256) }
+.assert "WriteToVdcMemoryByCoordinates($beef, -1, -1, 100)", { WriteToVdcMemoryByCoordinates($beef, -1, -1, 100) },
 {
-    ldy #0; lda $beef, y; jsr $CDCA; iny; bne *-7;
+    ldy #101; lda $beef, y; jsr $CDCA; dey; bne *-7;
 }
-.assert "WriteToVdcMemoryByCoordinates($beef, 1, 1)", { WriteToVdcMemoryByCoordinates($beef, 1, 1) },
+.assert "WriteToVdcMemoryByCoordinates($beef, 1, 1, 100)", { WriteToVdcMemoryByCoordinates($beef, 1, 1, 100) },
 {
-    ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC; ldy #0
-    lda $beef, y; jsr $CDCA; iny; bne *-7;
+    ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC;
+    ldy #101; lda $beef, y; jsr $CDCA; dey; bne *-7;
+}
+.assert "WriteToVdcMemoryByCoordinates($beef, 1, 1, 255)", { WriteToVdcMemoryByCoordinates($beef, 1, 1, 255) },
+{
+    ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC;
+    ldy #0; lda $beef, y; jsr $CDCA; dey; bne *-7;
 }
 
-.macro WriteToVdcMemoryByAddress(source, destination) {
+.macro WriteToVdcMemoryByAddress(source, destination, qty) {
+  .errorif (qty <= 0), "qty must be greater than 0"
+  .errorif (qty > 255), "qty must be lower than 256"
     ldx #$12
     lda #>destination
     jsr c128lib.ScreenEditor.WRITEREG
@@ -232,17 +243,24 @@
     inx
     jsr c128lib.ScreenEditor.WRITEREG
 
-    ldy #0
+    ldy #qty+1
   CopyLoop:
     lda source, y
     jsr c128lib.ScreenEditor.WRITE80
-    iny
+    dey
     bne CopyLoop
 }
-.assert "WriteToVdcMemoryByAddress($beef, $baab)", { WriteToVdcMemoryByAddress($beef, $baab) },
+.asserterror "WriteToVdcMemoryByAddress($beef, $baab, 0)", { WriteToVdcMemoryByAddress($beef, $baab, 0) }
+.asserterror "WriteToVdcMemoryByAddress($beef, $baab, 256)", { WriteToVdcMemoryByAddress($beef, $baab, 256) }
+.assert "WriteToVdcMemoryByAddress($beef, $baab, 100)", { WriteToVdcMemoryByAddress($beef, $baab, 100) },
 {
-    ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC; ldy #0
-    lda $beef, y; jsr $CDCA; iny; bne *-7;
+    ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC;
+    ldy #101; lda $beef, y; jsr $CDCA; dey; bne *-7;
+}
+.assert "WriteToVdcMemoryByAddress($beef, $baab, 255)", { WriteToVdcMemoryByAddress($beef, $baab, 255) },
+{
+    ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC;
+    ldy #0; lda $beef, y; jsr $CDCA; dey; bne *-7;
 }
 
 /*
