@@ -190,6 +190,61 @@
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
+.macro WriteToVdcMemoryByCoordinates(source, xPos, yPos) {
+  .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
+  .errorif (xPos != -1 && yPos == -1), "xPos and yPos must be -1 at same time"
+  .errorif (xPos < -1 || yPos < -1), "xPos and yPos can't be lower than -1"
+  .if (xPos != -1 && yPos != -1) {
+    ldx #$12
+    lda #>getTextOffset80Col(xPos, yPos)
+    jsr c128lib.ScreenEditor.WRITEREG
+    lda #<getTextOffset80Col(xPos, yPos)
+    inx
+    jsr c128lib.ScreenEditor.WRITEREG
+  }
+    ldy #0
+  CopyLoop:
+    lda source, y
+    jsr c128lib.ScreenEditor.WRITE80
+    iny
+    bne CopyLoop
+}
+.asserterror "WriteToVdcMemoryByCoordinates($beef, -1, 0)", { WriteToVdcMemoryByCoordinates($beef, -1, 0) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, 0, -1)", { WriteToVdcMemoryByCoordinates($beef, 0, -1) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, -2, 0)", { WriteToVdcMemoryByCoordinates($beef, -2, 0) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, 0, -2)", { WriteToVdcMemoryByCoordinates($beef, 0, -2) }
+.asserterror "WriteToVdcMemoryByCoordinates($beef, -2, -2)", { WriteToVdcMemoryByCoordinates($beef, -2, -2) }
+.assert "WriteToVdcMemoryByCoordinates($beef, -1, -1)", { WriteToVdcMemoryByCoordinates($beef, -1, -1) },
+{
+    ldy #0; lda $beef, y; jsr $CDCA; iny; bne *-7;
+}
+.assert "WriteToVdcMemoryByCoordinates($beef, 1, 1)", { WriteToVdcMemoryByCoordinates($beef, 1, 1) },
+{
+    ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC; ldy #0
+    lda $beef, y; jsr $CDCA; iny; bne *-7;
+}
+
+.macro WriteToVdcMemoryByAddress(source, destination) {
+    ldx #$12
+    lda #>destination
+    jsr c128lib.ScreenEditor.WRITEREG
+    lda #<destination
+    inx
+    jsr c128lib.ScreenEditor.WRITEREG
+
+    ldy #0
+  CopyLoop:
+    lda source, y
+    jsr c128lib.ScreenEditor.WRITE80
+    iny
+    bne CopyLoop
+}
+.assert "WriteToVdcMemoryByAddress($beef, $baab)", { WriteToVdcMemoryByAddress($beef, $baab) },
+{
+    ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC; ldy #0
+    lda $beef, y; jsr $CDCA; iny; bne *-7;
+}
+
 /*
   Calculates memory offset of text cell specified by given coordinates
   on 80 cols screen
