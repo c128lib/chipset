@@ -224,6 +224,27 @@
     lda $beef, y; jsr $CDCA; iny; bne *-7;
 }
 
+.macro WriteToVdcMemoryByAddress(source, destination) {
+    ldx #$12
+    lda #>destination
+    jsr c128lib.ScreenEditor.WRITEREG
+    lda #<destination
+    inx
+    jsr c128lib.ScreenEditor.WRITEREG
+
+    ldy #0
+  CopyLoop:
+    lda source, y
+    jsr c128lib.ScreenEditor.WRITE80
+    iny
+    bne CopyLoop
+}
+.assert "WriteToVdcMemoryByAddress($beef, $baab)", { WriteToVdcMemoryByAddress($beef, $baab) },
+{
+    ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC; ldy #0
+    lda $beef, y; jsr $CDCA; iny; bne *-7;
+}
+
 /*
   Calculates memory offset of text cell specified by given coordinates
   on 80 cols screen
