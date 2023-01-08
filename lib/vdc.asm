@@ -177,13 +177,13 @@
     WriteVDC()
 }
 .assert "SetBackgroundForegroundColorWithVars(background, foreground)", {
-    SetBackgroundForegroundColorWithVars($beef, $b00b)
+    SetBackgroundForegroundColorWithVars($beef, $baab)
   }, {
     lda #0; ldx #$19;
     stx $d600; bit $d600; bpl *-3; lda $d601
     and #%10111111;
     stx $d600; bit $d600; bpl *-3; sta $d601
-    lda $b00b;
+    lda $baab;
     asl; asl; asl; asl;
     ora $beef;
     ldx #$1A;
