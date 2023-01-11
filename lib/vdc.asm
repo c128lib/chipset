@@ -279,11 +279,12 @@
     inx
     jsr c128lib.ScreenEditor.WRITEREG
   }
-    ldy #(qty+1)
+    ldy #0
   CopyLoop:
     lda source, y
     jsr c128lib.ScreenEditor.WRITE80
-    dey
+    iny
+    cpy #qty
     bne CopyLoop
 }
 .asserterror "WriteToVdcMemoryByCoordinates($beef, -1, 0, 100)", { WriteToVdcMemoryByCoordinates($beef, -1, 0, 100) }
@@ -295,17 +296,17 @@
 .asserterror "WriteToVdcMemoryByCoordinates($beef, 2, 2, 256)", { WriteToVdcMemoryByCoordinates($beef, 2, 2, 256) }
 .assert "WriteToVdcMemoryByCoordinates($beef, -1, -1, 100)", { WriteToVdcMemoryByCoordinates($beef, -1, -1, 100) },
 {
-    ldy #101; lda $beef, y; jsr $CDCA; dey; bne *-7;
+    ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #100; bne *-9;
 }
 .assert "WriteToVdcMemoryByCoordinates($beef, 1, 1, 100)", { WriteToVdcMemoryByCoordinates($beef, 1, 1, 100) },
 {
     ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC;
-    ldy #101; lda $beef, y; jsr $CDCA; dey; bne *-7;
+    ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #100; bne *-9;
 }
 .assert "WriteToVdcMemoryByCoordinates($beef, 1, 1, 255)", { WriteToVdcMemoryByCoordinates($beef, 1, 1, 255) },
 {
     ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC;
-    ldy #0; lda $beef, y; jsr $CDCA; dey; bne *-7;
+    ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #255; bne *-9;
 }
 
 .macro WriteToVdcMemoryByAddress(source, destination, qty) {
@@ -318,11 +319,12 @@
     inx
     jsr c128lib.ScreenEditor.WRITEREG
 
-    ldy #qty+1
+    ldy #0
   CopyLoop:
     lda source, y
     jsr c128lib.ScreenEditor.WRITE80
-    dey
+    iny
+    cpy #qty
     bne CopyLoop
 }
 .asserterror "WriteToVdcMemoryByAddress($beef, $baab, 0)", { WriteToVdcMemoryByAddress($beef, $baab, 0) }
@@ -330,12 +332,12 @@
 .assert "WriteToVdcMemoryByAddress($beef, $baab, 100)", { WriteToVdcMemoryByAddress($beef, $baab, 100) },
 {
     ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC;
-    ldy #101; lda $beef, y; jsr $CDCA; dey; bne *-7;
+    ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #100; bne *-9;
 }
 .assert "WriteToVdcMemoryByAddress($beef, $baab, 255)", { WriteToVdcMemoryByAddress($beef, $baab, 255) },
 {
     ldx #$12; lda #$ba; jsr $CDCC; lda #$ab; inx; jsr $CDCC;
-    ldy #0; lda $beef, y; jsr $CDCA; dey; bne *-7;
+    ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #255; bne *-9;
 }
 
 /*
