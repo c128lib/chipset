@@ -190,6 +190,81 @@
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
+.macro ReadFromVdcMemoryByCoordinates(destination, xPos, yPos, qty) {
+  .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
+  .errorif (xPos != -1 && yPos == -1), "xPos and yPos must be -1 at same time"
+  .errorif (xPos < -1 || yPos < -1), "xPos and yPos can't be lower than -1"
+  .errorif (qty <= 0), "qty must be greater than 0"
+  .errorif (qty > 255), "qty must be lower than 256"
+  .if (xPos != -1 && yPos != -1) {
+    ldx #$12
+    lda #>getTextOffset80Col(xPos, yPos)
+    jsr c128lib.ScreenEditor.WRITEREG
+    lda #<getTextOffset80Col(xPos, yPos)
+    inx
+    jsr c128lib.ScreenEditor.WRITEREG
+  }
+    ldy #0
+  CopyLoop:
+    jsr c128lib.ScreenEditor.READ80
+    sta destination, y
+    iny
+    cpy #qty
+    bne CopyLoop
+}
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, -1, 0, 100)", { ReadFromVdcMemoryByCoordinates($beef, -1, 0, 100) }
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, 0, -1, 100)", { ReadFromVdcMemoryByCoordinates($beef, 0, -1, 100) }
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, -2, 0, 100)", { ReadFromVdcMemoryByCoordinates($beef, -2, 0, 100) }
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, 0, -2, 100)", { ReadFromVdcMemoryByCoordinates($beef, 0, -2, 100) }
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, -2, -2, 100)", { ReadFromVdcMemoryByCoordinates($beef, -2, -2, 100) }
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, 2, 2, 0)", { ReadFromVdcMemoryByCoordinates($beef, 2, 2, 0) }
+.asserterror "ReadFromVdcMemoryByCoordinates($beef, 2, 2, 256)", { ReadFromVdcMemoryByCoordinates($beef, 2, 2, 256) }
+.assert "ReadFromVdcMemoryByCoordinates($beef, -1, -1, 100)", { ReadFromVdcMemoryByCoordinates($beef, -1, -1, 100) },
+{
+    ldy #0; jsr $CDD8; sta $beef, y; iny; cpy #100; bne *-9;
+}
+.assert "ReadFromVdcMemoryByCoordinates($beef, 1, 1, 100)", { ReadFromVdcMemoryByCoordinates($beef, 1, 1, 100) },
+{
+    ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC;
+    ldy #0; jsr $CDD8; sta $beef, y; iny; cpy #100; bne *-9;
+}
+.assert "ReadFromVdcMemoryByCoordinates($beef, 1, 1, 255)", { ReadFromVdcMemoryByCoordinates($beef, 1, 1, 255) },
+{
+    ldx #$12; lda #0; jsr $CDCC; lda #81; inx; jsr $CDCC;
+    ldy #0; jsr $CDD8; sta $beef, y; iny; cpy #255; bne *-9;
+}
+
+.macro ReadFromVdcMemoryByAddress(source, destination, qty) {
+  .errorif (qty <= 0), "qty must be greater than 0"
+  .errorif (qty > 255), "qty must be lower than 256"
+    ldx #$12
+    lda #>source
+    jsr c128lib.ScreenEditor.WRITEREG
+    lda #<source
+    inx
+    jsr c128lib.ScreenEditor.WRITEREG
+
+    ldy #0
+  CopyLoop:
+    jsr c128lib.ScreenEditor.WRITE80
+    sta destination, y
+    iny
+    cpy #qty
+    bne CopyLoop
+}
+.asserterror "ReadFromVdcMemoryByAddress($beef, $baab, 0)", { ReadFromVdcMemoryByAddress($beef, $baab, 0) }
+.asserterror "ReadFromVdcMemoryByAddress($beef, $baab, 256)", { ReadFromVdcMemoryByAddress($beef, $baab, 256) }
+.assert "ReadFromVdcMemoryByAddress($beef, $baab, 100)", { ReadFromVdcMemoryByAddress($beef, $baab, 100) },
+{
+    ldx #$12; lda #$be; jsr $CDCC; lda #$ef; inx; jsr $CDCC;
+    ldy #0; jsr $CDCA; sta $baab, y; iny; cpy #100; bne *-9;
+}
+.assert "ReadFromVdcMemoryByAddress($beef, $baab, 255)", { ReadFromVdcMemoryByAddress($beef, $baab, 255) },
+{
+    ldx #$12; lda #$be; jsr $CDCC; lda #$ef; inx; jsr $CDCC;
+    ldy #0; jsr $CDCA; sta $baab, y; iny; cpy #255; bne *-9;
+}
+
 .macro WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) {
   .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
   .errorif (xPos != -1 && yPos == -1), "xPos and yPos must be -1 at same time"
