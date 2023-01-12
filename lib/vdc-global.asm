@@ -12,10 +12,10 @@
 .macro @c128lib_ReadVDC() { ReadVDC() }
 .macro @c128lib_SetBackgroundForegroundColor(background, foreground) { SetBackgroundForegroundColor(background, foreground) }
 .macro @c128lib_SetBackgroundForegroundColorWithVars(background, foreground) { SetBackgroundForegroundColorWithVars(background, foreground) }
+.macro @c128lib_ReadFromVdcMemoryByCoordinates(xPos, yPos, destination, qty) { ReadFromVdcMemoryByCoordinates(xPos, yPos, destination, qty) }
+.macro @c128lib_ReadFromVdcMemoryByAddress(source, destination, qty) { ReadFromVdcMemoryByAddress(source, destination, qty) }
 .macro @c128lib_WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) { WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) }
 .macro @c128lib_WriteToVdcMemoryByAddress(source, destination, qty) { WriteToVdcMemoryByAddress(source, destination, qty) }
-.macro @c128lib_ReadFromVdcMemoryByCoordinates(source, xPos, yPos, qty) { ReadFromVdcMemoryByCoordinates(source, xPos, yPos, qty) }
-.macro @c128lib_ReadFromVdcMemoryByAddress(source, destination, qty) { ReadFromVdcMemoryByAddress(source, destination, qty) }
 
 .macro @c128lib_WriteVDCWithKernal(register, value) { WriteVDCWithKernal(register, value) }
 .macro @c128lib_ReadVDCWithKernal(register, value) { ReadVDCWithKernal(register, value) }
