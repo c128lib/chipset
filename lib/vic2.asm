@@ -64,6 +64,8 @@
 .label SPRITE_5_COLOR       = VIC2 + $2C
 .label SPRITE_6_COLOR       = VIC2 + $2D
 .label SPRITE_7_COLOR       = VIC2 + $2E
+.label XSCAN                = VIC2 + $2F
+.label CLKRATE              = VIC2 + $30
 
 /*
   Vic-II sprite movement
