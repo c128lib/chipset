@@ -11,6 +11,8 @@
 
 .macro @c128lib_IsReturnPressed() { IsReturnPressed() }
 .macro @c128lib_IsReturnPressedAndReleased() { IsReturnPressedAndReleased() }
+.macro @c128lib_IsSpacePressed() { IsSpacePressed() }
+.macro @c128lib_IsSpacePressedAndReleased() { IsSpacePressedAndReleased() }
 
 .macro @c128lib_GetFirePressedPort1() { GetFirePressedPort1() }
 .macro @c128lib_GetFirePressedPort2() { GetFirePressedPort2() }

@@ -146,6 +146,37 @@ DetectKeyPressed: {
   #endif
 }
 
+.macro IsSpacePressed() {
+  #if (!DETECTKEYPRESSED)
+    .error "You should use #define DETECTKEYPRESSED"
+  #else
+    lda #%01111111
+    sta DetectKeyPressed.MaskOnPortA
+    lda #%00010000
+    sta DetectKeyPressed.MaskOnPortB
+  !:
+    jsr DetectKeyPressed
+    beq !-
+  #endif
+}
+
+.macro IsSpacePressedAndReleased() {
+  #if (!DETECTKEYPRESSED)
+    .error "You should use #define DETECTKEYPRESSED"
+  #else
+    lda #%01111111
+    sta DetectKeyPressed.MaskOnPortA
+    lda #%00010000
+    sta DetectKeyPressed.MaskOnPortB
+  !:
+    jsr DetectKeyPressed
+    beq !-
+  !:
+    jsr DetectKeyPressed
+    bne !-
+  #endif
+}
+
 /*
   Check if joystick port 1 fire button is pressed.
 
