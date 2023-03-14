@@ -252,7 +252,7 @@
 .macro SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) {
   .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   .errorif (speed < 0 || speed > 255), "speed must be from 0 to 255"
-  .errorif (quadrant < Vic2.SPRITE_MAIN_DIR_UP || quadrant > Vic2.SPRITE_MAIN_DIR_LEFT), "quadrant must be from SPRITE_MAIN_DIR_UP to 25SPRITE_MAIN_DIR_LEFT5"
+  .errorif (quadrant < Vic2.SPRITE_MAIN_DIR_UP || quadrant > Vic2.SPRITE_MAIN_DIR_LEFT), "quadrant must be from SPRITE_MAIN_DIR_UP to SPRITE_MAIN_DIR_LEFT"
     lda #speed
     sta GetSpriteMovementStartingAddress(spriteNo)
     lda #quadrant
