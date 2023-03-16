@@ -250,6 +250,9 @@
 
 */
 .macro SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
+  .errorif (speed < 0 || speed > 255), "speed must be from 0 to 255"
+  .errorif (quadrant < Vic2.SPRITE_MAIN_DIR_UP || quadrant > Vic2.SPRITE_MAIN_DIR_LEFT), "quadrant must be from SPRITE_MAIN_DIR_UP to SPRITE_MAIN_DIR_LEFT"
     lda #speed
     sta GetSpriteMovementStartingAddress(spriteNo)
     lda #quadrant
@@ -269,6 +272,12 @@
     sta GetSpriteMovementStartingAddress(spriteNo) + 9
     sta GetSpriteMovementStartingAddress(spriteNo) + 10
 }
+.asserterror "SpriteMove(-1, 1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(-1, 1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }
+.asserterror "SpriteMove(8, 1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(8, 1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }
+.asserterror "SpriteMove(0, -1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(0, -1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }
+.asserterror "SpriteMove(0, 256, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(0, 256, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }
+.asserterror "SpriteMove(0, 0, -1, $1234, $beef)", { SpriteMove(0, 0, -1, $1234, $beef) }
+.asserterror "SpriteMove(0, 0, 4, $1234, $beef)", { SpriteMove(0, 0, 4, $1234, $beef) }
 .assert "SpriteMove(0, 1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(0, 1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }, {
   lda #1; sta $117E; lda #0; sta $1180; lda #$34; sta $1181; lda #$12; sta $1182; lda #$ef; sta $1183; lda #$be; sta $1184;
   lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188 
