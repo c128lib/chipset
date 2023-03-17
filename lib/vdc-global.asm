@@ -19,3 +19,5 @@
 
 .macro @c128lib_WriteVDCWithKernal(register, value) { WriteVDCWithKernal(register, value) }
 .macro @c128lib_ReadVDCWithKernal(register, value) { ReadVDCWithKernal(register, value) }
+
+.macro @c128lib_Print80Char(char, x, y) { Print80Char(char, x, y) }
