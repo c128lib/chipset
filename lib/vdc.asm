@@ -89,6 +89,11 @@
 .label ENDING_POSITION_FOR_HORIZONTAL_BLANKING            = $23
 .label NUMBER_OF_MEMORY_REFRESH_CYCLER_PER_SCANLINE       = $24
 
+.label ATTRIBUTE_ALTERNATE  = %10000000;
+.label ATTRIBUTE_REVERSE    = %01000000;
+.label ATTRIBUTE_UNDERLINE  = %00100000;
+.label ATTRIBUTE_BLINK      = %00010000;
+
 #if PRINT80STR
 #define WRITE80BYTE
 /*
@@ -99,7 +104,7 @@
     Y - hi byte string address
 
   Preconditions:
-    First byte of string is length
+    First byte of string is interpreted as length.
 */
 Print80Str:
     sta str80
@@ -175,8 +180,7 @@ Fill80Attr: {
 */
 Move80Text00: {
     lda vdc80ram
-// TODO(intoinside): should be changed with CURRENT_MEMORY_LOW_ADDRESS?
-    ldx #19
+    ldx #CURRENT_MEMORY_LOW_ADDRESS
     WriteVDC()
     dex
     lda vdc80ram+1
@@ -191,8 +195,7 @@ Move80Text00: {
 */
 Move80Attr00: {
     lda vdc80attr
-// TODO(intoinside): should be changed with CURRENT_MEMORY_LOW_ADDRESS?
-    ldx #19
+    ldx #CURRENT_MEMORY_LOW_ADDRESS
     WriteVDC()
     dex
     lda vdc80attr+1
@@ -209,8 +212,8 @@ Move80Attr00: {
 
   Params:
     A - character to print on screen
-    X - row where to print
-    Y - column where to print
+    X - column where to print
+    Y - row where to print
 */
 Print80Char: {
     pha
@@ -226,8 +229,8 @@ Print80Char: {
   Position the ram pointer at specific coordinates in screen memory.
 
   Params:
-    X - row where to position
-    Y - column where to position
+    X - column where to position
+    Y - row where to position
 */
 Position80xy: {
     lda #0
@@ -259,7 +262,7 @@ Position80xy: {
     lda vdc80ram+1
     adc high80
     sta high80          // added offset for start of screen RAM
-    ldx #18
+    ldx #CURRENT_MEMORY_HIGH_ADDRESS
     lda high80
     WriteVDC()
     inx
@@ -274,8 +277,8 @@ Position80xy: {
   Position the ram pointer at specific coordinates in attribute memory.
 
   Params:
-    X - row where to position
-    Y - column where to position
+    X - column where to position
+    Y - row where to position
 */
 PosAttr80xy: {
     lda #0
@@ -307,7 +310,7 @@ PosAttr80xy: {
     lda vdc80attr+1
     adc high80
     sta high80          // added offset for start of attribute RAM
-    ldx #18
+    ldx #CURRENT_MEMORY_HIGH_ADDRESS
     lda high80
     WriteVDC()
     inx
@@ -322,19 +325,17 @@ PosAttr80xy: {
   Pass the number of times in A.
 
   Params:
-    X - row where to print
-    Y - column where to print
+    X - column where to print
+    Y - row where to print
 */
 Repeat80Byte: {
     pha
-// TODO(intoinside): should be changed with VERTICAL_SMOOTH_SCROLLING?
-    ldx #24
+    ldx #VERTICAL_SMOOTH_SCROLLING
     ReadVDC()
     and #$7f
     WriteVDC()
     pla
-// TODO(intoinside): should be changed with NUMBER_OF_BYTES_FOR_BLOCK_WRITE_OR_COPY?
-    ldx #30
+    ldx #NUMBER_OF_BYTES_FOR_BLOCK_WRITE_OR_COPY
     WriteVDC()
     rts
 }
@@ -342,14 +343,13 @@ Repeat80Byte: {
 
 #if WRITE80BYTE
 /*
-  Write a specific character to current screen position.
+  Write a specific byte to current ram pointer.
 
   Params:
-    A - characted to print
+    A - byte to store
 */
 Write80Byte: {
-// TODO(intoinside): should be changed with MEMORY_READ_WRITE?
-    ldx #31
+    ldx #MEMORY_READ_WRITE
     WriteVDC()
     rts
 }
@@ -360,12 +360,11 @@ Write80Byte: {
   Set ram pointer.
 
   Params:
-    X - row to set
-    Y - column to set
+    X - column to set
+    Y - row to set
 */
 SetRamPointer: {
-// TODO(intoinside): should be changed with CURRENT_MEMORY_LOW_ADDRESS?
-    ldx #19
+    ldx #CURRENT_MEMORY_LOW_ADDRESS
     WriteVDC()
     tya
     dex
@@ -376,23 +375,20 @@ SetRamPointer: {
 
 #if INIT80TEXT
 /*
-  Initialize VDC for text display
+  Initialize VDC for text display.
 */
 Init80Text: {
-// TODO(intoinside): should be changed with HORIZONTAL_SMOOTH_SCROLLING?
-    ldx #25
+    ldx #HORIZONTAL_SMOOTH_SCROLLING
     ReadVDC()
     and #$7f
     WriteVDC()              // set text mode
-// TODO(intoinside): should be changed with SCREEN_MEMORY_STARTING_HIGH_ADDRESS?
-    ldx #12
+    ldx #SCREEN_MEMORY_STARTING_HIGH_ADDRESS
     ReadVDC()
     sta vdc80ram+1
     inx
     ReadVDC()
     sta vdc80ram            // save screen RAM address
-// TODO(intoinside): should be changed with ATTRIBUTE_MEMORY_HIGH_ADDRESS?
-    ldx #20
+    ldx #ATTRIBUTE_MEMORY_HIGH_ADDRESS
     ReadVDC()
     sta vdc80attr+1
     inx
@@ -410,7 +406,7 @@ Init80Text: {
   str80:      .byte $fd
 
   vdc80ram:   .word $0000
-  vdc80attr:  .word $0008
+  vdc80attr:  .word $0800
 #endif
 
 }
@@ -441,6 +437,10 @@ Init80Text: {
 .assert "Go80()", { Go80() },
 {
   lda $d7; bmi *+5; jsr $FF5F
+}
+
+.function CalculateAttributeByte(attributes, color) {
+  .return attributes + color;
 }
 
 /*
