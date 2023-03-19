@@ -7,6 +7,9 @@
  * References available at
  * https://c128lib.github.io/Reference/Vdc
  * https://c128lib.github.io/Reference/D600
+ *
+ * Sources
+ * https://gitlab.com/aaron-baugher/farming-game-128/-/blob/master/vdc80lib.a
 */
 #importonce
 .filenamespace c128lib
@@ -88,8 +91,16 @@
 
 #if PRINT80STR
 #define WRITE80BYTE
-	// print string found at location .A = low byte, .Y = high byte
-  // first byte is length
+/*
+  Print a string on screen on current position.
+
+  Params:
+    A - low byte string address
+    Y - hi byte string address
+
+  Preconditions:
+    First byte of string is length
+*/
 Print80Str:
     sta str80
     sty str80+1
@@ -109,7 +120,12 @@ Print80Str:
 #define MOVE80TEXT00
 #define WRITE80BYTE
 #define REPEAT80BYTE
-	// fill screen ram with char in .A
+/*
+  Fill screen ram with a specific character.
+
+  Params:
+    A - character used to fill screen
+*/
 Fill80Text:
     pha
     jsr Move80Text00
@@ -130,7 +146,12 @@ Fill80Text:
 #define MOVE80ATTR00
 #define REPEAT80BYTE
 #define WRITE80BYTE
-        	// fill attribute ram with byte in .A
+/*
+  Fill attribute ram with a specific value.
+
+  Params:
+    A - value used to fill attribute ram
+*/
 Fill80Attr: {
     pha
     jsr Move80Attr00
@@ -150,10 +171,11 @@ Fill80Attr: {
 
 #if MOVE80TEXT00
 /*
-  Move screen ram pointer to 0/0 on screen
+  Move screen ram pointer to 0/0 on screen.
 */
 Move80Text00: {
     lda vdc80ram
+// TODO(intoinside): should be changed with CURRENT_MEMORY_LOW_ADDRESS?
     ldx #19
     WriteVDC()
     dex
@@ -161,14 +183,15 @@ Move80Text00: {
     WriteVDC()
     rts
 }
-#endif 
+#endif
 
 #if MOVE80ATTR00
 /*
-  Move ram pointer to 0/0 in attribute RAM
+  Move ram pointer to 0/0 in attribute memory.
 */
 Move80Attr00: {
     lda vdc80attr
+// TODO(intoinside): should be changed with CURRENT_MEMORY_LOW_ADDRESS?
     ldx #19
     WriteVDC()
     dex
@@ -176,11 +199,19 @@ Move80Attr00: {
     WriteVDC()
     rts
 }
-#endif 
+#endif
 
 #if PRINT80CHAR
 #define POSITION80XY
 #define WRITE80BYTE
+/*
+  Print a char at specific coordinates in screen memory.
+
+  Params:
+    A - character to print on screen
+    X - row where to print
+    Y - column where to print
+*/
 Print80Char: {
     pha
     jsr Position80xy
@@ -192,30 +223,34 @@ Print80Char: {
 
 #if POSITION80XY
 /*
-  Position the RAM pointer at .X/.Y coordinates in screen memory
+  Position the ram pointer at specific coordinates in screen memory.
+
+  Params:
+    X - row where to position
+    Y - column where to position
 */
 Position80xy: {
     lda #0
     sta high80
     sty low80
     asl low80
-    asl low80           // .Y times 4
+    asl low80           // Y times 4
     tya
     clc
     adc low80
-    sta low80           // .Y times 5
+    sta low80           // Y times 5
     ldy #4
   !:
     asl low80
     rol high80
     dey
-    bne !-              // .Y times 80 in low80/high80
+    bne !-              // Y times 80 in low80/high80
     txa
     clc
     adc low80
     sta low80
     bcc !+
-    inc high80          // added .X offset across screen
+    inc high80          // added X offset across screen
   !:
     lda vdc80ram
     clc
@@ -236,30 +271,34 @@ Position80xy: {
 
 #if POSATTR80XY
 /*
-  Position the RAM pointer at .X/.Y coordinates in attribute memory
+  Position the ram pointer at specific coordinates in attribute memory.
+
+  Params:
+    X - row where to position
+    Y - column where to position
 */
 PosAttr80xy: {
     lda #0
     sta high80
     sty low80
     asl low80
-    asl low80           // .Y times 4
+    asl low80           // Y times 4
     tya
     clc
     adc low80
-    sta low80           // .Y times 5
+    sta low80           // Y times 5
     ldy #4
   !:
     asl low80
     rol high80
     dey
-    bne !-              // .Y times 80 in low80/high80
+    bne !-              // Y times 80 in low80/high80
     txa
     clc
     adc low80
     sta low80
     bcc !+
-    inc high80          // added .X offset across screen
+    inc high80          // added X offset across screen
   !:
     lda vdc80attr
     clc
@@ -280,15 +319,21 @@ PosAttr80xy: {
 
 #if REPEAT80BYTE
 /*
-  Pass the number of times in A
+  Pass the number of times in A.
+
+  Params:
+    X - row where to print
+    Y - column where to print
 */
 Repeat80Byte: {
     pha
+// TODO(intoinside): should be changed with VERTICAL_SMOOTH_SCROLLING?
     ldx #24
     ReadVDC()
     and #$7f
     WriteVDC()
     pla
+// TODO(intoinside): should be changed with NUMBER_OF_BYTES_FOR_BLOCK_WRITE_OR_COPY?
     ldx #30
     WriteVDC()
     rts
@@ -297,9 +342,13 @@ Repeat80Byte: {
 
 #if WRITE80BYTE
 /*
-  Pass the byte in A, will write to current ram pointer
+  Write a specific character to current screen position.
+
+  Params:
+    A - characted to print
 */
 Write80Byte: {
+// TODO(intoinside): should be changed with MEMORY_READ_WRITE?
     ldx #31
     WriteVDC()
     rts
@@ -308,9 +357,14 @@ Write80Byte: {
 
 #if SETRAMPOINTER
 /*
-  Pass  low byte in A, high byte in Y
+  Set ram pointer.
+
+  Params:
+    X - row to set
+    Y - column to set
 */
 SetRamPointer: {
+// TODO(intoinside): should be changed with CURRENT_MEMORY_LOW_ADDRESS?
     ldx #19
     WriteVDC()
     tya
@@ -321,17 +375,23 @@ SetRamPointer: {
 #endif
 
 #if INIT80TEXT
+/*
+  Initialize VDC for text display
+*/
 Init80Text: {
+// TODO(intoinside): should be changed with HORIZONTAL_SMOOTH_SCROLLING?
     ldx #25
     ReadVDC()
     and #$7f
     WriteVDC()              // set text mode
+// TODO(intoinside): should be changed with SCREEN_MEMORY_STARTING_HIGH_ADDRESS?
     ldx #12
     ReadVDC()
     sta vdc80ram+1
     inx
     ReadVDC()
     sta vdc80ram            // save screen RAM address
+// TODO(intoinside): should be changed with ATTRIBUTE_MEMORY_HIGH_ADDRESS?
     ldx #20
     ReadVDC()
     sta vdc80attr+1
@@ -340,7 +400,6 @@ Init80Text: {
     sta vdc80attr           // save attribute RAM address
 
     rts
-
 }
 #endif
 
@@ -516,9 +575,9 @@ Init80Text: {
   using source address.
 
   Params:
-  source - Vdc memory absolute address
-  destination - Vic screen memory absolute address
-  qty - number of byte to copy
+    source - Vdc memory absolute address
+    destination - Vic screen memory absolute address
+    qty - number of byte to copy
 */
 .macro ReadFromVdcMemoryByAddress(source, destination, qty) {
   .errorif (qty <= 0), "qty must be greater than 0"
@@ -556,10 +615,10 @@ Init80Text: {
   using coordinates.
 
   Params:
-  xPos - X coord on Vic screen
-  yPos - Y coord on Vic screen
-  destination - Vdc internal memory absolute address
-  qty - number of byte to copy
+    xPos - X coord on Vic screen
+    yPos - Y coord on Vic screen
+    destination - Vdc internal memory absolute address
+    qty - number of byte to copy
 */
 .macro WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) {
   .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
@@ -610,9 +669,9 @@ Init80Text: {
   using coordinates.
 
   Params:
-  source - Vic screen memory absolute address
-  destination - Vdc internal memory absolute address
-  qty - number of byte to copy
+    source - Vic screen memory absolute address
+    destination - Vdc internal memory absolute address
+    qty - number of byte to copy
 */
 .macro WriteToVdcMemoryByAddress(source, destination, qty) {
   .errorif (qty <= 0), "qty must be greater than 0"
@@ -650,8 +709,8 @@ Init80Text: {
   on 80 cols screen
 
   Params:
-  xPos - X coord
-  yPos - Y coord
+    xPos - X coord
+    yPos - Y coord
 */
 .function getTextOffset80Col(xPos, yPos) {
   .return xPos + Vdc.TEXT_SCREEN_80_COL_WIDTH * yPos
@@ -666,8 +725,6 @@ Init80Text: {
   Returns the address start of VDC display memory data. This
   is stored in VDC register 12 and 13.
   The 16-bit value is stored in $FB and $FC.
-
-  Syntax:    GetVDCDisplayStart()
 */
 .macro GetVDCDisplayStart() {
   ldx #Vdc.SCREEN_MEMORY_STARTING_HIGH_ADDRESS
@@ -682,9 +739,6 @@ Init80Text: {
 /*
   Set the pointer to the RAM area that is to be updated.
   The update pointer is stored in VDC register 18 and 19.
-
-  Syntax:    SetVDCUpdateAddress($1200)
-
   This will point register 18 and 19 to $1200. This area
   can then be written to using WriteVDCRAM()
 */
@@ -704,8 +758,6 @@ Init80Text: {
 
 /*
   Translates between VIC and VDC color codes.
-
-  Syntax:    GetVDCColor(0)
 */
 .macro GetVDCColor(viccolor) {
   ldx #viccolor
@@ -720,8 +772,6 @@ Init80Text: {
   routine instead of pure instruction. It needs register
   number in X and value to write in A.
   It costs 11 byte.
-
-  Syntax:    WriteVDC()
 */
 .macro WriteVDC() {
     stx Vdc.VDCADR
@@ -738,8 +788,6 @@ Init80Text: {
   routine instead of pure instruction. It needs register
   number in X and value is written in A.
   It costs 11 byte.
-
-  Syntax:    ReadVDC()
 */
 .macro ReadVDC() {
     stx Vdc.VDCADR
@@ -755,8 +803,6 @@ Init80Text: {
   Write a value into Vdc register. It uses kernal
   routine instead of pure instruction.
   It costs 7 byte.
-
-  Syntax:    WriteVDCWithKernal(FOREGROUND_BACKGROUND_COLOR, 11)
 */
 .macro WriteVDCWithKernal(register, value) {
     ldx #register
@@ -771,8 +817,6 @@ Init80Text: {
   Read a value from Vdc register. It uses kernal
   routine instead of pure instruction.
   It costs 7 byte.
-
-  Syntax:    WriteVDCWithKernal(FOREGROUND_BACKGROUND_COLOR, 11)
 */
 .macro ReadVDCWithKernal(register, value) {
     ldx #register
@@ -782,37 +826,3 @@ Init80Text: {
 .assert "ReadVDCWithKernal()", { ReadVDCWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDDA
 }
-
-
-
-
-
-
-// /*
-//   Print a char in A at X/Y coordinates in screen memory
-// */
-// .macro Print80Char(char, x, y) {
-//   #if !PRINT80CHAR
-//     .error "You should use #define PRINT80CHAR"
-//   #elif (!POSITION80XY)
-//     .error "You should use #define POSITION80XY"
-//   #elif (!WRITE80BYTE)
-//     .error "You should use #define WRITE80BYTE"
-//   #else
-//     lda #char
-//     ldx #x
-//     ldy #y
-//     jsr Print80Char
-//   #endif
-// }
-
-
-
-//https://gitlab.com/aaron-baugher/farming-game-128/-/blob/master/vdc80lib.a
-// .macro Init80Text() {
-//   #if (!INIT80TEXT)
-//     .error "You should use #define INIT80TEXT"
-//   #else
-//     jsr Init80Text
-//   #endif
-// }
