@@ -94,119 +94,120 @@
 .label ATTRIBUTE_UNDERLINE  = %00100000;
 .label ATTRIBUTE_BLINK      = %00010000;
 
-#if PRINT80STR
-#define WRITE80BYTE
-/*
-  Print a string on screen on current position.
+// #if PRINT80STR
+// #define WRITE80BYTE
+// /*
+//   Print a string on screen on current position.
 
-  Params:
-    A - low byte string address
-    Y - hi byte string address
+//   Params:
+//     A - low byte string address
+//     Y - hi byte string address
 
-  Preconditions:
-    First byte of string is interpreted as length.
-*/
-Print80Str:
-    sta str80
-    sty str80+1
-    ldy #0
-    lda (str80),y
-    sta count80
-  !:
-    iny
-    lda (str80),y
-    jsr Write80Byte
-    dec count80
-    bne !-
-    rts
-#endif
+//   Preconditions:
+//     First byte of string is interpreted as length.
+// */
+// Print80Str:
+//     sta str80
+//     sty str80+1
+//     ldy #0
+//     lda (str80),y
+//     sta count80
+//     sta $0400
+//   !:
+//     iny
+//     lda (str80),y
+//     jsr Write80Byte
+//     dec count80
+//     bne !-
+//     rts
+// #endif
 
-#if FILL80TEXT
-#define MOVE80TEXT00
-#define WRITE80BYTE
-#define REPEAT80BYTE
+#if FILLSCREEN
+#define MOVESCREENPOINTERTO00
+#define WRITEBYTE
+#define REPEATBYTE
 /*
   Fill screen ram with a specific character.
 
   Params:
     A - character used to fill screen
 */
-Fill80Text:
+FillScreen:
     pha
-    jsr Move80Text00
+    jsr MoveScreenPointerTo00
     pla
-    jsr Write80Byte
+    jsr WriteByte
     lda #249
-    jsr Repeat80Byte
+    jsr RepeatByte
     lda #250
     ldy #7
   !:
-    jsr Repeat80Byte
+    jsr RepeatByte
     dey
     bne !-
     rts
 #endif
 
-#if FILL80ATTR
-#define MOVE80ATTR00
-#define REPEAT80BYTE
-#define WRITE80BYTE
+#if FILLATTRIBUTE
+#define MOVEATTRIBUTEPOINTERTO00
+#define REPEATBYTE
+#define WRITEBYTE
 /*
   Fill attribute ram with a specific value.
 
   Params:
     A - value used to fill attribute ram
 */
-Fill80Attr: {
+FillAttribute: {
     pha
-    jsr Move80Attr00
+    jsr MoveAttributePointerTo00
     pla
-    jsr Write80Byte
+    jsr WriteByte
     lda #249
-    jsr Repeat80Byte
+    jsr RepeatByte
     lda #250
     ldy #7
   !:
-    jsr Repeat80Byte
+    jsr RepeatByte
     dey
     bne !-
     rts
 }
 #endif
 
-#if MOVE80TEXT00
+#if MOVESCREENPOINTERTO00
 /*
   Move screen ram pointer to 0/0 on screen.
 */
-Move80Text00: {
-    lda vdc80ram
+MoveScreenPointerTo00: {
+    lda vdcram
     ldx #CURRENT_MEMORY_LOW_ADDRESS
     WriteVDC()
     dex
-    lda vdc80ram+1
+    lda vdcram+1
     WriteVDC()
     rts
 }
 #endif
 
-#if MOVE80ATTR00
+#if MOVEATTRIBUTEPOINTERTO00
 /*
   Move ram pointer to 0/0 in attribute memory.
 */
-Move80Attr00: {
-    lda vdc80attr
+MoveAttributePointerTo00: {
+    lda vdcattr
     ldx #CURRENT_MEMORY_LOW_ADDRESS
     WriteVDC()
     dex
-    lda vdc80attr+1
+    lda vdcattr+1
     WriteVDC()
     rts
 }
 #endif
 
-#if PRINT80CHAR
-#define POSITION80XY
-#define WRITE80BYTE
+#if PRINTCHARATPOSITION
+#define POSITIONXY
+#define WRITEBYTE
 /*
   Print a char at specific coordinates in screen memory.
 
@@ -215,16 +216,16 @@ Move80Attr00: {
     X - column where to print
     Y - row where to print
 */
-Print80Char: {
+PrintCharAtPosition: {
     pha
-    jsr Position80xy
+    jsr PositionXy
     pla
-    jsr Write80Byte
+    jsr WriteByte
     rts
 }
 #endif
 
-#if POSITION80XY
+#if POSITIONXY
 /*
   Position the ram pointer at specific coordinates in screen memory.
 
@@ -232,47 +233,47 @@ Print80Char: {
     X - column where to position
     Y - row where to position
 */
-Position80xy: {
+PositionXy: {
     lda #0
-    sta high80
-    sty low80
-    asl low80
-    asl low80           // Y times 4
+    sta high
+    sty low
+    asl low
+    asl low           // Y times 4
     tya
     clc
-    adc low80
-    sta low80           // Y times 5
+    adc low
+    sta low           // Y times 5
     ldy #4
   !:
-    asl low80
-    rol high80
+    asl low
+    rol high
     dey
-    bne !-              // Y times 80 in low80/high80
+    bne !-              // Y times 80 in low/high
     txa
     clc
-    adc low80
-    sta low80
+    adc low
+    sta low
     bcc !+
-    inc high80          // added X offset across screen
+    inc high          // added X offset across screen
   !:
-    lda vdc80ram
+    lda vdcram
     clc
-    adc low80
-    sta low80
-    lda vdc80ram+1
-    adc high80
-    sta high80          // added offset for start of screen RAM
+    adc low
+    sta low
+    lda vdcram+1
+    adc high
+    sta high          // added offset for start of screen RAM
     ldx #CURRENT_MEMORY_HIGH_ADDRESS
-    lda high80
+    lda high
     WriteVDC()
     inx
-    lda low80
+    lda low
     WriteVDC()
     rts
 }
 #endif
 
-#if POSATTR80XY
+#if POSITIONATTRXY
 /*
   Position the ram pointer at specific coordinates in attribute memory.
 
@@ -280,55 +281,51 @@ Position80xy: {
     X - column where to position
     Y - row where to position
 */
-PosAttr80xy: {
+PositionAttrXy: {
     lda #0
-    sta high80
-    sty low80
-    asl low80
-    asl low80           // Y times 4
+    sta high
+    sty low
+    asl low
+    asl low           // Y times 4
     tya
     clc
-    adc low80
-    sta low80           // Y times 5
+    adc low
+    sta low           // Y times 5
     ldy #4
   !:
-    asl low80
-    rol high80
+    asl low
+    rol high
     dey
-    bne !-              // Y times 80 in low80/high80
+    bne !-              // Y times 80 in low/high
     txa
     clc
-    adc low80
-    sta low80
+    adc low
+    sta low
     bcc !+
-    inc high80          // added X offset across screen
+    inc high          // added X offset across screen
   !:
-    lda vdc80attr
+    lda vdcattr
     clc
-    adc low80
-    sta low80
-    lda vdc80attr+1
-    adc high80
-    sta high80          // added offset for start of attribute RAM
+    adc low
+    sta low
+    lda vdcattr+1
+    adc high
+    sta high          // added offset for start of attribute RAM
     ldx #CURRENT_MEMORY_HIGH_ADDRESS
-    lda high80
+    lda high
     WriteVDC()
     inx
-    lda low80
+    lda low
     WriteVDC()
     rts
 }
 #endif
 
-#if REPEAT80BYTE
+#if REPEATBYTE
 /*
   Pass the number of times in A.
-
-  Params:
-    X - column where to print
-    Y - row where to print
 */
-Repeat80Byte: {
+RepeatByte: {
     pha
     ldx #VERTICAL_SMOOTH_SCROLLING
     ReadVDC()
@@ -341,14 +338,14 @@ Repeat80Byte: {
 }
 #endif
 
-#if WRITE80BYTE
+#if WRITEBYTE
 /*
   Write a specific byte to current ram pointer.
 
   Params:
     A - byte to store
 */
-Write80Byte: {
+WriteByte: {
     ldx #MEMORY_READ_WRITE
     WriteVDC()
     rts
@@ -360,8 +357,8 @@ Write80Byte: {
   Set ram pointer.
 
   Params:
-    X - column to set
-    Y - row to set
+    A - low byte of address
+    Y - high byte of address
 */
 SetRamPointer: {
     ldx #CURRENT_MEMORY_LOW_ADDRESS
@@ -373,40 +370,40 @@ SetRamPointer: {
 }
 #endif
 
-#if INIT80TEXT
+#if INITTEXT
 /*
   Initialize VDC for text display.
 */
-Init80Text: {
+InitText: {
     ldx #HORIZONTAL_SMOOTH_SCROLLING
     ReadVDC()
     and #$7f
     WriteVDC()              // set text mode
     ldx #SCREEN_MEMORY_STARTING_HIGH_ADDRESS
     ReadVDC()
-    sta vdc80ram+1
+    sta vdcram+1
     inx
     ReadVDC()
-    sta vdc80ram            // save screen RAM address
+    sta vdcram            // save screen RAM address
     ldx #ATTRIBUTE_MEMORY_HIGH_ADDRESS
     ReadVDC()
-    sta vdc80attr+1
+    sta vdcattr+1
     inx
     ReadVDC()
-    sta vdc80attr           // save attribute RAM address
+    sta vdcattr           // save attribute RAM address
 
     rts
 }
 #endif
 
-#if PRINT80STR || FILL80TEXT || FILL80ATTR || MOVE80TEXT00 || MOVE80ATTR00 || POSITION80XY || POSATTR80XY || INIT80TEXT
-  count80:    .byte $fa
-  high80:     .byte $fc
-  low80:      .byte $fb
-  str80:      .byte $fd
+#if MOVESCREENPOINTERTO00 || MOVEATTRIBUTEPOINTERTO00 || POSITIONXY || POSITIONATTRXY || INITTEXT
+  count:      .byte $fa
+  high:       .byte $fc
+  low:        .byte $fb
+  str:        .byte $fd
 
-  vdc80ram:   .word $0000
-  vdc80attr:  .word $0800
+  vdcram:     .word $0000
+  vdcattr:    .word $0800
 #endif
 
 }
@@ -826,3 +823,126 @@ Init80Text: {
 .assert "ReadVDCWithKernal()", { ReadVDCWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDDA
 }
+
+.macro FillScreen(char) {
+#if !FILLSCREEN
+    .error "You should use #define FILLSCREEN"
+#else
+    lda #char
+    jsr Vdc.FillScreen
+#endif
+}
+
+.macro FillAttribute(byte) {
+#if !FILLATTRIBUTE
+    .error "You should use #define FILLATTRIBUTE"
+#else
+    lda #byte
+    jsr Vdc.FillAttribute
+#endif
+}
+
+.macro MoveScreenPointerTo00() {
+#if !MOVESCREENPOINTERTO00
+    .error "You should use #define MOVESCREENPOINTERTO00"
+#else
+    jsr Vdc.MoveScreenPointerTo00
+#endif
+}
+
+.macro MoveAttributePointerTo00() {
+#if !MOVEATTRIBUTEPOINTERTO00
+    .error "You should use #define MOVEATTRIBUTEPOINTERTO00"
+#else
+    jsr Vdc.MoveAttributePointerTo00
+#endif
+}
+
+.macro PrintCharAtPosition(char, x, y) {
+#if !PRINTCHARATPOSITION
+    .error "You should use #define PRINTCHARATPOSITION"
+#else
+    lda #char
+    ldx #x
+    ldy #y
+    jsr Vdc.PrintCharAtPosition
+#endif
+}
+
+.macro PositionXy(x, y) {
+#if !POSITIONXY
+    .error "You should use #define POSITIONXY"
+#else
+    ldx #x
+    ldy #y
+    jsr Vdc.PositionXy
+#endif
+}
+
+.macro PositionAttrXy(x, y) {
+#if !POSITIONATTRXY
+    .error "You should use #define POSITIONATTRXY"
+#else
+    ldx #x
+    ldy #y
+    jsr Vdc.PositionAttrXy
+#endif
+}
+
+.macro RepeatByte(times) {
+#if !REPEATBYTE
+    .error "You should use #define REPEATBYTE"
+#else
+    lda #times
+    jsr Vdc.RepeatByte
+#endif
+}
+
+.macro WriteByte(byteToWrite) {
+#if !WRITEBYTE
+    .error "You should use #define WRITEBYTE"
+#else
+    lda #byteToWrite
+    jsr Vdc.WriteByte
+#endif
+}
+
+.macro SetRamPointer(address) {
+#if !SETRAMPOINTER
+    .error "You should use #define SETRAMPOINTER"
+#else
+    lda #<address
+    ldy #>address
+    jsr Vdc.SetRamPointer
+#endif
+}
+
+.macro InitText() {
+#if !INITTEXT
+    .error "You should use #define INITTEXT"
+#else
+    jsr Vdc.InitText
+#endif
+}
+
+
+
+/*
+  Print a char at specific coordinates in screen memory.
+
+  Params:
+    A - character to print on screen
+    X - column where to print
+    Y - row where to print
+*/
+
+
+// .macro Print80Str(address) {
+//   #if !PRINT80STR
+//     .error "You should use #define PRINT80STR"
+//   #else
+//     lda #>address
+//     ldy #<address // low byte
+//     jsr Vdc.Print80Str
+//   #endif 
+// }

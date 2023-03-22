@@ -22,3 +22,15 @@
 
 .macro @c128lib_WriteVDCWithKernal(register, value) { WriteVDCWithKernal(register, value) }
 .macro @c128lib_ReadVDCWithKernal(register, value) { ReadVDCWithKernal(register, value) }
+
+// .macro @c128lib_Print80Str(address) { Print80Str(address) }
+.macro @c128lib_FillScreen(char) { FillScreen(char) }
+.macro @c128lib_FillAttribute(byte) { FillAttribute(byte) }
+.macro @c128lib_MoveAttributePointerTo00() { MoveAttributePointerTo00() }
+.macro @c128lib_PrintCharAtPosition(char, x, y) { PrintCharAtPosition(char, x, y) }
+.macro @c128lib_PositionXy(x, y) { PositionXy(x, y) }
+.macro @c128lib_PositionAttrXy(x, y) { PositionAttrXy(x, y) }
+.macro @c128lib_RepeatByte(times) { RepeatByte(times) }
+.macro @c128lib_WriteByte(byteToWrite) { WriteByte(byteToWrite) }
+.macro @c128lib_SetRamPointer(address) { SetRamPointer(address) }
+.macro @c128lib_InitText() { InitText() }
