@@ -2,12 +2,14 @@
 #import "common/lib/screen-editor.asm"
 
 /*
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
+ * Vdc
  *
  * References available at
  * https://c128lib.github.io/Reference/Vdc
  * https://c128lib.github.io/Reference/D600
+ *
+ * Sources
+ * https://gitlab.com/aaron-baugher/farming-game-128/-/blob/master/vdc80lib.a
 */
 #importonce
 .filenamespace c128lib
@@ -15,7 +17,7 @@
 .namespace Vdc {
 
 /*
-  VDC color codes
+  Vdc color codes
 */
 .label VDC_BLACK = 0
 .label VDC_DARK_GRAY = 1
@@ -41,13 +43,13 @@
 .label TEXT_SCREEN_80_COL_WIDTH = 80
 
 /*
-  VDC registers
+  Vdc registers
 */
-.label VDCADR     = $d600   // VDC address/status register
-.label VDCDAT     = $d601   // VDC data register
+.label VDCADR     = $d600   // Vdc address/status register
+.label VDCDAT     = $d601   // Vdc data register
 
 /*
-  VDC internal registers
+  Vdc internal registers
 */
 .label TOTALE_NUMBER_OF_HORIZONTAL_CHARACTER_POSITIONS    = $00
 .label NUMBER_OF_VISIBILE_HORIZONTAL_CHARACTER_POSITIONS  = $01
@@ -87,6 +89,323 @@
 .label ENDING_POSITION_FOR_HORIZONTAL_BLANKING            = $23
 .label NUMBER_OF_MEMORY_REFRESH_CYCLER_PER_SCANLINE       = $24
 
+.label ATTRIBUTE_ALTERNATE  = %10000000;
+.label ATTRIBUTE_REVERSE    = %01000000;
+.label ATTRIBUTE_UNDERLINE  = %00100000;
+.label ATTRIBUTE_BLINK      = %00010000;
+
+// #if PRINT80STR
+// #define WRITE80BYTE
+// /*
+//   Print a string on screen on current position.
+
+//   Params:
+//     A - low byte string address
+//     Y - hi byte string address
+
+//   Preconditions:
+//     First byte of string is interpreted as length.
+// */
+// Print80Str:
+//     sta str80
+//     sty str80+1
+//     ldy #0
+//     lda (str80),y
+//     sta count80
+//     sta $0400
+//   !:
+//     iny
+//     lda (str80),y
+//     jsr Write80Byte
+//     dec count80
+//     bne !-
+//     rts
+// #endif
+
+#if FILLSCREEN
+#define MOVESCREENPOINTERTO00
+#define WRITEBYTE
+#define REPEATBYTE
+/*
+  Fill screen ram with a specific character.
+
+  Params:
+    A - character used to fill screen
+*/
+FillScreen:
+    pha
+    jsr MoveScreenPointerTo00
+    pla
+    jsr WriteByte
+    lda #249
+    jsr RepeatByte
+    lda #250
+    ldy #7
+  !:
+    jsr RepeatByte
+    dey
+    bne !-
+    rts
+#endif
+
+#if FILLATTRIBUTE
+#define MOVEATTRIBUTEPOINTERTO00
+#define REPEATBYTE
+#define WRITEBYTE
+/*
+  Fill attribute ram with a specific value.
+
+  Params:
+    A - value used to fill attribute ram
+*/
+FillAttribute: {
+    pha
+    jsr MoveAttributePointerTo00
+    pla
+    jsr WriteByte
+    lda #249
+    jsr RepeatByte
+    lda #250
+    ldy #7
+  !:
+    jsr RepeatByte
+    dey
+    bne !-
+    rts
+}
+#endif
+
+#if MOVESCREENPOINTERTO00
+/*
+  Move screen ram pointer to 0/0 on screen.
+*/
+MoveScreenPointerTo00: {
+    lda vdcram
+    ldx #CURRENT_MEMORY_LOW_ADDRESS
+    WriteVdc()
+    dex
+    lda vdcram+1
+    WriteVdc()
+    rts
+}
+#endif
+
+#if MOVEATTRIBUTEPOINTERTO00
+/*
+  Move ram pointer to 0/0 in attribute memory.
+*/
+MoveAttributePointerTo00: {
+    lda vdcattr
+    ldx #CURRENT_MEMORY_LOW_ADDRESS
+    WriteVdc()
+    dex
+    lda vdcattr+1
+    WriteVdc()
+    rts
+}
+#endif
+
+#if PRINTCHARATPOSITION
+#define POSITIONXY
+#define WRITEBYTE
+/*
+  Print a char at specific coordinates in screen memory.
+
+  Params:
+    A - character to print on screen
+    X - column where to print
+    Y - row where to print
+*/
+PrintCharAtPosition: {
+    pha
+    jsr PositionXy
+    pla
+    jsr WriteByte
+    rts
+}
+#endif
+
+#if POSITIONXY
+/*
+  Position the ram pointer at specific coordinates in screen memory.
+
+  Params:
+    X - column where to position
+    Y - row where to position
+*/
+PositionXy: {
+    lda #0
+    sta high
+    sty low
+    asl low
+    asl low           // Y times 4
+    tya
+    clc
+    adc low
+    sta low           // Y times 5
+    ldy #4
+  !:
+    asl low
+    rol high
+    dey
+    bne !-              // Y times 80 in low/high
+    txa
+    clc
+    adc low
+    sta low
+    bcc !+
+    inc high          // added X offset across screen
+  !:
+    lda vdcram
+    clc
+    adc low
+    sta low
+    lda vdcram+1
+    adc high
+    sta high          // added offset for start of screen RAM
+    ldx #CURRENT_MEMORY_HIGH_ADDRESS
+    lda high
+    WriteVdc()
+    inx
+    lda low
+    WriteVdc()
+    rts
+}
+#endif
+
+#if POSITIONATTRXY
+/*
+  Position the ram pointer at specific coordinates in attribute memory.
+
+  Params:
+    X - column where to position
+    Y - row where to position
+*/
+PositionAttrXy: {
+    lda #0
+    sta high
+    sty low
+    asl low
+    asl low           // Y times 4
+    tya
+    clc
+    adc low
+    sta low           // Y times 5
+    ldy #4
+  !:
+    asl low
+    rol high
+    dey
+    bne !-              // Y times 80 in low/high
+    txa
+    clc
+    adc low
+    sta low
+    bcc !+
+    inc high          // added X offset across screen
+  !:
+    lda vdcattr
+    clc
+    adc low
+    sta low
+    lda vdcattr+1
+    adc high
+    sta high          // added offset for start of attribute RAM
+    ldx #CURRENT_MEMORY_HIGH_ADDRESS
+    lda high
+    WriteVdc()
+    inx
+    lda low
+    WriteVdc()
+    rts
+}
+#endif
+
+#if REPEATBYTE
+/*
+  Pass the number of times in A.
+*/
+RepeatByte: {
+    pha
+    ldx #VERTICAL_SMOOTH_SCROLLING
+    ReadVdc()
+    and #$7f
+    WriteVdc()
+    pla
+    ldx #NUMBER_OF_BYTES_FOR_BLOCK_WRITE_OR_COPY
+    WriteVdc()
+    rts
+}
+#endif
+
+#if WRITEBYTE
+/*
+  Write a specific byte to current ram pointer.
+
+  Params:
+    A - byte to store
+*/
+WriteByte: {
+    ldx #MEMORY_READ_WRITE
+    WriteVdc()
+    rts
+}
+#endif
+
+#if SETRAMPOINTER
+/*
+  Set ram pointer.
+
+  Params:
+    A - low byte of address
+    Y - high byte of address
+*/
+SetRamPointer: {
+    ldx #CURRENT_MEMORY_LOW_ADDRESS
+    WriteVdc()
+    tya
+    dex
+    WriteVdc()
+    rts
+}
+#endif
+
+#if INITTEXT
+/*
+  Initialize Vdc for text display.
+*/
+InitText: {
+    ldx #HORIZONTAL_SMOOTH_SCROLLING
+    ReadVdc()
+    and #$7f
+    WriteVdc()              // set text mode
+    ldx #SCREEN_MEMORY_STARTING_HIGH_ADDRESS
+    ReadVdc()
+    sta vdcram+1
+    inx
+    ReadVdc()
+    sta vdcram            // save screen RAM address
+    ldx #ATTRIBUTE_MEMORY_HIGH_ADDRESS
+    ReadVdc()
+    sta vdcattr+1
+    inx
+    ReadVdc()
+    sta vdcattr           // save attribute RAM address
+
+    rts
+}
+#endif
+
+#if MOVESCREENPOINTERTO00 || MOVEATTRIBUTEPOINTERTO00 || POSITIONXY || POSITIONATTRXY || INITTEXT
+  count:      .byte $fa
+  high:       .byte $fc
+  low:        .byte $fb
+  str:        .byte $fd
+
+  vdcram:     .word $0000
+  vdcattr:    .word $0800
+#endif
+
 }
 
 /*
@@ -117,6 +436,10 @@
   lda $d7; bmi *+5; jsr $FF5F
 }
 
+.function CalculateAttributeByte(attributes, color) {
+  .return attributes + color;
+}
+
 /*
   Calculate byte with hi nibble to foreground color and low nibble
   to background color.
@@ -132,14 +455,14 @@
 .macro SetBackgroundForegroundColor(background, foreground) {
     lda #0
     ldx #Vdc.HORIZONTAL_SMOOTH_SCROLLING
-    ReadVDC()
+    ReadVdc()
 
     and #%10111111
-    WriteVDC()
+    WriteVdc()
 
     lda #CalculateBackgroundAndForeground(background, foreground)
     ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
-    WriteVDC()
+    WriteVdc()
 }
 .assert "SetBackgroundForegroundColor(background, foreground)", {
     SetBackgroundForegroundColor(Vdc.VDC_DARK_GREEN, Vdc.VDC_LIGHT_GREEN)
@@ -162,10 +485,10 @@
 .macro SetBackgroundForegroundColorWithVars(background, foreground) {
     lda #0
     ldx #Vdc.HORIZONTAL_SMOOTH_SCROLLING
-    ReadVDC()
+    ReadVdc()
 
     and #%10111111
-    WriteVDC()
+    WriteVdc()
 
     lda foreground
     asl
@@ -174,7 +497,7 @@
     asl
     ora background
     ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
-    WriteVDC()
+    WriteVdc()
 }
 .assert "SetBackgroundForegroundColorWithVars(background, foreground)", {
     SetBackgroundForegroundColorWithVars($beef, $baab)
@@ -249,9 +572,9 @@
   using source address.
 
   Params:
-  source - Vdc memory absolute address
-  destination - Vic screen memory absolute address
-  qty - number of byte to copy
+    source - Vdc memory absolute address
+    destination - Vic screen memory absolute address
+    qty - number of byte to copy
 */
 .macro ReadFromVdcMemoryByAddress(source, destination, qty) {
   .errorif (qty <= 0), "qty must be greater than 0"
@@ -289,10 +612,10 @@
   using coordinates.
 
   Params:
-  xPos - X coord on Vic screen
-  yPos - Y coord on Vic screen
-  destination - Vdc internal memory absolute address
-  qty - number of byte to copy
+    xPos - X coord on Vic screen
+    yPos - Y coord on Vic screen
+    destination - Vdc internal memory absolute address
+    qty - number of byte to copy
 */
 .macro WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) {
   .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
@@ -343,9 +666,9 @@
   using coordinates.
 
   Params:
-  source - Vic screen memory absolute address
-  destination - Vdc internal memory absolute address
-  qty - number of byte to copy
+    source - Vic screen memory absolute address
+    destination - Vdc internal memory absolute address
+    qty - number of byte to copy
 */
 .macro WriteToVdcMemoryByAddress(source, destination, qty) {
   .errorif (qty <= 0), "qty must be greater than 0"
@@ -383,8 +706,8 @@
   on 80 cols screen
 
   Params:
-  xPos - X coord
-  yPos - Y coord
+    xPos - X coord
+    yPos - Y coord
 */
 .function getTextOffset80Col(xPos, yPos) {
   .return xPos + Vdc.TEXT_SCREEN_80_COL_WIDTH * yPos
@@ -396,35 +719,29 @@
 .assert "getTextOffset80Col(79,24) gives 1959", getTextOffset80Col(79, 24), 1999
 
 /*
-  Returns the address start of VDC display memory data. This
-  is stored in VDC register 12 and 13.
+  Returns the address start of Vdc display memory data. This
+  is stored in Vdc register 12 and 13.
   The 16-bit value is stored in $FB and $FC.
-
-  Syntax:    GetVDCDisplayStart()
 */
-.macro GetVDCDisplayStart() {
+.macro GetVdcDisplayStart() {
   ldx #Vdc.SCREEN_MEMORY_STARTING_HIGH_ADDRESS
-  ReadVDC()
+  ReadVdc()
 
   sta $fb
   inx
-  ReadVDC()
+  ReadVdc()
   sta $fc
 }
 
 /*
   Set the pointer to the RAM area that is to be updated.
-  The update pointer is stored in VDC register 18 and 19.
-
-  Syntax:    SetVDCUpdateAddress($1200)
-
-  This will point register 18 and 19 to $1200. This area
-  can then be written to using WriteVDCRAM()
+  The update pointer is stored in Vdc register 18 and 19.
+  This will point register 18 and 19 to $1200.
 */
-.macro SetVDCUpdateAddress(address) {
+.macro SetVdcUpdateAddress(address) {
   ldx #Vdc.CURRENT_MEMORY_HIGH_ADDRESS
   lda #>address
-  WriteVDC();
+  WriteVdc();
 
   inx
   .var a1 = <address
@@ -432,19 +749,17 @@
   .if( a1 != a2) {
     lda #<address // include if different from hi-byte.
   }
-  WriteVDC()
+  WriteVdc()
 }
 
 /*
-  Translates between VIC and VDC color codes.
-
-  Syntax:    GetVDCColor(0)
+  Translates between Vic and Vdc color codes.
 */
-.macro GetVDCColor(viccolor) {
+.macro GetVdcColor(viccolor) {
   ldx #viccolor
   lda Vdc.COLOR80,x
 }
-.assert "GetVDCColor(0)", { GetVDCColor(0) }, {
+.assert "GetVdcColor(0)", { GetVdcColor(0) }, {
   ldx #0; lda $ce5c,x
 }
 
@@ -453,16 +768,14 @@
   routine instead of pure instruction. It needs register
   number in X and value to write in A.
   It costs 11 byte.
-
-  Syntax:    WriteVDC()
 */
-.macro WriteVDC() {
+.macro WriteVdc() {
     stx Vdc.VDCADR
 !:  bit Vdc.VDCADR
     bpl !-
     sta Vdc.VDCDAT
 }
-.assert "WriteVDC()", { WriteVDC() }, {
+.assert "WriteVdc()", { WriteVdc() }, {
   stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
@@ -471,16 +784,14 @@
   routine instead of pure instruction. It needs register
   number in X and value is written in A.
   It costs 11 byte.
-
-  Syntax:    ReadVDC()
 */
-.macro ReadVDC() {
+.macro ReadVdc() {
     stx Vdc.VDCADR
 !:  bit Vdc.VDCADR
     bpl !-
     lda Vdc.VDCDAT
 }
-.assert "ReadVDC()", { ReadVDC() }, {
+.assert "ReadVdc()", { ReadVdc() }, {
   stx $d600; bit $d600; bpl *-3; lda $d601
 }
 
@@ -488,15 +799,13 @@
   Write a value into Vdc register. It uses kernal
   routine instead of pure instruction.
   It costs 7 byte.
-
-  Syntax:    WriteVDCWithKernal(FOREGROUND_BACKGROUND_COLOR, 11)
 */
-.macro WriteVDCWithKernal(register, value) {
+.macro WriteVdcWithKernal(register, value) {
     ldx #register
     lda #value
     jsr c128lib.ScreenEditor.WRITEREG
 }
-.assert "WriteVDCWithKernal()", { WriteVDCWithKernal(1, 2) }, {
+.assert "WriteVdcWithKernal()", { WriteVdcWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDCC
 }
 
@@ -504,14 +813,123 @@
   Read a value from Vdc register. It uses kernal
   routine instead of pure instruction.
   It costs 7 byte.
-
-  Syntax:    WriteVDCWithKernal(FOREGROUND_BACKGROUND_COLOR, 11)
 */
-.macro ReadVDCWithKernal(register, value) {
+.macro ReadVdcWithKernal(register, value) {
     ldx #register
     lda #value
     jsr c128lib.ScreenEditor.READREG
 }
-.assert "ReadVDCWithKernal()", { ReadVDCWithKernal(1, 2) }, {
+.assert "ReadVdcWithKernal()", { ReadVdcWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDDA
 }
+
+.macro FillScreen(char) {
+#if !FILLSCREEN
+    .error "You should use #define FILLSCREEN"
+#else
+    lda #char
+    jsr Vdc.FillScreen
+#endif
+}
+
+.macro FillAttribute(byte) {
+#if !FILLATTRIBUTE
+    .error "You should use #define FILLATTRIBUTE"
+#else
+    lda #byte
+    jsr Vdc.FillAttribute
+#endif
+}
+
+.macro MoveScreenPointerTo00() {
+#if !MOVESCREENPOINTERTO00
+    .error "You should use #define MOVESCREENPOINTERTO00"
+#else
+    jsr Vdc.MoveScreenPointerTo00
+#endif
+}
+
+.macro MoveAttributePointerTo00() {
+#if !MOVEATTRIBUTEPOINTERTO00
+    .error "You should use #define MOVEATTRIBUTEPOINTERTO00"
+#else
+    jsr Vdc.MoveAttributePointerTo00
+#endif
+}
+
+.macro PrintCharAtPosition(char, x, y) {
+#if !PRINTCHARATPOSITION
+    .error "You should use #define PRINTCHARATPOSITION"
+#else
+    lda #char
+    ldx #x
+    ldy #y
+    jsr Vdc.PrintCharAtPosition
+#endif
+}
+
+.macro PositionXy(x, y) {
+#if !POSITIONXY
+    .error "You should use #define POSITIONXY"
+#else
+    ldx #x
+    ldy #y
+    jsr Vdc.PositionXy
+#endif
+}
+
+.macro PositionAttrXy(x, y) {
+#if !POSITIONATTRXY
+    .error "You should use #define POSITIONATTRXY"
+#else
+    ldx #x
+    ldy #y
+    jsr Vdc.PositionAttrXy
+#endif
+}
+
+.macro RepeatByte(times) {
+#if !REPEATBYTE
+    .error "You should use #define REPEATBYTE"
+#else
+    lda #times
+    jsr Vdc.RepeatByte
+#endif
+}
+
+.macro WriteByte(byteToWrite) {
+#if !WRITEBYTE
+    .error "You should use #define WRITEBYTE"
+#else
+    lda #byteToWrite
+    jsr Vdc.WriteByte
+#endif
+}
+
+.macro SetRamPointer(address) {
+#if !SETRAMPOINTER
+    .error "You should use #define SETRAMPOINTER"
+#else
+    lda #<address
+    ldy #>address
+    jsr Vdc.SetRamPointer
+#endif
+}
+
+.macro InitText() {
+#if !INITTEXT
+    .error "You should use #define INITTEXT"
+#else
+    jsr Vdc.InitText
+#endif
+}
+
+// .macro Print80Str(address) {
+//   #if !PRINT80STR
+//     .error "You should use #define PRINT80STR"
+//   #else
+//     lda #>address
+//     ldy #<address // low byte
+//     jsr Vdc.Print80Str
+//   #endif
+// }
