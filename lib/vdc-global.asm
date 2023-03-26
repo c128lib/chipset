@@ -8,11 +8,11 @@
 
 .function @c128lib_CalculateBackgroundAndForeground(background, foreground) { .return CalculateBackgroundAndForeground(background, foreground); }
 .function @c128lib_CalculateAttributeByte(attributes, color) { .return CalculateAttributeByte(attributes, color); }
-.macro @c128lib_GetVDCDisplayStart() { GetVDCDisplayStart() }
-.macro @c128lib_SetVDCUpdateAddress(address) { SetVDCUpdateAddress(address) }
-.macro @c128lib_GetVDCColor(viccolor) { GetVDCColor(viccolor) }
-.macro @c128lib_WriteVDC() { WriteVDC() }
-.macro @c128lib_ReadVDC() { ReadVDC() }
+.macro @c128lib_GetVdcDisplayStart() { GetVdcDisplayStart() }
+.macro @c128lib_SetVdcUpdateAddress(address) { SetVdcUpdateAddress(address) }
+.macro @c128lib_GetVdcColor(viccolor) { GetVdcColor(viccolor) }
+.macro @c128lib_WriteVdc() { WriteVdc() }
+.macro @c128lib_ReadVdc() { ReadVdc() }
 .macro @c128lib_SetBackgroundForegroundColor(background, foreground) { SetBackgroundForegroundColor(background, foreground) }
 .macro @c128lib_SetBackgroundForegroundColorWithVars(background, foreground) { SetBackgroundForegroundColorWithVars(background, foreground) }
 .macro @c128lib_ReadFromVdcMemoryByCoordinates(xPos, yPos, destination, qty) { ReadFromVdcMemoryByCoordinates(xPos, yPos, destination, qty) }
@@ -20,8 +20,8 @@
 .macro @c128lib_WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) { WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) }
 .macro @c128lib_WriteToVdcMemoryByAddress(source, destination, qty) { WriteToVdcMemoryByAddress(source, destination, qty) }
 
-.macro @c128lib_WriteVDCWithKernal(register, value) { WriteVDCWithKernal(register, value) }
-.macro @c128lib_ReadVDCWithKernal(register, value) { ReadVDCWithKernal(register, value) }
+.macro @c128lib_WriteVdcWithKernal(register, value) { WriteVdcWithKernal(register, value) }
+.macro @c128lib_ReadVdcWithKernal(register, value) { ReadVdcWithKernal(register, value) }
 
 // .macro @c128lib_Print80Str(address) { Print80Str(address) }
 .macro @c128lib_FillScreen(char) { FillScreen(char) }

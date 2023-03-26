@@ -17,7 +17,7 @@
 .namespace Vdc {
 
 /*
-  VDC color codes
+  Vdc color codes
 */
 .label VDC_BLACK = 0
 .label VDC_DARK_GRAY = 1
@@ -43,13 +43,13 @@
 .label TEXT_SCREEN_80_COL_WIDTH = 80
 
 /*
-  VDC registers
+  Vdc registers
 */
-.label VDCADR     = $d600   // VDC address/status register
-.label VDCDAT     = $d601   // VDC data register
+.label VDCADR     = $d600   // Vdc address/status register
+.label VDCDAT     = $d601   // Vdc data register
 
 /*
-  VDC internal registers
+  Vdc internal registers
 */
 .label TOTALE_NUMBER_OF_HORIZONTAL_CHARACTER_POSITIONS    = $00
 .label NUMBER_OF_VISIBILE_HORIZONTAL_CHARACTER_POSITIONS  = $01
@@ -182,10 +182,10 @@ FillAttribute: {
 MoveScreenPointerTo00: {
     lda vdcram
     ldx #CURRENT_MEMORY_LOW_ADDRESS
-    WriteVDC()
+    WriteVdc()
     dex
     lda vdcram+1
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
@@ -197,10 +197,10 @@ MoveScreenPointerTo00: {
 MoveAttributePointerTo00: {
     lda vdcattr
     ldx #CURRENT_MEMORY_LOW_ADDRESS
-    WriteVDC()
+    WriteVdc()
     dex
     lda vdcattr+1
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
@@ -265,10 +265,10 @@ PositionXy: {
     sta high          // added offset for start of screen RAM
     ldx #CURRENT_MEMORY_HIGH_ADDRESS
     lda high
-    WriteVDC()
+    WriteVdc()
     inx
     lda low
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
@@ -313,10 +313,10 @@ PositionAttrXy: {
     sta high          // added offset for start of attribute RAM
     ldx #CURRENT_MEMORY_HIGH_ADDRESS
     lda high
-    WriteVDC()
+    WriteVdc()
     inx
     lda low
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
@@ -328,12 +328,12 @@ PositionAttrXy: {
 RepeatByte: {
     pha
     ldx #VERTICAL_SMOOTH_SCROLLING
-    ReadVDC()
+    ReadVdc()
     and #$7f
-    WriteVDC()
+    WriteVdc()
     pla
     ldx #NUMBER_OF_BYTES_FOR_BLOCK_WRITE_OR_COPY
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
@@ -347,7 +347,7 @@ RepeatByte: {
 */
 WriteByte: {
     ldx #MEMORY_READ_WRITE
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
@@ -362,34 +362,34 @@ WriteByte: {
 */
 SetRamPointer: {
     ldx #CURRENT_MEMORY_LOW_ADDRESS
-    WriteVDC()
+    WriteVdc()
     tya
     dex
-    WriteVDC()
+    WriteVdc()
     rts
 }
 #endif
 
 #if INITTEXT
 /*
-  Initialize VDC for text display.
+  Initialize Vdc for text display.
 */
 InitText: {
     ldx #HORIZONTAL_SMOOTH_SCROLLING
-    ReadVDC()
+    ReadVdc()
     and #$7f
-    WriteVDC()              // set text mode
+    WriteVdc()              // set text mode
     ldx #SCREEN_MEMORY_STARTING_HIGH_ADDRESS
-    ReadVDC()
+    ReadVdc()
     sta vdcram+1
     inx
-    ReadVDC()
+    ReadVdc()
     sta vdcram            // save screen RAM address
     ldx #ATTRIBUTE_MEMORY_HIGH_ADDRESS
-    ReadVDC()
+    ReadVdc()
     sta vdcattr+1
     inx
-    ReadVDC()
+    ReadVdc()
     sta vdcattr           // save attribute RAM address
 
     rts
@@ -455,14 +455,14 @@ InitText: {
 .macro SetBackgroundForegroundColor(background, foreground) {
     lda #0
     ldx #Vdc.HORIZONTAL_SMOOTH_SCROLLING
-    ReadVDC()
+    ReadVdc()
 
     and #%10111111
-    WriteVDC()
+    WriteVdc()
 
     lda #CalculateBackgroundAndForeground(background, foreground)
     ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
-    WriteVDC()
+    WriteVdc()
 }
 .assert "SetBackgroundForegroundColor(background, foreground)", {
     SetBackgroundForegroundColor(Vdc.VDC_DARK_GREEN, Vdc.VDC_LIGHT_GREEN)
@@ -485,10 +485,10 @@ InitText: {
 .macro SetBackgroundForegroundColorWithVars(background, foreground) {
     lda #0
     ldx #Vdc.HORIZONTAL_SMOOTH_SCROLLING
-    ReadVDC()
+    ReadVdc()
 
     and #%10111111
-    WriteVDC()
+    WriteVdc()
 
     lda foreground
     asl
@@ -497,7 +497,7 @@ InitText: {
     asl
     ora background
     ldx #Vdc.FOREGROUND_BACKGROUND_COLOR
-    WriteVDC()
+    WriteVdc()
 }
 .assert "SetBackgroundForegroundColorWithVars(background, foreground)", {
     SetBackgroundForegroundColorWithVars($beef, $baab)
@@ -719,30 +719,29 @@ InitText: {
 .assert "getTextOffset80Col(79,24) gives 1959", getTextOffset80Col(79, 24), 1999
 
 /*
-  Returns the address start of VDC display memory data. This
-  is stored in VDC register 12 and 13.
+  Returns the address start of Vdc display memory data. This
+  is stored in Vdc register 12 and 13.
   The 16-bit value is stored in $FB and $FC.
 */
-.macro GetVDCDisplayStart() {
+.macro GetVdcDisplayStart() {
   ldx #Vdc.SCREEN_MEMORY_STARTING_HIGH_ADDRESS
-  ReadVDC()
+  ReadVdc()
 
   sta $fb
   inx
-  ReadVDC()
+  ReadVdc()
   sta $fc
 }
 
 /*
   Set the pointer to the RAM area that is to be updated.
-  The update pointer is stored in VDC register 18 and 19.
-  This will point register 18 and 19 to $1200. This area
-  can then be written to using WriteVDCRAM()
+  The update pointer is stored in Vdc register 18 and 19.
+  This will point register 18 and 19 to $1200.
 */
-.macro SetVDCUpdateAddress(address) {
+.macro SetVdcUpdateAddress(address) {
   ldx #Vdc.CURRENT_MEMORY_HIGH_ADDRESS
   lda #>address
-  WriteVDC();
+  WriteVdc();
 
   inx
   .var a1 = <address
@@ -750,17 +749,17 @@ InitText: {
   .if( a1 != a2) {
     lda #<address // include if different from hi-byte.
   }
-  WriteVDC()
+  WriteVdc()
 }
 
 /*
-  Translates between VIC and VDC color codes.
+  Translates between Vic and Vdc color codes.
 */
-.macro GetVDCColor(viccolor) {
+.macro GetVdcColor(viccolor) {
   ldx #viccolor
   lda Vdc.COLOR80,x
 }
-.assert "GetVDCColor(0)", { GetVDCColor(0) }, {
+.assert "GetVdcColor(0)", { GetVdcColor(0) }, {
   ldx #0; lda $ce5c,x
 }
 
@@ -770,13 +769,13 @@ InitText: {
   number in X and value to write in A.
   It costs 11 byte.
 */
-.macro WriteVDC() {
+.macro WriteVdc() {
     stx Vdc.VDCADR
 !:  bit Vdc.VDCADR
     bpl !-
     sta Vdc.VDCDAT
 }
-.assert "WriteVDC()", { WriteVDC() }, {
+.assert "WriteVdc()", { WriteVdc() }, {
   stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
@@ -786,13 +785,13 @@ InitText: {
   number in X and value is written in A.
   It costs 11 byte.
 */
-.macro ReadVDC() {
+.macro ReadVdc() {
     stx Vdc.VDCADR
 !:  bit Vdc.VDCADR
     bpl !-
     lda Vdc.VDCDAT
 }
-.assert "ReadVDC()", { ReadVDC() }, {
+.assert "ReadVdc()", { ReadVdc() }, {
   stx $d600; bit $d600; bpl *-3; lda $d601
 }
 
@@ -801,12 +800,12 @@ InitText: {
   routine instead of pure instruction.
   It costs 7 byte.
 */
-.macro WriteVDCWithKernal(register, value) {
+.macro WriteVdcWithKernal(register, value) {
     ldx #register
     lda #value
     jsr c128lib.ScreenEditor.WRITEREG
 }
-.assert "WriteVDCWithKernal()", { WriteVDCWithKernal(1, 2) }, {
+.assert "WriteVdcWithKernal()", { WriteVdcWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDCC
 }
 
@@ -815,12 +814,12 @@ InitText: {
   routine instead of pure instruction.
   It costs 7 byte.
 */
-.macro ReadVDCWithKernal(register, value) {
+.macro ReadVdcWithKernal(register, value) {
     ldx #register
     lda #value
     jsr c128lib.ScreenEditor.READREG
 }
-.assert "ReadVDCWithKernal()", { ReadVDCWithKernal(1, 2) }, {
+.assert "ReadVdcWithKernal()", { ReadVdcWithKernal(1, 2) }, {
   ldx #1; lda #2; jsr $CDDA
 }
 
@@ -925,18 +924,6 @@ InitText: {
 #endif
 }
 
-
-
-/*
-  Print a char at specific coordinates in screen memory.
-
-  Params:
-    A - character to print on screen
-    X - column where to print
-    Y - row where to print
-*/
-
-
 // .macro Print80Str(address) {
 //   #if !PRINT80STR
 //     .error "You should use #define PRINT80STR"
@@ -944,5 +931,5 @@ InitText: {
 //     lda #>address
 //     ldy #<address // low byte
 //     jsr Vdc.Print80Str
-//   #endif 
+//   #endif
 // }
