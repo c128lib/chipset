@@ -1,5 +1,7 @@
-#import "io.asm"
 #importonce
+
+#import "io.asm"
+
 .filenamespace c128lib
 
 .macro @c128lib_OpenIOChannel(filenumber, devicenumber, secondary) { OpenIOChannel(filenumber, devicenumber, secondary) }

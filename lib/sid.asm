@@ -1,6 +1,5 @@
 /*
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
+ * c128lib - Sid
  *
  * References available at
  * https://c128lib.github.io/Reference/Sid

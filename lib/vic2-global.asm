@@ -1,5 +1,7 @@
-#import "vic2.asm"
 #importonce
+
+#import "vic2.asm"
+
 .filenamespace c128lib
 
 .macro @c128lib_SetBorderAndBackgroundColor(borderColor, backgroundColor) { SetBorderAndBackgroundColor(borderColor, backgroundColor) }

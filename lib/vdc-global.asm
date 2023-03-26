@@ -1,5 +1,7 @@
-#import "vdc.asm"
 #importonce
+
+#import "vdc.asm"
+
 .filenamespace c128lib
 
 .macro @c128lib_Go40() { Go40() }

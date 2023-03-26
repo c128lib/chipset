@@ -1,17 +1,14 @@
-#import "common/lib/common.asm"
-
 /*
- * Set of variables, functions and macros
- * for handling VIC-II graphic processor.
- *
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
+ * c128lib - Vic2
  *
  * References available at
  * https://c128lib.github.io/Reference/Vic
  * https://c128lib.github.io/Reference/D000
 */
 #importonce
+
+#import "common/lib/common.asm"
+
 .filenamespace c128lib
 
 .namespace Vic2 {
@@ -172,136 +169,6 @@
 
 .label SCREEN_EDITOR_IRQ_FLAG = $D8
 
-}
-
-/*
-  Set border and background color with optimization if possible.
-
-  Params:
-  borderColor - borderColor to be set
-  backgroundColor - backgroundColor to be set
-
-*/
-.macro SetBorderAndBackgroundColor(borderColor, backgroundColor) {
-  lda #borderColor
-  sta Vic2.BORDER_COL
-  .if (borderColor != backgroundColor) {
-    lda #backgroundColor
-  }
-  sta Vic2.BG_COL_0
-}
-.assert "SetBorderAndBackgroundColor(borderColor, backgroundColor) different color",  { SetBorderAndBackgroundColor(1, 2) }, {
-  lda #1; sta $D020; lda #2; sta $D021
-}
-.assert "SetBorderAndBackgroundColor(borderColor, backgroundColor) same color",  { SetBorderAndBackgroundColor(3, 3) }, {
-  lda #3; sta $D020; sta $D021
-}
-
-/*
-  Set border color
-
-  Params:
-  color - color to be set
-
-*/
-.macro SetBorderColor(color) {
-  lda #color
-  sta Vic2.BORDER_COL
-}
-.assert "SetBorderColor(borderColor)",  { SetBorderColor(1) }, {
-  lda #1; sta $D020
-}
-
-/*
-  Set background color
-
-  Params:
-  color - color to be set
-
-*/
-.macro SetBackgroundColor(color) {
-  lda #color
-  sta Vic2.BG_COL_0
-}
-.assert "SetBackgroundColor(color)",  { SetBackgroundColor(1) }, {
-  lda #1; sta $D021
-}
-
-/*
-  Calculates memory offset of text cell specified by given coordinates.
-
-  Params:
-  xPos - X coord
-  yPos - Y coord
-*/
-.function getTextOffset(xPos, yPos) {
-  .return xPos + Vic2.TEXT_SCREEN_WIDTH * yPos
-}
-.assert "getTextOffset(0,0) gives 0", getTextOffset(0, 0), 0
-.assert "getTextOffset(39,0) gives 39", getTextOffset(39, 0), 39
-.assert "getTextOffset(0,1) gives 40", getTextOffset(0, 1), 40
-.assert "getTextOffset(19,12) gives 499", getTextOffset(19, 12), 499
-.assert "getTextOffset(39,24) gives 999", getTextOffset(39, 24), 999
-
-/*
-  Combines screen and charset slots for memory control register.
-
-  Params:
-  screenMem: location of screen memory: 0..15
-  charSet: location of charset definition: 0..7
-*/
-.function getTextMemory(screenMem, charSet) {
-  .return charSet<<1 | screenMem<<4
-}
-.assert "getTextMemory(0, 0) returns $00",  getTextMemory(0, 0), %00000000
-.assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
-.assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
-
-/*
-  Set Basic IRQ routine active or not. Turning off the BASIC
-  IRQ routine will give you direct access to the hardware registers,
-  you should keep in mind that it will also effectively disable the
-  BASIC statements MOVSPR, COLLISION, SOUND and PLAY
-
-  Params: bool
-*/
-.macro SetBasicIrqActivity(active) {
-  .if (active == 0) {
-    lda #1
-  } else {
-    lda #0
-  }
-    sta Vic2.BASIC_IRQ_FLAG
-}
-.assert "SetBasicIrqActivity() sets 1 to $12FD",  { SetBasicIrqActivity(0) }, {
-  lda #1; sta $12FD
-}
-.assert "SetBasicIrqActivity() sets 0 to $12FD",  { SetBasicIrqActivity(1) }, {
-  lda #0; sta $12FD
-}
-
-/*
-  Set screen editor IRQ routine active or not. This gives you direct control
-  over the VIC chip register settings (D018), but disables BASIC'S ability
-  to change display modes.
-
-  Params: bool
-*/
-.macro SetScreenEditorIrq(active) {
-  .if (active == 0) {
-    lda #$ff
-  } else {
-    lda #0
-  }
-    sta Vic2.SCREEN_EDITOR_IRQ_FLAG
-}
-.assert "SetScreenEditorIrq() sets $ff to $D8",  { SetScreenEditorIrq(0) }, {
-  lda #$ff; sta $D8
-}
-.assert "SetScreenEditorIrq() sets 0 to $D8",  { SetScreenEditorIrq(1) }, {
-  lda #0; sta $D8
-}
-
 // TIP(intoinside): c128ProgrammersReferenceGuide has a wrong example on page 231
 // (manual page 223). $0A2C and $0A2D is wrongly written as $02AC and $02AC
 .label VIC_SCREEN_CHAR_SHADOW   = $0A2C       // VIC text screen and character base
@@ -333,34 +200,183 @@
 .label SCREEN_MEM_3800      = %11100000
 .label SCREEN_MEM_3C00      = %11110000
 
+.label BITMAP_MEM_0000      = %00000000
+.label BITMAP_MEM_2000      = %00001000
+
+}
+
+/*
+  Set border and background color with optimization if possible.
+
+  Params:
+    borderColor - borderColor to be set
+    backgroundColor - backgroundColor to be set
+
+  Mod: .A
+*/
+.macro SetBorderAndBackgroundColor(borderColor, backgroundColor) {
+  lda #borderColor
+  sta Vic2.BORDER_COL
+  .if (borderColor != backgroundColor) {
+    lda #backgroundColor
+  }
+  sta Vic2.BG_COL_0
+}
+.assert "SetBorderAndBackgroundColor(borderColor, backgroundColor) different color",  { SetBorderAndBackgroundColor(1, 2) }, {
+  lda #1; sta $D020; lda #2; sta $D021
+}
+.assert "SetBorderAndBackgroundColor(borderColor, backgroundColor) same color",  { SetBorderAndBackgroundColor(3, 3) }, {
+  lda #3; sta $D020; sta $D021
+}
+
+/*
+  Set border color
+
+  Params:
+    color - color to be set
+
+  Mod: .A
+*/
+.macro SetBorderColor(color) {
+  lda #color
+  sta Vic2.BORDER_COL
+}
+.assert "SetBorderColor(borderColor)",  { SetBorderColor(1) }, {
+  lda #1; sta $D020
+}
+
+/*
+  Set background color
+
+  Params:
+    color - color to be set
+
+  Mod: .A
+*/
+.macro SetBackgroundColor(color) {
+  lda #color
+  sta Vic2.BG_COL_0
+}
+.assert "SetBackgroundColor(color)",  { SetBackgroundColor(1) }, {
+  lda #1; sta $D021
+}
+
+/*
+  Calculates memory offset of text cell specified by given coordinates.
+
+  Params:
+    xPos - X coord
+    yPos - Y coord
+*/
+.function getTextOffset(xPos, yPos) {
+  .return xPos + Vic2.TEXT_SCREEN_WIDTH * yPos
+}
+.assert "getTextOffset(0,0) gives 0", getTextOffset(0, 0), 0
+.assert "getTextOffset(39,0) gives 39", getTextOffset(39, 0), 39
+.assert "getTextOffset(0,1) gives 40", getTextOffset(0, 1), 40
+.assert "getTextOffset(19,12) gives 499", getTextOffset(19, 12), 499
+.assert "getTextOffset(39,24) gives 999", getTextOffset(39, 24), 999
+
+/*
+  Combines screen and charset slots for memory control register.
+
+  Params:
+    screenMem - location of screen memory: 0..15
+    charSet - location of charset definition: 0..7
+*/
+.function getTextMemory(screenMem, charSet) {
+  .return charSet<<1 | screenMem<<4
+}
+.assert "getTextMemory(0, 0) returns $00",  getTextMemory(0, 0), %00000000
+.assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
+.assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
+
+/*
+  Set Basic IRQ routine active or not. Turning off the BASIC
+  IRQ routine will give you direct access to the hardware registers,
+  you should keep in mind that it will also effectively disable the
+  BASIC statements MOVSPR, COLLISION, SOUND and PLAY
+
+  Params:
+    active - activate or deactivate basic irq
+
+  Mod: .A
+*/
+.macro SetBasicIrqActivity(active) {
+  .if (active == 0) {
+    lda #1
+  } else {
+    lda #0
+  }
+    sta Vic2.BASIC_IRQ_FLAG
+}
+.assert "SetBasicIrqActivity() sets 1 to $12FD",  { SetBasicIrqActivity(0) }, {
+  lda #1; sta $12FD
+}
+.assert "SetBasicIrqActivity() sets 0 to $12FD",  { SetBasicIrqActivity(1) }, {
+  lda #0; sta $12FD
+}
+
+/*
+  Set screen editor IRQ routine active or not. This gives you direct control
+  over the VIC chip register settings (D018), but disables BASIC'S ability
+  to change display modes.
+
+  Params:
+    active - activate or deactivate screen editor irq
+
+  Mod: .A
+*/
+.macro SetScreenEditorIrq(active) {
+  .if (active == 0) {
+    lda #$ff
+  } else {
+    lda #0
+  }
+    sta Vic2.SCREEN_EDITOR_IRQ_FLAG
+}
+.assert "SetScreenEditorIrq() sets $ff to $D8",  { SetScreenEditorIrq(0) }, {
+  lda #$ff; sta $D8
+}
+.assert "SetScreenEditorIrq() sets 0 to $D8",  { SetScreenEditorIrq(1) }, {
+  lda #0; sta $D8
+}
+
 /*
   Set screen memory and charset memory position by
   using shadow register.
 
-  Params: CHAR_MEM_X | SCREEN_MEM_X
+  Params:
+    config - screen memory and/or char memory configuration.
+
+  Mod: .A
+
+  Remarks: labels Vic2.CHAR* and Vic2.SCREEN_MEM* can ben used to compone
 */
 .macro SetScreenAndCharacterMemory(config) {
     lda #config
-    sta VIC_SCREEN_CHAR_SHADOW
+    sta Vic2.VIC_SCREEN_CHAR_SHADOW
 }
-.assert "SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) sets char to $3800 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenAndCharacterMemory(CHAR_MEM_3800 | SCREEN_MEM_3C00) }, {
+.assert "SetScreenAndCharacterMemory(Vic2.CHAR_MEM_3800 | Vic2.SCREEN_MEM_3C00) sets char to $3800 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenAndCharacterMemory(Vic2.CHAR_MEM_3800 | Vic2.SCREEN_MEM_3C00) }, {
   lda #%11111110; sta $0A2C
 }
-
-.label BITMAP_MEM_0000      = %00000000
-.label BITMAP_MEM_2000      = %00001000
 
 /*
   Set screen memory and bitmap memory pointer by
   using shadow register.
 
-  Params: BITMAP_MEM_X | SCREEN_MEM_X
+  Params:
+    config - screen memory and/or bitmap memory configuration.
+
+  Mod: .A
+
+  Remarks: labels Vic2.BITMAP* and Vic2.SCREEN_MEM* can ben used to compone
 */
 .macro SetScreenMemoryAndBitmapPointer(config) {
     lda #config
-    sta VIC_BITMAP_VIDEO_SHADOW
+    sta Vic2.VIC_BITMAP_VIDEO_SHADOW
 }
-.assert "SetScreenMemoryAndBitmapPointer(BITMAP_MEM_2000 | SCREEN_MEM_3C00) sets bitmap to $2000 and Screen to $3c00 in shaow MEMORY_CONTROL",  { SetScreenMemoryAndBitmapPointer(BITMAP_MEM_2000 | SCREEN_MEM_3C00) }, {
+.assert "SetScreenMemoryAndBitmapPointer(Vic2.BITMAP_MEM_2000 | Vic2.SCREEN_MEM_3C00) sets bitmap to $2000 and Screen to $3c00 in shadow MEMORY_CONTROL",  { SetScreenMemoryAndBitmapPointer(Vic2.BITMAP_MEM_2000 | Vic2.SCREEN_MEM_3C00) }, {
   lda #%11111000; sta $0A2D
 }
 
@@ -368,10 +384,10 @@
   Configures memory for text mode
 
   Params:
-  video: location of video ram: 0..15
-  charSet: location of charset definition: 0..7
+    video - location of video ram: 0..15
+    charSet - location of charset definition: 0..7
 
-  MOD: A
+  Mod: .A
 */
 .macro configureTextMemory(video, charSet) {
   lda #getTextMemory(video, charSet)
@@ -394,8 +410,8 @@
   Combines video and bitmap slots into value of memory control register.
 
   Params:
-  video: location of video ram: 0..15
-  bitmap: location of bitmap definition: 0..1
+    video - location of video ram: 0..15
+    bitmap - location of bitmap definition: 0..1
 */
 .function getBitmapMemory(video, bitmap) {
   .return bitmap<<3 | video<<4
@@ -408,10 +424,10 @@
   Configure memory for bitmap mode
 
   Params:
-  video: location of video ram: 0..15
-  bitmap: location of bitmap definition: 0..1
+    video - location of video ram: 0..15
+    bitmap - location of bitmap definition: 0..1
 
-  MOD: A
+  Mod: .A
 */
 .macro configureBitmapMemory(video, bitmap) {
   lda #getBitmapMemory(video, bitmap)
@@ -471,9 +487,7 @@
   not required. Use when precise timing is not critical.
 
   Params:
-  mode: VIC-II video mode designator according to predefined labels
-
-  MOD: A
+    mode - VIC-II video mode designator according to predefined labels
 */
 // .macro setVideoMode(mode) {                // 24
 //   lda CONTROL_2                             // 4
@@ -510,7 +524,10 @@
 /*
   Configures VIC-II so that it fire IRQ when given "rasterLine" is drawn.
 
-  MOD: A
+  Params:
+    rasterLine: link where irq should trigger
+
+  Mod: .A
 */
 .macro setRaster(rasterLine) {
   lda #<rasterLine
@@ -542,7 +559,7 @@
 /*
   Call it when entering raster interrupt.
 
-  MOD: A
+  Mod: .A
 */
 .macro irqEnter() {
   pha
@@ -558,6 +575,8 @@
   intVector - address of next interrupt handling routine
   rasterLine - at which raster line should we fire next interrupt
   memory - if true, rasterLine is taken from memory address, if false - absolute addressing is used
+
+  Mod: .A .X .Y
 */
 .macro irqExit(intVector, rasterLine, memory) {
   ldx #>intVector
@@ -646,9 +665,9 @@
   This subroutine should be first installed by calling this macro with appropriate parameter (see below).
 
   Parameters:
-  charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
+    charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
 
-  Mod: A, Y
+  Mod: .A .Y
 */
 .macro rotateCharRight(charPointer) {
   ldy #0
@@ -671,10 +690,10 @@
   This subroutine should be first installed by calling this macro with appropriate parameter (see below).
 
   Parameters:
-  charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
-  store - should point to zero or non-zero location (1 byte). This location is used internaly, it's content will be destroyed after calling the subroutine.
+    charPointer - should point to zero-page location (2 bytes). Location should contain address of the character to be rotated.
+    store - should point to zero or non-zero location (1 byte). This location is used internaly, it's content will be destroyed after calling the subroutine.
 
-  Mod: A, Y
+  Mod: .A .Y
 */
 .macro rotateCharBottom(charPointer, store) {
   ldy #7
@@ -690,4 +709,3 @@
   lda store
   sta (charPointer),y
 }
-

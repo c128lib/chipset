@@ -1,8 +1,8 @@
 /*
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
+ * c128lib - 8502
  *
- * Ref: https://www.cubic.org/~doj/c64/mapping128.pdf
+ * References available at
+ * https://www.cubic.org/~doj/c64/mapping128.pdf
  */
 #importonce
 

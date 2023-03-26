@@ -1,5 +1,7 @@
-#import "sprites.asm"
 #importonce
+
+#import "sprites.asm"
+
 .filenamespace c128lib
 
 .macro @c128lib_SetSpriteXPosition(spriteNo, x) { SetSpriteXPosition(spriteNo, x) }

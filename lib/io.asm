@@ -1,13 +1,11 @@
+/*
+ * c128lib - I/o
+ */
+#importonce
+
 #import "common/lib/common.asm"
 #import "common/lib/kernal.asm"
 
-/*
- * Set of macros for handling IO.
- *
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
- */
-#importonce
 .filenamespace c128lib
 
 /*

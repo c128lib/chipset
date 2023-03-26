@@ -1,10 +1,10 @@
-#import "vic2.asm"
-
 /*
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
+ * c128lib - Sprites
  */
 #importonce
+
+#import "vic2.asm"
+
 .filenamespace c128lib
 
 /* 

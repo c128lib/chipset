@@ -1,8 +1,5 @@
-#import "common/lib/kernal.asm"
-#import "common/lib/screen-editor.asm"
-
 /*
- * Vdc
+ * c128lib - Vdc
  *
  * References available at
  * https://c128lib.github.io/Reference/Vdc
@@ -12,6 +9,10 @@
  * https://gitlab.com/aaron-baugher/farming-game-128/-/blob/master/vdc80lib.a
 */
 #importonce
+
+#import "common/lib/kernal.asm"
+#import "common/lib/screen-editor.asm"
+
 .filenamespace c128lib
 
 .namespace Vdc {

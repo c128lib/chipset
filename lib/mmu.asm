@@ -1,14 +1,13 @@
 /*
- * Requires KickAssembler v5.x
- * (c) 2022 Raffaele Intorcia
+ * c128lib - Mmu
  *
  * References available at
  * https://c128lib.github.io/Reference/Mmu
  * https://c128lib.github.io/Reference/D500
  */
-#import "common/lib/kernal.asm"
-
 #importonce
+
+#import "common/lib/kernal.asm"
 
 .filenamespace c128lib
 
