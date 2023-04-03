@@ -815,13 +815,12 @@ InitText: {
   routine instead of pure instruction.
   It costs 7 byte.
 */
-.macro ReadVdcWithKernal(register, value) {
+.macro ReadVdcWithKernal(register) {
     ldx #register
-    lda #value
     jsr c128lib.ScreenEditor.READREG
 }
-.assert "ReadVdcWithKernal()", { ReadVdcWithKernal(1, 2) }, {
-  ldx #1; lda #2; jsr $CDDA
+.assert "ReadVdcWithKernal()", { ReadVdcWithKernal(1) }, {
+  ldx #1; jsr $CDDA
 }
 
 .macro FillScreen(char) {

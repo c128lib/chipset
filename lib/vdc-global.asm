@@ -23,7 +23,7 @@
 .macro @c128lib_WriteToVdcMemoryByAddress(source, destination, qty) { WriteToVdcMemoryByAddress(source, destination, qty) }
 
 .macro @c128lib_WriteVdcWithKernal(register, value) { WriteVdcWithKernal(register, value) }
-.macro @c128lib_ReadVdcWithKernal(register, value) { ReadVdcWithKernal(register, value) }
+.macro @c128lib_ReadVdcWithKernal(register) { ReadVdcWithKernal(register) }
 
 // .macro @c128lib_Print80Str(address) { Print80Str(address) }
 .macro @c128lib_FillScreen(char) { FillScreen(char) }
