@@ -123,10 +123,10 @@
 //     rts
 // #endif
 
-#if FILLSCREEN
-#define MOVESCREENPOINTERTO00
-#define WRITEBYTE
-#define REPEATBYTE
+#if VDC_FILLSCREEN
+#define VDC_MOVESCREENPOINTERTO00
+#define VDC_WRITEBYTE
+#define VDC_REPEATBYTE
 /*
   Fill screen ram with a specific character.
 
@@ -149,10 +149,10 @@ FillScreen:
     rts
 #endif
 
-#if FILLATTRIBUTE
-#define MOVEATTRIBUTEPOINTERTO00
-#define REPEATBYTE
-#define WRITEBYTE
+#if VDC_FILLATTRIBUTE
+#define VDC_MOVEATTRIBUTEPOINTERTO00
+#define VDC_REPEATBYTE
+#define VDC_WRITEBYTE
 /*
   Fill attribute ram with a specific value.
 
@@ -176,7 +176,7 @@ FillAttribute: {
 }
 #endif
 
-#if MOVESCREENPOINTERTO00
+#if VDC_MOVESCREENPOINTERTO00
 /*
   Move screen ram pointer to 0/0 on screen.
 */
@@ -191,7 +191,7 @@ MoveScreenPointerTo00: {
 }
 #endif
 
-#if MOVEATTRIBUTEPOINTERTO00
+#if VDC_MOVEATTRIBUTEPOINTERTO00
 /*
   Move ram pointer to 0/0 in attribute memory.
 */
@@ -206,9 +206,9 @@ MoveAttributePointerTo00: {
 }
 #endif
 
-#if PRINTCHARATPOSITION
-#define POSITIONXY
-#define WRITEBYTE
+#if VDC_PRINTCHARATPOSITION
+#define VDC_POSITIONXY
+#define VDC_WRITEBYTE
 /*
   Print a char at specific coordinates in screen memory.
 
@@ -226,7 +226,7 @@ PrintCharAtPosition: {
 }
 #endif
 
-#if POSITIONXY
+#if VDC_POSITIONXY
 /*
   Position the ram pointer at specific coordinates in screen memory.
 
@@ -274,7 +274,7 @@ PositionXy: {
 }
 #endif
 
-#if POSITIONATTRXY
+#if VDC_POSITIONATTRXY
 /*
   Position the ram pointer at specific coordinates in attribute memory.
 
@@ -322,7 +322,7 @@ PositionAttrXy: {
 }
 #endif
 
-#if REPEATBYTE
+#if VDC_REPEATBYTE
 /*
   Pass the number of times in A.
 */
@@ -339,7 +339,7 @@ RepeatByte: {
 }
 #endif
 
-#if WRITEBYTE
+#if VDC_WRITEBYTE
 /*
   Write a specific byte to current ram pointer.
 
@@ -353,7 +353,7 @@ WriteByte: {
 }
 #endif
 
-#if SETRAMPOINTER
+#if VDC_SETRAMPOINTER
 /*
   Set ram pointer.
 
@@ -371,7 +371,7 @@ SetRamPointer: {
 }
 #endif
 
-#if INITTEXT
+#if VDC_INITTEXT
 /*
   Initialize Vdc for text display.
 */
@@ -397,7 +397,7 @@ InitText: {
 }
 #endif
 
-#if MOVESCREENPOINTERTO00 || MOVEATTRIBUTEPOINTERTO00 || POSITIONXY || POSITIONATTRXY || INITTEXT
+#if VDC_MOVESCREENPOINTERTO00 || VDC_MOVEATTRIBUTEPOINTERTO00 || VDC_POSITIONXY || VDC_POSITIONATTRXY || VDC_INITTEXT
   count:      .byte $fa
   high:       .byte $fc
   low:        .byte $fb
@@ -824,8 +824,8 @@ InitText: {
 }
 
 .macro FillScreen(char) {
-#if !FILLSCREEN
-    .error "You should use #define FILLSCREEN"
+#if !VDC_FILLSCREEN
+    .error "You should use #define VDC_FILLSCREEN"
 #else
     lda #char
     jsr Vdc.FillScreen
@@ -833,8 +833,8 @@ InitText: {
 }
 
 .macro FillAttribute(byte) {
-#if !FILLATTRIBUTE
-    .error "You should use #define FILLATTRIBUTE"
+#if !VDC_FILLATTRIBUTE
+    .error "You should use #define VDC_FILLATTRIBUTE"
 #else
     lda #byte
     jsr Vdc.FillAttribute
@@ -842,24 +842,24 @@ InitText: {
 }
 
 .macro MoveScreenPointerTo00() {
-#if !MOVESCREENPOINTERTO00
-    .error "You should use #define MOVESCREENPOINTERTO00"
+#if !VDC_MOVESCREENPOINTERTO00
+    .error "You should use #define VDC_MOVESCREENPOINTERTO00"
 #else
     jsr Vdc.MoveScreenPointerTo00
 #endif
 }
 
 .macro MoveAttributePointerTo00() {
-#if !MOVEATTRIBUTEPOINTERTO00
-    .error "You should use #define MOVEATTRIBUTEPOINTERTO00"
+#if !VDC_MOVEATTRIBUTEPOINTERTO00
+    .error "You should use #define VDC_MOVEATTRIBUTEPOINTERTO00"
 #else
     jsr Vdc.MoveAttributePointerTo00
 #endif
 }
 
 .macro PrintCharAtPosition(char, x, y) {
-#if !PRINTCHARATPOSITION
-    .error "You should use #define PRINTCHARATPOSITION"
+#if !VDC_PRINTCHARATPOSITION
+    .error "You should use #define VDC_PRINTCHARATPOSITION"
 #else
     lda #char
     ldx #x
@@ -869,8 +869,8 @@ InitText: {
 }
 
 .macro PositionXy(x, y) {
-#if !POSITIONXY
-    .error "You should use #define POSITIONXY"
+#if !VDC_POSITIONXY
+    .error "You should use #define VDC_POSITIONXY"
 #else
     ldx #x
     ldy #y
@@ -879,8 +879,8 @@ InitText: {
 }
 
 .macro PositionAttrXy(x, y) {
-#if !POSITIONATTRXY
-    .error "You should use #define POSITIONATTRXY"
+#if !VDC_POSITIONATTRXY
+    .error "You should use #define VDC_POSITIONATTRXY"
 #else
     ldx #x
     ldy #y
@@ -889,8 +889,8 @@ InitText: {
 }
 
 .macro RepeatByte(times) {
-#if !REPEATBYTE
-    .error "You should use #define REPEATBYTE"
+#if !VDC_REPEATBYTE
+    .error "You should use #define VDC_REPEATBYTE"
 #else
     lda #times
     jsr Vdc.RepeatByte
@@ -898,8 +898,8 @@ InitText: {
 }
 
 .macro WriteByte(byteToWrite) {
-#if !WRITEBYTE
-    .error "You should use #define WRITEBYTE"
+#if !VDC_WRITEBYTE
+    .error "You should use #define VDC_WRITEBYTE"
 #else
     lda #byteToWrite
     jsr Vdc.WriteByte
@@ -907,8 +907,8 @@ InitText: {
 }
 
 .macro SetRamPointer(address) {
-#if !SETRAMPOINTER
-    .error "You should use #define SETRAMPOINTER"
+#if !VDC_SETRAMPOINTER
+    .error "You should use #define VDC_SETRAMPOINTER"
 #else
     lda #<address
     ldy #>address
@@ -917,8 +917,8 @@ InitText: {
 }
 
 .macro InitText() {
-#if !INITTEXT
-    .error "You should use #define INITTEXT"
+#if !VDC_INITTEXT
+    .error "You should use #define VDC_INITTEXT"
 #else
     jsr Vdc.InitText
 #endif
