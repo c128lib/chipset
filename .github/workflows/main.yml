@@ -24,7 +24,7 @@ jobs:
         python-version: '3.10' 
     - run: |
         ls -la
-        python converter.py lib\*.asm
+        python converter.py lib/*.asm
 
     - name: Doxygen Action
       uses: mattnotmitt/doxygen-action@v1.1.0
