@@ -1,12 +1,21 @@
+# KickAssembler out files
 *.prg
 *.sym
-.asminfo.txt
-.source.txt
-# gradle
-.gradle
-build
 *.dbg
 *.vs
+*.specOut
+.asminfo.txt
+.source.txt
+
+# Gradle files
+.gradle
+
+# Doxygen
+html/*
+xml/*
+lib/output
+
+# IDE and tool files
 .idea
 .ra
 .vscode
