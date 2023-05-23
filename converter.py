@@ -43,6 +43,6 @@ print("Using " + sys.argv[1] + " command line arguments")
 head, tail = os.path.split(sys.argv[1])
 print("Creating " + head + '/output/')
 os.makedirs(head + '/output/', exist_ok=True)
-
+print(sys.argv)
 for file in glob.glob(sys.argv[1]):
   convertFile(file)
