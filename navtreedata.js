@@ -25,11 +25,19 @@
 var NAVTREE =
 [
   [ "c128lib Chipset", "index.html", [
+    [ "Namespaces", "namespaces.html", [
+      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
+      [ "Namespace Members", "namespacemembers.html", [
+        [ "All", "namespacemembers.html", "namespacemembers_dup" ],
+        [ "Variables", "namespacemembers_vars.html", "namespacemembers_vars" ]
+      ] ]
+    ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
         [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ]
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ]
       ] ]
     ] ]
   ] ]
@@ -37,7 +45,10 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"cia-global_8asm.html"
+"cia-global_8asm.html",
+"namespaceSid.html#a06def2b86f7d0bef02053f271c51d4e1",
+"namespacemembers_i.html",
+"vic2_8asm.html#a0376fc1d2a30f62b4083249721f1f2eb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
