@@ -4,13 +4,15 @@ import sys
 import re
 
 def convertFile(filename):
+  print("Processing " + filename)
   head, tail = os.path.split(filename)
 
-  os.makedirs(head + '/output/', exist_ok=True)
   outputFileName = head + '/output/' + tail
 
+  print("Reading...")
   content = open(filename, 'r').read()
 
+  print("Editing...")
   # convert keywords to be interpreted by doxygen
   content = content.replace('.namespace ', 'namespace ')
   content = content.replace('.macro ', 'macro ')
@@ -32,9 +34,14 @@ def convertFile(filename):
   # add semicolor at the end of label declaration
   content = re.sub(r'.(label[^\n]+)', r'\1;', content)
 
+  print("Saving " + outputFileName + "...")
   f = open(outputFileName, 'w')
   f.write(content)
   f.close()
+
+head, tail = os.path.split(sys.argv[1])
+print("Creating " + head + '/output/')
+os.makedirs(head + '/output/', exist_ok=True)
 
 for file in glob.glob(sys.argv[1]):
   convertFile(file)
