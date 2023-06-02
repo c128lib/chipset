@@ -9,8 +9,14 @@ repositories {
 retroProject {
     dialect = "KickAssembler"
     dialectVersion = "5.25"
-    libDirs = ["..", ".ra/deps/c128lib"]
+    libDirs = [".ra/deps/c128lib"]
+    srcDirs = ["lib"]
+    excludes = ["**/output/*.asm"]
+
+    specDirs = ['spec']
+    specIncludes = ['**/*.spec.asm']
+    viceExecutable = 'x128.exe'
 
     libFromGitHub "c128lib/common", "0.6.0"
+    libFromGitHub "c128lib/128spec", "0.7.2"
 }
-
