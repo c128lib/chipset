@@ -24,10 +24,10 @@
 */
 .macro @c128lib_SetVICBank(bank) { SetVICBank(bank) }
 
-.macro @c128lib_IsReturnPressed() { IsReturnPressed() }
-.macro @c128lib_IsReturnPressedAndReleased() { IsReturnPressedAndReleased() }
-.macro @c128lib_IsSpacePressed() { IsSpacePressed() }
-.macro @c128lib_IsSpacePressedAndReleased() { IsSpacePressedAndReleased() }
+.macro @c128lib_WaitReturnPressed() { WaitReturnPressed() }
+.macro @c128lib_WaitReturnPressedAndReleased() { WaitReturnPressedAndReleased() }
+.macro @c128lib_WaitSpacePressed() { WaitSpacePressed() }
+.macro @c128lib_WaitSpacePressedAndReleased() { WaitSpacePressedAndReleased() }
 
 /**
   Check if joystick port 1 fire button is pressed.

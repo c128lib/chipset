@@ -161,7 +161,19 @@ DetectKeyPressed: {
 }
 #endif
 
-.macro IsReturnPressed() {
+/**
+  Waits until return is pressed. It means a wait
+  for a key down event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @note Use c128lib_WaitReturnPressed in cia-global.asm
+
+  @since 0.6.0
+*/
+.macro WaitReturnPressed() {
   #if (!DETECTKEYPRESSED)
     .error "You should use #define DETECTKEYPRESSED"
   #else
@@ -175,7 +187,19 @@ DetectKeyPressed: {
   #endif
 }
 
-.macro IsReturnPressedAndReleased() {
+/**
+  Waits until return is pressed and released. It means a wait
+  for a key down and a key up event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @note Use c128lib_WaitReturnPressedAndReleased in cia-global.asm
+
+  @since 0.6.0
+*/
+.macro WaitReturnPressedAndReleased() {
   #if (!DETECTKEYPRESSED)
     .error "You should use #define DETECTKEYPRESSED"
   #else
@@ -192,7 +216,19 @@ DetectKeyPressed: {
   #endif
 }
 
-.macro IsSpacePressed() {
+/**
+  Waits until space is pressed. It means a wait
+  for a key down event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @note Use c128lib_WaitSpacePressed in cia-global.asm
+
+  @since 0.6.0
+*/
+.macro WaitSpacePressed() {
   #if (!DETECTKEYPRESSED)
     .error "You should use #define DETECTKEYPRESSED"
   #else
@@ -206,7 +242,19 @@ DetectKeyPressed: {
   #endif
 }
 
-.macro IsSpacePressedAndReleased() {
+/**
+  Waits until space is pressed and released. It means a wait
+  for a key down and a key up event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @note Use c128lib_WaitSpacePressedAndReleased in cia-global.asm
+
+  @since 0.6.0
+*/
+.macro WaitSpacePressedAndReleased() {
   #if (!DETECTKEYPRESSED)
     .error "You should use #define DETECTKEYPRESSED"
   #else
