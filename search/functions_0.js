@@ -80,7 +80,7 @@ var searchData=
   ['c128lib_5fwritetovdcmemorybycoordinates_77',['c128lib_WriteToVdcMemoryByCoordinates',['../vdc-global_8asm.html#ae7ae05143f20725ebeff233f720afc85',1,'vdc-global.asm']]],
   ['c128lib_5fwritevdc_78',['c128lib_WriteVdc',['../vdc-global_8asm.html#a8d4c7abc3425bbd3cede649446b681b9',1,'vdc-global.asm']]],
   ['c128lib_5fwritevdcwithkernal_79',['c128lib_WriteVdcWithKernal',['../vdc-global_8asm.html#a4434c3d6c62a032fbfc0277d875a433e',1,'vdc-global.asm']]],
-  ['calculateattributebyte_80',['CalculateAttributeByte',['../vdc_8asm.html#ab19261aea7ffca86a09bdf6f3e70b83d',1,'vdc.asm']]],
+  ['calculateattributebyte_80',['CalculateAttributeByte',['../vdc_8asm.html#a195bfcbc099e56fe3fab4c170b2d6eea',1,'vdc.asm']]],
   ['calculatebackgroundandforeground_81',['CalculateBackgroundAndForeground',['../vdc_8asm.html#a42d61b112809346b98c9c598ea006388',1,'vdc.asm']]],
   ['configurebitmapmemory_82',['configureBitmapMemory',['../vic2_8asm.html#ae980340738827303a77a914426ae0807',1,'vic2.asm']]],
   ['configurememory_83',['configureMemory',['../mos8502_8asm.html#a5dd0f42472f4268c25a3b713bacfbd9b',1,'mos8502.asm']]],

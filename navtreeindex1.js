@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"namespaceSid.html#a06def2b86f7d0bef02053f271c51d4e1":[0,0,3,11],
 "namespaceSid.html#a119f8e039413629e4740623b8591d6a0":[0,0,3,8],
 "namespaceSid.html#a1a64373f3f2a3d2c036213c8aaec352c":[0,0,3,5],
 "namespaceSid.html#a442cd56707fef9b9b1c3fe17904d4739":[0,0,3,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "namespacemembers_e.html":[0,1,0,3],
 "namespacemembers_f.html":[0,1,0,4],
 "namespacemembers_g.html":[0,1,0,5],
-"namespacemembers_h.html":[0,1,0,6]
+"namespacemembers_h.html":[0,1,0,6],
+"namespacemembers_i.html":[0,1,0,7]
 };

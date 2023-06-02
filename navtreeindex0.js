@@ -60,7 +60,6 @@ var NAVTREEINDEX0 =
 "files.html":[1,0],
 "globals.html":[1,1,0],
 "globals_func.html":[1,1,1],
-"globals_vars.html":[1,1,2],
 "index.html":[],
 "io-global_8asm.html":[1,0,2],
 "io-global_8asm.html#a48d03d6b05c12d5812cf2db1fa89a942":[1,0,2,3],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "namespaceMos8502.html#ae480c0386821cf9503a938590341d378":[0,0,2,7],
 "namespaceMos8502.html#ae677c5921415225f28666e48f889a0f5":[0,0,2,9],
 "namespaceMos8502.html#af0abd46070dc8d61531617c0663dfbb1":[0,0,2,4],
-"namespaceSid.html":[0,0,3]
+"namespaceSid.html":[0,0,3],
+"namespaceSid.html#a06def2b86f7d0bef02053f271c51d4e1":[0,0,3,11]
 };

@@ -1,11 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"vic2_8asm.html#a0376fc1d2a30f62b4083249721f1f2eb":[1,0,14,146],
-"vic2_8asm.html#a037c50e656a3207b2afc997ce6e38f37":[1,0,14,56],
-"vic2_8asm.html#a040387ad8c4ac374f7da4da6c4bb32d5":[1,0,14,30],
-"vic2_8asm.html#a040ba55c42f2fdca51ba8ad3a28d228a":[1,0,14,112],
-"vic2_8asm.html#a068d9cb2604d27230e7c06429e8f7447":[1,0,14,40],
-"vic2_8asm.html#a06a3620422f62cad920cc9936d1f7e29":[1,0,14,135],
 "vic2_8asm.html#a0863b45461ac2e26469d809b2c913bb8":[1,0,14,70],
 "vic2_8asm.html#a090c3a5596053c0e6b061332f2bfb848":[1,0,14,50],
 "vic2_8asm.html#a098a796a565400b129f1652910e4fa62":[1,0,14,4],

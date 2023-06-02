@@ -1,14 +1,18 @@
 var searchData=
 [
-  ['paddle_5fx_5fposition_0',['PADDLE_X_POSITION',['../namespaceSid.html#a793d3db388d67e7125ef5f391a8c7215',1,'Sid']]],
-  ['paddle_5fy_5fposition_1',['PADDLE_Y_POSITION',['../namespaceSid.html#a442cd56707fef9b9b1c3fe17904d4739',1,'Sid']]],
-  ['page0_5fblock_5fpointer_2',['PAGE0_BLOCK_POINTER',['../namespaceMmu.html#ad9dbdb3c415d24af6a07d88b153d9f4a',1,'Mmu']]],
-  ['page1_5fblock_5fpointer_3',['PAGE1_BLOCK_POINTER',['../namespaceMmu.html#a74ae84125e172898984388435a09598b',1,'Mmu']]],
-  ['page1_5fpage_5fpointer_4',['PAGE1_PAGE_POINTER',['../namespaceMmu.html#a7986d6bcc8f4c0a87f09e6b842118879',1,'Mmu']]],
-  ['pla_5fcharen_5',['PLA_CHAREN',['../namespaceMos8502.html#ae480c0386821cf9503a938590341d378',1,'Mos8502']]],
-  ['pla_5fhiram_6',['PLA_HIRAM',['../namespaceMos8502.html#a5fb1894477ff8a7b1bb4630885452796',1,'Mos8502']]],
-  ['pla_5floram_7',['PLA_LORAM',['../namespaceMos8502.html#ae677c5921415225f28666e48f889a0f5',1,'Mos8502']]],
-  ['preconfig_5fb_8',['PRECONFIG_B',['../namespaceMmu.html#a1d5db25c6566a2bd796541ea04b97fcd',1,'Mmu']]],
-  ['preconfig_5fc_9',['PRECONFIG_C',['../namespaceMmu.html#a6cc1449afc1f222349e91747c917b238',1,'Mmu']]],
-  ['preconfig_5fd_10',['PRECONFIG_D',['../namespaceMmu.html#a678f534f6daeb47c9d99df55ab954fd2',1,'Mmu']]]
+  ['ram0_0',['RAM0',['../namespaceMmu.html#a9c8a4e0605db422ab5b401fddc40d661',1,'Mmu']]],
+  ['ram1_1',['RAM1',['../namespaceMmu.html#a42779f4e6f399116278fb7c85e5ba243',1,'Mmu']]],
+  ['ram_5fchar_5fkernal_2',['RAM_CHAR_KERNAL',['../namespaceMos8502.html#a55688c75ce1c8559e552751fe2b27e07',1,'Mos8502']]],
+  ['ram_5fchar_5fram_3',['RAM_CHAR_RAM',['../namespaceMos8502.html#a41ba335d3cb958d39acbb0b9ff14c68c',1,'Mos8502']]],
+  ['ram_5fio_5fkernal_4',['RAM_IO_KERNAL',['../namespaceMos8502.html#ab5718e3e368ab02d2072a80bc2ff31f3',1,'Mos8502']]],
+  ['ram_5fio_5fram_5',['RAM_IO_RAM',['../namespaceMos8502.html#a7661daecd04e45da1b78c37b3f8673c0',1,'Mos8502']]],
+  ['ram_5fram_5fram_6',['RAM_RAM_RAM',['../namespaceMos8502.html#ac3607e43075be6b6c2ed4e8c1ca82b95',1,'Mos8502']]],
+  ['raster_7',['RASTER',['../namespaceVic2.html#a3be364cb629673077797589ee39e99e5',1,'Vic2']]],
+  ['raster_5fmax_5fntsc_8',['RASTER_MAX_NTSC',['../namespaceVic2.html#a95e636c6bfa7fd1a6c8524bf95a452b9',1,'Vic2']]],
+  ['raster_5fmax_5fpal_9',['RASTER_MAX_PAL',['../namespaceVic2.html#ad040762f30acd4de807c4a6450ade4f8',1,'Vic2']]],
+  ['resonance_5ffilter_5fcontrol_5fregister_10',['RESONANCE_FILTER_CONTROL_REGISTER',['../namespaceSid.html#ac006806da143b33283eb52778c6de6cd',1,'Sid']]],
+  ['rom_5fhi_11',['ROM_HI',['../namespaceMmu.html#abf011279345b16101111dcdac7e9b16d',1,'Mmu']]],
+  ['rom_5flow_5fram_12',['ROM_LOW_RAM',['../namespaceMmu.html#ac1f83e6b5caefa64ae0fd29a20018989',1,'Mmu']]],
+  ['rom_5flow_5from_13',['ROM_LOW_ROM',['../namespaceMmu.html#a7cf9fb271f2a1ccf1e5b3c347fc8279f',1,'Mmu']]],
+  ['rom_5fmid_5from_14',['ROM_MID_ROM',['../namespaceMmu.html#a709df67e65dbafeb6c2aeb2f2b7cfe18',1,'Mmu']]]
 ];

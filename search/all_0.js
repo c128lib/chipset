@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['_24baab_0',['$baab',['../vdc_8asm.html#ab62c9c2fe34ff52851cb5d529215341e',1,'vdc.asm']]],
-  ['_24beef_1',['$beef',['../vdc_8asm.html#a9274983ee8901b9f4cf73cd87fa9b721',1,'vdc.asm']]],
-  ['_24cdca_2',['$CDCA',['../vdc_8asm.html#ab830d19e559e9cecfe46331c401ccff5',1,'vdc.asm']]],
-  ['_24cdd8_3',['$CDD8',['../vdc_8asm.html#a24e818574463209fb14bdb4452abcdb0',1,'vdc.asm']]],
-  ['_24d600_4',['$d600',['../vdc_8asm.html#a71c0573a1c58edccda334d90358df6b3',1,'vdc.asm']]]
+  ['address_5fincrement_5fper_5frow_0',['ADDRESS_INCREMENT_PER_ROW',['../namespaceVdc.html#a1635d4bf80ba9319b20bd2db8e27208a',1,'Vdc']]],
+  ['attribute_5falternate_1',['ATTRIBUTE_ALTERNATE',['../namespaceVdc.html#ac7753a5d106aaa24250477fbe705f2cb',1,'Vdc']]],
+  ['attribute_5fblink_2',['ATTRIBUTE_BLINK',['../namespaceVdc.html#a72f90681f4ecc35cca5a812e15601ccb',1,'Vdc']]],
+  ['attribute_5fmemory_5fhigh_5faddress_3',['ATTRIBUTE_MEMORY_HIGH_ADDRESS',['../namespaceVdc.html#a14d4a7ebaaca4cf3ded7384bc820e3e3',1,'Vdc']]],
+  ['attribute_5fmemory_5flow_5faddress_4',['ATTRIBUTE_MEMORY_LOW_ADDRESS',['../namespaceVdc.html#a5a286b7bcc8a25e3027f6c83bdd38389',1,'Vdc']]],
+  ['attribute_5freverse_5',['ATTRIBUTE_REVERSE',['../namespaceVdc.html#af16ccd3f6fd66897b7bde4547425f899',1,'Vdc']]],
+  ['attribute_5funderline_6',['ATTRIBUTE_UNDERLINE',['../namespaceVdc.html#acd44ac8a4b4bfa5ea7808062f10411f6',1,'Vdc']]]
 ];

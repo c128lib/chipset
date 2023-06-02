@@ -114,27 +114,45 @@ Functions</h2></td></tr>
 <tr class="separator:a5ccd4e98b3abae65a27199f2bbbc17e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8b3c0dc4c602354f3120f894e21ff22"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#ab8b3c0dc4c602354f3120f894e21ff22">SetSpriteXPositionWithShadow</a> (spriteNo, x)</td></tr>
 <tr class="separator:ab8b3c0dc4c602354f3120f894e21ff22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a547f8a875c6d10a0905efe7c5a49b4ab"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a547f8a875c6d10a0905efe7c5a49b4ab">SetSpriteYPosition</a> (spriteNo, <a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>)</td></tr>
+<tr class="memitem:a547f8a875c6d10a0905efe7c5a49b4ab"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a547f8a875c6d10a0905efe7c5a49b4ab">SetSpriteYPosition</a> (spriteNo, y)</td></tr>
 <tr class="separator:a547f8a875c6d10a0905efe7c5a49b4ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5da15613576454c85e9fbb1b5e973efb"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a5da15613576454c85e9fbb1b5e973efb">SetSpriteYPositionWithShadow</a> (spriteNo, <a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>)</td></tr>
+<tr class="memitem:a5da15613576454c85e9fbb1b5e973efb"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a5da15613576454c85e9fbb1b5e973efb">SetSpriteYPositionWithShadow</a> (spriteNo, y)</td></tr>
 <tr class="separator:a5da15613576454c85e9fbb1b5e973efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e1467f92f74dd051509c89af37f7dc7"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a6e1467f92f74dd051509c89af37f7dc7">SetSpritePosition</a> (spriteNo, x, <a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>)</td></tr>
+<tr class="memitem:a6e1467f92f74dd051509c89af37f7dc7"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a6e1467f92f74dd051509c89af37f7dc7">SetSpritePosition</a> (spriteNo, x, y)</td></tr>
 <tr class="separator:a6e1467f92f74dd051509c89af37f7dc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c1dcda96144013a96c3b00919d7f893"><td class="memItemLeft" align="right" valign="top">assert <a class="el" href="sprites_8asm.html#a6e1467f92f74dd051509c89af37f7dc7">SetSpritePosition</a> stores position in SPRITE_ *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a0c1dcda96144013a96c3b00919d7f893">reg</a> (x and <a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a> equals)&quot;</td></tr>
-<tr class="separator:a0c1dcda96144013a96c3b00919d7f893"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada697243163383e60d7ea174bf3ec9a0"><td class="memItemLeft" align="right" valign="top">lda sta $d006 sta $d007 lda sta $d006 lda sta $d007 lda sta $d006 lda $d010 ora sta $d010 lda sta $d007 macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#ada697243163383e60d7ea174bf3ec9a0">SetSpritePositionWithShadow</a> (spriteNo, x, y)</td></tr>
+<tr class="separator:ada697243163383e60d7ea174bf3ec9a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b703731d869dbdfabc7cb7a63090e02"><td class="memItemLeft" align="right" valign="top">lda sta $11dc sta $11dd lda sta $11dc lda sta $11dd lda sta $11dc lda $11e6 ora sta $11e6 lda sta $11dd function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a9b703731d869dbdfabc7cb7a63090e02">GetSpriteMovementStartingAddress</a> (spriteNo)</td></tr>
+<tr class="separator:a9b703731d869dbdfabc7cb7a63090e02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7eadcac3839595110dc966b7d3a2fb06"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a7eadcac3839595110dc966b7d3a2fb06">SpriteMove</a> (spriteNo, speed, quadrant, deltaX, deltaY)</td></tr>
+<tr class="separator:a7eadcac3839595110dc966b7d3a2fb06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5260b1497f514dbdad27353a4f71921"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#ae5260b1497f514dbdad27353a4f71921">SpriteEnable</a> (mask)</td></tr>
+<tr class="separator:ae5260b1497f514dbdad27353a4f71921"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96f227e221dd8dafa42753beb1b2a337"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a96f227e221dd8dafa42753beb1b2a337">SpriteDisable</a> (mask)</td></tr>
+<tr class="separator:a96f227e221dd8dafa42753beb1b2a337"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad24ac666b2884256c5c4094c78e0be0c"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#ad24ac666b2884256c5c4094c78e0be0c">SpriteEnableMulticolor</a> (mask)</td></tr>
+<tr class="separator:ad24ac666b2884256c5c4094c78e0be0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa632748b29f29b73679a78c716f280a7"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#aa632748b29f29b73679a78c716f280a7">SpriteDisableMulticolor</a> (mask)</td></tr>
+<tr class="separator:aa632748b29f29b73679a78c716f280a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3cc18c0cd8064eebc204ff6d6c50ccc"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#ac3cc18c0cd8064eebc204ff6d6c50ccc">SpriteColor</a> (spriteNo, color)</td></tr>
+<tr class="separator:ac3cc18c0cd8064eebc204ff6d6c50ccc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d392b6b40acf6e9fa1e94119e146fc"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#a07d392b6b40acf6e9fa1e94119e146fc">SpriteMultiColor0</a> (color)</td></tr>
+<tr class="separator:a07d392b6b40acf6e9fa1e94119e146fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa69b4d0b41f75640ffec4e1c140402fd"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sprites_8asm.html#aa69b4d0b41f75640ffec4e1c140402fd">SpriteMultiColor1</a> (color)</td></tr>
+<tr class="separator:aa69b4d0b41f75640ffec4e1c140402fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a0c1dcda96144013a96c3b00919d7f893" name="a0c1dcda96144013a96c3b00919d7f893"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c1dcda96144013a96c3b00919d7f893">&#9670;&#160;</a></span>reg()</h2>
+<a id="a9b703731d869dbdfabc7cb7a63090e02" name="a9b703731d869dbdfabc7cb7a63090e02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b703731d869dbdfabc7cb7a63090e02">&#9670;&#160;</a></span>GetSpriteMovementStartingAddress()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">assert <a class="el" href="sprites_8asm.html#a6e1467f92f74dd051509c89af37f7dc7">SetSpritePosition</a> stores position in SPRITE_ * reg </td>
+          <td class="memname">lda sta $11dc sta $11dd lda sta $11dc lda sta $11dd lda sta $11dc lda $11e6 ora sta $11e6 lda sta $11dd function GetSpriteMovementStartingAddress </td>
           <td>(</td>
-          <td class="paramtype">x and <a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>&#160;</td>
-          <td class="paramname"><em>equals</em></td><td>)</td>
+          <td class="paramtype">spriteNo&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -163,7 +181,41 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>&#160;</td>
+          <td class="paramtype">y&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada697243163383e60d7ea174bf3ec9a0" name="ada697243163383e60d7ea174bf3ec9a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada697243163383e60d7ea174bf3ec9a0">&#9670;&#160;</a></span>SetSpritePositionWithShadow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">lda sta $d006 sta $d007 lda sta $d006 lda sta $d007 lda sta $d006 lda $d010 ora sta $d010 lda sta $d007 macro SetSpritePositionWithShadow </td>
+          <td>(</td>
+          <td class="paramtype">spriteNo&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">x&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">y&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -247,7 +299,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>&#160;</td>
+          <td class="paramtype">y&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -275,7 +327,35 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="vdc_8asm.html#abc394de8209f8fd45c7fad00d6688910">y</a>&#160;</td>
+          <td class="paramtype">y&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac3cc18c0cd8064eebc204ff6d6c50ccc" name="ac3cc18c0cd8064eebc204ff6d6c50ccc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3cc18c0cd8064eebc204ff6d6c50ccc">&#9670;&#160;</a></span>SpriteColor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteColor </td>
+          <td>(</td>
+          <td class="paramtype">spriteNo&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">color&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -306,6 +386,78 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a96f227e221dd8dafa42753beb1b2a337" name="a96f227e221dd8dafa42753beb1b2a337"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96f227e221dd8dafa42753beb1b2a337">&#9670;&#160;</a></span>SpriteDisable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteDisable </td>
+          <td>(</td>
+          <td class="paramtype">mask&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa632748b29f29b73679a78c716f280a7" name="aa632748b29f29b73679a78c716f280a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa632748b29f29b73679a78c716f280a7">&#9670;&#160;</a></span>SpriteDisableMulticolor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteDisableMulticolor </td>
+          <td>(</td>
+          <td class="paramtype">mask&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5260b1497f514dbdad27353a4f71921" name="ae5260b1497f514dbdad27353a4f71921"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5260b1497f514dbdad27353a4f71921">&#9670;&#160;</a></span>SpriteEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteEnable </td>
+          <td>(</td>
+          <td class="paramtype">mask&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad24ac666b2884256c5c4094c78e0be0c" name="ad24ac666b2884256c5c4094c78e0be0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad24ac666b2884256c5c4094c78e0be0c">&#9670;&#160;</a></span>SpriteEnableMulticolor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteEnableMulticolor </td>
+          <td>(</td>
+          <td class="paramtype">mask&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a68a77950c0628f5f0123c598ae3a9657" name="a68a77950c0628f5f0123c598ae3a9657"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a68a77950c0628f5f0123c598ae3a9657">&#9670;&#160;</a></span>spriteMask()</h2>
 
@@ -316,6 +468,88 @@ Functions</h2></td></tr>
           <td class="memname">function spriteMask </td>
           <td>(</td>
           <td class="paramtype">spriteNo&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7eadcac3839595110dc966b7d3a2fb06" name="a7eadcac3839595110dc966b7d3a2fb06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7eadcac3839595110dc966b7d3a2fb06">&#9670;&#160;</a></span>SpriteMove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteMove </td>
+          <td>(</td>
+          <td class="paramtype">spriteNo&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">speed&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">quadrant&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">deltaX&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">deltaY&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a07d392b6b40acf6e9fa1e94119e146fc" name="a07d392b6b40acf6e9fa1e94119e146fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07d392b6b40acf6e9fa1e94119e146fc">&#9670;&#160;</a></span>SpriteMultiColor0()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteMultiColor0 </td>
+          <td>(</td>
+          <td class="paramtype">color&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa69b4d0b41f75640ffec4e1c140402fd" name="aa69b4d0b41f75640ffec4e1c140402fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa69b4d0b41f75640ffec4e1c140402fd">&#9670;&#160;</a></span>SpriteMultiColor1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro SpriteMultiColor1 </td>
+          <td>(</td>
+          <td class="paramtype">color&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -402,7 +636,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="sprites_8asm.html">sprites.asm</a></li>
-    <li class="footer">Generated on Tue May 23 2023 20:02:38 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Fri Jun 2 2023 11:35:11 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>
