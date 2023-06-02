@@ -1,6 +1,10 @@
 var namespaces_dup =
 [
     [ "Cia", "namespaceCia.html", [
+      [ "BANK_0", "namespaceCia.html#a725764fe5a4066ca0a5c1fdeb2bf6219", null ],
+      [ "BANK_1", "namespaceCia.html#a77cdd721dae2bbefe5f1246c81f31e1c", null ],
+      [ "BANK_2", "namespaceCia.html#a95d79d96ce8fe43c5578e0486197bbef", null ],
+      [ "BANK_3", "namespaceCia.html#ad3bf94f4a7143e288be84af907bf51b4", null ],
       [ "CIA1", "namespaceCia.html#ac18446072b8add609fa862f65cfde5c2", null ],
       [ "CIA1_CONTROL_A", "namespaceCia.html#ac8212f231aa7cf6487fa314d2d547e12", null ],
       [ "CIA1_CONTROL_B", "namespaceCia.html#a46f338933784186663dbb9f172e7cb0a", null ],

@@ -95,6 +95,9 @@ $(document).ready(function(){initNavTree('cia-global_8asm.html',''); initResizab
   <div class="headertitle"><div class="title">cia-global.asm File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="namespaceCia.html">Cia</a> module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -115,7 +118,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a6e51f0f2789797000537f67fb1a51f7b"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a6e51f0f2789797000537f67fb1a51f7b">c128lib_disableCIAInterrupts</a> ()</td></tr>
 <tr class="separator:a6e51f0f2789797000537f67fb1a51f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="namespaceCia.html">Cia</a> module. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>MIT Licensed </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2022 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a6e51f0f2789797000537f67fb1a51f7b" name="a6e51f0f2789797000537f67fb1a51f7b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6e51f0f2789797000537f67fb1a51f7b">&#9670;&#160;</a></span>c128lib_disableCIAInterrupts()</h2>
 
@@ -147,6 +154,10 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Check if joystick port 1 fire button is pressed. Accumulator will be 0 if button is pressed</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Using control port 1 for joystick input can have an undesiderable side effect. Since the input lines of that port are also used for reading the keyboard, the keyscan routine ($C55D) has no way to tell whether the port lines are beign grounded by keypresses of joystick presses. As a result, moving a joystick effectively generates a keypress, and certain keypresses produce the same effect as moving the joystick.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -164,6 +175,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Check if joystick port 2 fire button is pressed. Accumulator will be 0 if button is pressed</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -250,6 +264,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Configures memory "bank" (16K) which is directly addressable by VIC2 chip.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bank</td><td>Bank to set</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Bank parameter can be filled with <a class="el" href="namespaceCia.html#a725764fe5a4066ca0a5c1fdeb2bf6219">Cia.BANK_0</a>, <a class="el" href="namespaceCia.html#a77cdd721dae2bbefe5f1246c81f31e1c">Cia.BANK_1</a>, <a class="el" href="namespaceCia.html#a95d79d96ce8fe43c5578e0486197bbef">Cia.BANK_2</a>, <a class="el" href="namespaceCia.html#ad3bf94f4a7143e288be84af907bf51b4">Cia.BANK_3</a></dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N, Z and C will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -259,7 +283,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="cia-global_8asm.html">cia-global.asm</a></li>
-    <li class="footer">Generated on Fri Jun 2 2023 11:35:11 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Fri Jun 2 2023 13:52:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>
