@@ -110,14 +110,14 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:adc5664b4380fb14088337799ee4c5b9a"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#adc5664b4380fb14088337799ee4c5b9a">SetVICBank</a> (bank)</td></tr>
 <tr class="separator:adc5664b4380fb14088337799ee4c5b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0de2dfa8081db67ede8a37f264c4a244"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a0de2dfa8081db67ede8a37f264c4a244">IsReturnPressed</a> ()</td></tr>
-<tr class="separator:a0de2dfa8081db67ede8a37f264c4a244"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaac46f09b259b0fb682473e02d3e5995"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#aaac46f09b259b0fb682473e02d3e5995">IsReturnPressedAndReleased</a> ()</td></tr>
-<tr class="separator:aaac46f09b259b0fb682473e02d3e5995"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22bdfe624cc770c1deaee2177618dac3"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a22bdfe624cc770c1deaee2177618dac3">IsSpacePressed</a> ()</td></tr>
-<tr class="separator:a22bdfe624cc770c1deaee2177618dac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af06a064ae93e2f5ca614ab8a8449e100"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#af06a064ae93e2f5ca614ab8a8449e100">IsSpacePressedAndReleased</a> ()</td></tr>
-<tr class="separator:af06a064ae93e2f5ca614ab8a8449e100"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa5c6e9e5b43743f181db68fb683c01a"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#afa5c6e9e5b43743f181db68fb683c01a">WaitReturnPressed</a> ()</td></tr>
+<tr class="separator:afa5c6e9e5b43743f181db68fb683c01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bf2cd5de6b9fb7fc3f8b3cb72f23e57"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a8bf2cd5de6b9fb7fc3f8b3cb72f23e57">WaitReturnPressedAndReleased</a> ()</td></tr>
+<tr class="separator:a8bf2cd5de6b9fb7fc3f8b3cb72f23e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0730e015e290dd6522f8c76946f666ff"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a0730e015e290dd6522f8c76946f666ff">WaitSpacePressed</a> ()</td></tr>
+<tr class="separator:a0730e015e290dd6522f8c76946f666ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bd59e288aa702581f1bcae049422acd"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a9bd59e288aa702581f1bcae049422acd">WaitSpacePressedAndReleased</a> ()</td></tr>
+<tr class="separator:a9bd59e288aa702581f1bcae049422acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6601893cdf8b7512ffde9250235531cd"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a6601893cdf8b7512ffde9250235531cd">GetFirePressedPort1</a> ()</td></tr>
 <tr class="separator:a6601893cdf8b7512ffde9250235531cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b820efff6c6e69199e09d8f4c820064"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia_8asm.html#a2b820efff6c6e69199e09d8f4c820064">GetFirePressedPort2</a> ()</td></tr>
@@ -279,74 +279,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a0de2dfa8081db67ede8a37f264c4a244" name="a0de2dfa8081db67ede8a37f264c4a244"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0de2dfa8081db67ede8a37f264c4a244">&#9670;&#160;</a></span>IsReturnPressed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro IsReturnPressed </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aaac46f09b259b0fb682473e02d3e5995" name="aaac46f09b259b0fb682473e02d3e5995"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaac46f09b259b0fb682473e02d3e5995">&#9670;&#160;</a></span>IsReturnPressedAndReleased()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro IsReturnPressedAndReleased </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a22bdfe624cc770c1deaee2177618dac3" name="a22bdfe624cc770c1deaee2177618dac3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22bdfe624cc770c1deaee2177618dac3">&#9670;&#160;</a></span>IsSpacePressed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro IsSpacePressed </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af06a064ae93e2f5ca614ab8a8449e100" name="af06a064ae93e2f5ca614ab8a8449e100"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af06a064ae93e2f5ca614ab8a8449e100">&#9670;&#160;</a></span>IsSpacePressedAndReleased()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro IsSpacePressedAndReleased </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="adc5664b4380fb14088337799ee4c5b9a" name="adc5664b4380fb14088337799ee4c5b9a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc5664b4380fb14088337799ee4c5b9a">&#9670;&#160;</a></span>SetVICBank()</h2>
 
@@ -377,13 +309,105 @@ Use c128lib_SetVICBank in <a class="el" href="cia-global_8asm.html" title="Cia m
 
 </div>
 </div>
+<a id="afa5c6e9e5b43743f181db68fb683c01a" name="afa5c6e9e5b43743f181db68fb683c01a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa5c6e9e5b43743f181db68fb683c01a">&#9670;&#160;</a></span>WaitReturnPressed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro WaitReturnPressed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Waits until return is pressed. It means a wait for a key down event.</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected. </dd>
+<dd>
+Requires DETECTKEYPRESSED to be defined</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WaitReturnPressed in <a class="el" href="cia-global_8asm.html" title="Cia module.">cia-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
+<a id="a8bf2cd5de6b9fb7fc3f8b3cb72f23e57" name="a8bf2cd5de6b9fb7fc3f8b3cb72f23e57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bf2cd5de6b9fb7fc3f8b3cb72f23e57">&#9670;&#160;</a></span>WaitReturnPressedAndReleased()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro WaitReturnPressedAndReleased </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Waits until return is pressed and released. It means a wait for a key down and a key up event.</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected. </dd>
+<dd>
+Requires DETECTKEYPRESSED to be defined</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WaitReturnPressedAndReleased in <a class="el" href="cia-global_8asm.html" title="Cia module.">cia-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
+<a id="a0730e015e290dd6522f8c76946f666ff" name="a0730e015e290dd6522f8c76946f666ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0730e015e290dd6522f8c76946f666ff">&#9670;&#160;</a></span>WaitSpacePressed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro WaitSpacePressed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Waits until space is pressed. It means a wait for a key down event.</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected. </dd>
+<dd>
+Requires DETECTKEYPRESSED to be defined</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WaitSpacePressed in <a class="el" href="cia-global_8asm.html" title="Cia module.">cia-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
+<a id="a9bd59e288aa702581f1bcae049422acd" name="a9bd59e288aa702581f1bcae049422acd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bd59e288aa702581f1bcae049422acd">&#9670;&#160;</a></span>WaitSpacePressedAndReleased()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro WaitSpacePressedAndReleased </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Waits until space is pressed and released. It means a wait for a key down and a key up event.</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected. </dd>
+<dd>
+Requires DETECTKEYPRESSED to be defined</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WaitSpacePressedAndReleased in <a class="el" href="cia-global_8asm.html" title="Cia module.">cia-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="cia_8asm.html">cia.asm</a></li>
-    <li class="footer">Generated on Fri Jun 2 2023 13:52:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Jun 11 2023 17:04:00 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

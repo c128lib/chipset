@@ -103,14 +103,14 @@ $(document).ready(function(){initNavTree('cia-global_8asm.html',''); initResizab
 Functions</h2></td></tr>
 <tr class="memitem:a4149c348405ab27bd8108fa711e0a70e"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a4149c348405ab27bd8108fa711e0a70e">c128lib_SetVICBank</a> (bank)</td></tr>
 <tr class="separator:a4149c348405ab27bd8108fa711e0a70e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefefb95fd72df32503c603df72d85141"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#aefefb95fd72df32503c603df72d85141">c128lib_IsReturnPressed</a> ()</td></tr>
-<tr class="separator:aefefb95fd72df32503c603df72d85141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9751aecfa97997de0cf41c72689b5aa"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#af9751aecfa97997de0cf41c72689b5aa">c128lib_IsReturnPressedAndReleased</a> ()</td></tr>
-<tr class="separator:af9751aecfa97997de0cf41c72689b5aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1043433e3fb0b895828fe242dcaec440"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a1043433e3fb0b895828fe242dcaec440">c128lib_IsSpacePressed</a> ()</td></tr>
-<tr class="separator:a1043433e3fb0b895828fe242dcaec440"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a899e06fa4a3a72a2482bae6a28dc634a"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a899e06fa4a3a72a2482bae6a28dc634a">c128lib_IsSpacePressedAndReleased</a> ()</td></tr>
-<tr class="separator:a899e06fa4a3a72a2482bae6a28dc634a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab970a50235acc7a21bc0ce3c08eff491"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#ab970a50235acc7a21bc0ce3c08eff491">c128lib_WaitReturnPressed</a> ()</td></tr>
+<tr class="separator:ab970a50235acc7a21bc0ce3c08eff491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba7af07e9eda6d08bdde111894e7ca0e"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#aba7af07e9eda6d08bdde111894e7ca0e">c128lib_WaitReturnPressedAndReleased</a> ()</td></tr>
+<tr class="separator:aba7af07e9eda6d08bdde111894e7ca0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e8c39b5dfbc9cd33689b5a0cb63a2a5"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a0e8c39b5dfbc9cd33689b5a0cb63a2a5">c128lib_WaitSpacePressed</a> ()</td></tr>
+<tr class="separator:a0e8c39b5dfbc9cd33689b5a0cb63a2a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe1eed74dd95a688bb3df23adc8b9cc4"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#afe1eed74dd95a688bb3df23adc8b9cc4">c128lib_WaitSpacePressedAndReleased</a> ()</td></tr>
+<tr class="separator:afe1eed74dd95a688bb3df23adc8b9cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96c7a31536dc51ecdc7f47e13bdcbd05"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a96c7a31536dc51ecdc7f47e13bdcbd05">c128lib_GetFirePressedPort1</a> ()</td></tr>
 <tr class="separator:a96c7a31536dc51ecdc7f47e13bdcbd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a20b24b923eefc2320221728819cf1c"><td class="memItemLeft" align="right" valign="top">macro&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="cia-global_8asm.html#a0a20b24b923eefc2320221728819cf1c">c128lib_GetFirePressedPort2</a> ()</td></tr>
@@ -181,74 +181,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aefefb95fd72df32503c603df72d85141" name="aefefb95fd72df32503c603df72d85141"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefefb95fd72df32503c603df72d85141">&#9670;&#160;</a></span>c128lib_IsReturnPressed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_IsReturnPressed </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af9751aecfa97997de0cf41c72689b5aa" name="af9751aecfa97997de0cf41c72689b5aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9751aecfa97997de0cf41c72689b5aa">&#9670;&#160;</a></span>c128lib_IsReturnPressedAndReleased()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_IsReturnPressedAndReleased </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1043433e3fb0b895828fe242dcaec440" name="a1043433e3fb0b895828fe242dcaec440"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1043433e3fb0b895828fe242dcaec440">&#9670;&#160;</a></span>c128lib_IsSpacePressed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_IsSpacePressed </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a899e06fa4a3a72a2482bae6a28dc634a" name="a899e06fa4a3a72a2482bae6a28dc634a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a899e06fa4a3a72a2482bae6a28dc634a">&#9670;&#160;</a></span>c128lib_IsSpacePressedAndReleased()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_IsSpacePressedAndReleased </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a4149c348405ab27bd8108fa711e0a70e" name="a4149c348405ab27bd8108fa711e0a70e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4149c348405ab27bd8108fa711e0a70e">&#9670;&#160;</a></span>c128lib_SetVICBank()</h2>
 
@@ -277,13 +209,81 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ab970a50235acc7a21bc0ce3c08eff491" name="ab970a50235acc7a21bc0ce3c08eff491"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab970a50235acc7a21bc0ce3c08eff491">&#9670;&#160;</a></span>c128lib_WaitReturnPressed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_WaitReturnPressed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aba7af07e9eda6d08bdde111894e7ca0e" name="aba7af07e9eda6d08bdde111894e7ca0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba7af07e9eda6d08bdde111894e7ca0e">&#9670;&#160;</a></span>c128lib_WaitReturnPressedAndReleased()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_WaitReturnPressedAndReleased </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e8c39b5dfbc9cd33689b5a0cb63a2a5" name="a0e8c39b5dfbc9cd33689b5a0cb63a2a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e8c39b5dfbc9cd33689b5a0cb63a2a5">&#9670;&#160;</a></span>c128lib_WaitSpacePressed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_WaitSpacePressed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe1eed74dd95a688bb3df23adc8b9cc4" name="afe1eed74dd95a688bb3df23adc8b9cc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe1eed74dd95a688bb3df23adc8b9cc4">&#9670;&#160;</a></span>c128lib_WaitSpacePressedAndReleased()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_WaitSpacePressedAndReleased </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="cia-global_8asm.html">cia-global.asm</a></li>
-    <li class="footer">Generated on Fri Jun 2 2023 13:52:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Jun 11 2023 17:04:00 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

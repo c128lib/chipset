@@ -45,9 +45,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "cia-global_8asm.html",
-"namespaceMos8502.html#ac3607e43075be6b6c2ed4e8c1ca82b95",
-"namespacemembers.html",
-"vic2_8asm.html#a011622c35d9995061dc97d7ec2043de7"
+"namespaceMmu.html#a9c8a4e0605db422ab5b401fddc40d661",
+"namespaceVic2.html#ad775a5ef093e13dc7c2d092dce40b1cf",
+"vdc_8asm.html#aee91648064a74a1044f2f98e4a30b0d6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

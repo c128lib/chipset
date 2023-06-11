@@ -18,9 +18,5 @@ var searchData=
   ['irr_5flightpen_15',['IRR_LIGHTPEN',['../namespaceVic2.html#a1775285cc77a680270beb0c607ca6c58',1,'Vic2']]],
   ['irr_5fraster_16',['IRR_RASTER',['../namespaceVic2.html#a037c50e656a3207b2afc997ce6e38f37',1,'Vic2']]],
   ['irr_5fspr_5fbg_17',['IRR_SPR_BG',['../namespaceVic2.html#aa97f6b03ad1f4984032b3f54d9f997dd',1,'Vic2']]],
-  ['irr_5fspr_5fspr_18',['IRR_SPR_SPR',['../namespaceVic2.html#a8eb951d029d0c8c3a3afecee615f9ebc',1,'Vic2']]],
-  ['isreturnpressed_19',['IsReturnPressed',['../cia_8asm.html#a0de2dfa8081db67ede8a37f264c4a244',1,'cia.asm']]],
-  ['isreturnpressedandreleased_20',['IsReturnPressedAndReleased',['../cia_8asm.html#aaac46f09b259b0fb682473e02d3e5995',1,'cia.asm']]],
-  ['isspacepressed_21',['IsSpacePressed',['../cia_8asm.html#a22bdfe624cc770c1deaee2177618dac3',1,'cia.asm']]],
-  ['isspacepressedandreleased_22',['IsSpacePressedAndReleased',['../cia_8asm.html#af06a064ae93e2f5ca614ab8a8449e100',1,'cia.asm']]]
+  ['irr_5fspr_5fspr_18',['IRR_SPR_SPR',['../namespaceVic2.html#a8eb951d029d0c8c3a3afecee615f9ebc',1,'Vic2']]]
 ];
