@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"namespaceVic2.html#ad10fbfd63eab4c3f8b60e1a1d31cf366":[0,0,5,103],
 "namespaceVic2.html#ad775a5ef093e13dc7c2d092dce40b1cf":[0,0,5,11],
 "namespaceVic2.html#adacb23deb44e2d01b58642a54b4e27bf":[0,0,5,81],
 "namespaceVic2.html#adb9684483ffa43bd4dfb2edf88e7aa96":[0,0,5,74],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "vdc_8asm.html#ae6b287b79ba3f89cb4ee1f1408477ca9":[1,0,12,69],
 "vdc_8asm.html#ae7d1b5fc383470f186c438929e9e8195":[1,0,12,38],
 "vdc_8asm.html#ae9f81b163237bf9a721746358b4feedf":[1,0,12,42],
-"vdc_8asm.html#aea654eb6a9ebc271e98b8d58a51c56c2":[1,0,12,84],
-"vdc_8asm.html#aee87372293dba2955633d1407303c89e":[1,0,12,27]
+"vdc_8asm.html#aea654eb6a9ebc271e98b8d58a51c56c2":[1,0,12,84]
 };

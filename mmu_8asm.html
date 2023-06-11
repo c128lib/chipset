@@ -274,6 +274,19 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Configure common RAM amount.</p>
+<p>RAM Bank 0 is always the visible RAM bank. Valid values are 1,4,8 and 16. For ex. if you choose 4K common ram at top and bottom you'll have 4K up and 4K bottom.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">config</td><td>Values for common ram configuration</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.COMMON_RAM_*</dd>
+<dd>
+Use c128lib_SetCommonRAM in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -302,6 +315,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sets RAM bank that will be involved in I/O. Also sets bank where the filename will be found. Use the Basic bank definitions. (0-15)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bank</td><td>Values for setting bank </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bankname</td><td>Values filename</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetIOBank in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A and .X will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -327,10 +351,7 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM* <div class="fragment"><div class="line"><a class="code hl_function" href="mmu_8asm.html#a0e367e41fc25de49987703726aed4474">SetMMUConfiguration</a>(<a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.RAM1 | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.ROM_HI_RAM | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.ROM_MID_RAM | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.ROM_LOW_RAM | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.IO_RAM)</div>
-<div class="ttc" id="ammu_8asm_html_a0e367e41fc25de49987703726aed4474"><div class="ttname"><a href="mmu_8asm.html#a0e367e41fc25de49987703726aed4474">SetMMUConfiguration</a></div><div class="ttdeci">macro SetMMUConfiguration(config)</div></div>
-<div class="ttc" id="anamespaceMmu_html"><div class="ttname"><a href="namespaceMmu.html">Mmu</a></div><div class="ttdef"><b>Definition</b> mmu.asm:11</div></div>
-</div><!-- fragment --></dd>
+<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*</dd>
 <dd>
 Use c128lib_SetMMUConfiguration in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
@@ -371,6 +392,18 @@ Use c128lib_SetMMUConfiguration in <a class="el" href="mmu-global_8asm.html">mmu
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set mode configuration register.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">config</td><td>Values for confiuration register</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.CPU_*, Mmu.FASTSERIAL*, Mmu.GAME_*, Mmu.EXROM_*, Mmu.KERNAL_*, Mmu.COLS_*</dd>
+<dd>
+Use c128lib_SetModeConfig in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -398,7 +431,7 @@ Use c128lib_SetMMUConfiguration in <a class="el" href="mmu-global_8asm.html">mmu
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="mmu_8asm.html">mmu.asm</a></li>
-    <li class="footer">Generated on Sun Jun 11 2023 17:04:00 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Sun Jun 11 2023 20:29:19 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>
