@@ -89,16 +89,16 @@ def add_semicolor_to_label_declaration(content):
 
     return content
 
-def convert_file(filename):
+def read_file(filename):
     """Function printing python version."""
     print("Processing " + filename)
-    head, tail = os.path.split(filename)
 
-    output_filename = head + '/output/' + tail
-
-    print("Reading...")
     content = open(filename, 'r', encoding='utf8').read()
 
+    return content
+
+def convert_file(content):
+    """Function printing python version."""
     print("Editing...")
 
     content = remove_assert(content)
@@ -129,8 +129,14 @@ def convert_file(filename):
     content = remove_inital_dot_from_keywords(content)
 
     content = add_semicolor_to_label_declaration(content)
+    return content
 
-    # finish... save the new file
+def write_file(filename, content):
+    """Function printing python version."""
+    head, tail = os.path.split(filename)
+
+    output_filename = head + '/output/' + tail
+
     print("Saving " + output_filename + "...")
     out_file = open(output_filename, 'w', encoding='utf8')
     out_file.write(content)
@@ -161,4 +167,6 @@ else:
 
     for file in Path(sys.argv[1]).glob("*.asm"):
         if os.path.isdir(file) is False:
-            convert_file(str(file))
+            content_to_elaborate = read_file(str(file))
+            content_to_elaborate = convert_file(content_to_elaborate)
+            write_file(str(file), content_to_elaborate)

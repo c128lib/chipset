@@ -1,108 +1,163 @@
-/*
- * c128lib - Mmu
- *
- * References available at
- * https://c128lib.github.io/Reference/Mmu
- * https://c128lib.github.io/Reference/D500
- */
-#importonce
+/**
+  @file mmu.asm
+  @brief Mmu module
 
-#import "common/lib/kernal.asm"
+  @copyright MIT Licensed
+  @date 2022
+*/
+
+#importonce
 
 .filenamespace c128lib
 
 .namespace Mmu {
 
-.label CONFIGURATION        = $D500   // Bank configuration register
+/** Configuration register */
+.label CONFIGURATION        = $D500
+/** Preconfiguration register A */
 .label PRECONFIG_A          = $D501
+/** Preconfiguration register B */
 .label PRECONFIG_B          = $D502
+/** Preconfiguration register C */
 .label PRECONFIG_C          = $D503
+/** Preconfiguration register D */
 .label PRECONFIG_D          = $D504
-.label MODE_CONFIG          = $D505   // Cpu mode configuration register
-.label RAM_CONFIG           = $D506   // Ram configuration register
+/** Mode configuration register */
+.label MODE_CONFIG          = $D505
+/** RAM configuration register */
+.label RAM_CONFIG           = $D506
+/** Page 0 pointer */
 .label PAGE0_PAGE_POINTER   = $D507
+/** Page 0 block pointer */
 .label PAGE0_BLOCK_POINTER  = $D508
+/** Page 1 pointer */
 .label PAGE1_PAGE_POINTER   = $D509
+/** Page 1 block pointer */
 .label PAGE1_BLOCK_POINTER  = $D50A
+/** Version register */
 .label MMU_VERSION          = $D50B
-
+/** Configuration register */
 .label LOAD_CONFIGURATION   = $FF00
+/** Load configuration register A */
 .label LOAD_PRECONFIG_A     = $FF01
+/** Load configuration register B */
 .label LOAD_PRECONFIG_B     = $FF02
+/** Load configuration register C */
 .label LOAD_PRECONFIG_C     = $FF03
+/** Load configuration register D */
 .label LOAD_PRECONFIG_D     = $FF04
 
-// CONFIGURATION bit handling
-// bit 0 - controls io active on $d000-$dfff
+/** Mask for configuration bit 0 to set ROM active on address $d000-$dfff */
 .label IO_ROM             = %00000000
+/** Mask for configuration bit 0 to set RAM active on address $d000-$dfff */
 .label IO_RAM             = %00000001
 
-// bit 1 - controls rom low space $4000-$7fff (Basic low rom)
+/** Mask for configuration bit 1 to set ROM active on address $4000-$7fff (Basic low rom) */
 .label ROM_LOW_ROM        = %00000000
+/** Mask for configuration bit 1 to set RAM active on address $4000-$7fff (Basic low rom) */
 .label ROM_LOW_RAM        = %00000010
 
-// bit 2-3 - controls rom mid space $8000-$bfff (Basic hi rom, ML monitor rom)
-.label ROM_MID_ROM        = %00000000   // Upper portion of BASIC ROM ($8000-$AFFF), plus monitor ROM ($BOOO-$BFFF)
-.label ROM_MID_INT        = %00000100   // Internal function ROM: refers to ROM in the free ROM socket on the 128 circuit board
-.label ROM_MID_EXT        = %00001000   // External function ROM: refers to ROM in a cartridge plugged into the expansion port.
+/** Mask for configuration bits 2-3 to set ROM active on upper portion of BASIC ROM ($8000-$AFFF), plus monitor ROM ($B000-$BFFF) */
+.label ROM_MID_ROM        = %00000000
+/** Mask for configuration bits 2-3 to set internal function ROM: refers to ROM in the free ROM socket on the 128 circuit board */
+.label ROM_MID_INT        = %00000100
+/** Mask for configuration bits 2-3 to set xxternal function ROM: refers to ROM in a cartridge plugged into the expansion port. */
+.label ROM_MID_EXT        = %00001000
+/** Mask for configuration bits 2-3 to set RAM active on upper portion of BASIC ROM ($8000-$AFFF), plus monitor ROM ($B000-$BFFF) */
 .label ROM_MID_RAM        = %00001100
 
 // bit 4-5 - controls rom mid space $c000-$ffff (Screen editor rom, kernal rom)
-.label ROM_HI             = %00000000   // Screen editor ROM ($c000-$cfff), character ROM ($d000-$Ddfff), Kemal ROM ($e000-$ffff)
-.label ROM_HI_INT         = %00010000   // Internal function ROM: refers to ROM in the free ROM socket on the 128 circuit board.
-.label ROM_HI_EXT         = %00100000   // External function ROM: refers to ROM in a cartridge plugged into the expansion port.
+/** Mask for configuration bits 4-5 to set ROM active on screen editor ROM ($c000-$cfff), character ROM ($d000-$Ddfff), Kemal ROM ($e000-$ffff) */
+.label ROM_HI             = %00000000
+/** Mask for configuration bits 4-5 to set internal function ROM: refers to ROM in the free ROM socket on the 128 circuit board. */
+.label ROM_HI_INT         = %00010000
+/** Mask for configuration bits 4-5 to set external function ROM: refers to ROM in a cartridge plugged into the expansion port. */
+.label ROM_HI_EXT         = %00100000
+/** Mask for configuration bits 4-5 to set RAM active on screen editor ROM ($c000-$cfff), character ROM ($d000-$Ddfff), Kemal ROM ($e000-$ffff) */
 .label ROM_HI_RAM         = %00110000
 
-// bit 6
+/** Mask for configuration bit 6 to set block 0 active */
 .label RAM0               = %00000000
+/** Mask for configuration bit 6 to set block 1 active */
 .label RAM1               = %01000000
 
-// MODE_CONFIG bit handling
-// bit 0 Cpu active
+/** Mask for bit 0 for selecting Z80 cpu to run  */
 .label CPU_Z80            = %00000000
+/** Mask for bit 0 for selecting 8502 cpu to run  */
 .label CPU_8502           = %00000001
 
 // bit 3 Fast serial input/output
+/** Mask for bit 3 for selecting fast serial input */
 .label FASTSERIALINPUT    = %00000000
+/** Mask for bit 3 for selecting fast serial output */
 .label FASTSERIALOUTPUT   = %00001000
 
-// bit 4 GAME
+/** Mask for bit 4 for GAME pin low */
 .label GAME_LOW           = %00000000
+/** Mask for bit 4 for GAME pin high */
 .label GAME_HI            = %00010000
 
-// bit 5 EXROM
+/** Mask for bit 5 for EXROM pin low */
 .label EXROM_LOW          = %00000000
+/** Mask for bit 5 for EXROM pin high */
 .label EXROM_HI           = %00100000
 
-// bit 6 Kernal 128/64
+/** Mask for bit 6 for selecting 128 Kernal rom */
 .label KERNAL_128         = %00000000
+/** Mask for bit 6 for selecting 64 Kernal rom */
 .label KERNAL_64          = %01000000
 
 // bit 7 40/80 cols
+/** Mask for bit 7 for selecting 40/80 keyboard key switch status to 80 col */
 .label COLS_80            = %00000000
+/** Mask for bit 7 for selecting 40/80 keyboard key switch status to 40 col */
 .label COLS_40            = %10000000
 
-// RAM_CONFIG bit handling
-// bit 0-1 Amount of common ram
+/** Mask for bits 0-1 to set 1k of common ram */
 .label COMMON_RAM_1K      = %00000000
+/** Mask for bits 0-1 to set 4k of common ram */
 .label COMMON_RAM_4K      = %00000001
+/** Mask for bits 0-1 to set 8k of common ram */
 .label COMMON_RAM_8K      = %00000010
+/** Mask for bits 0-1 to set 16k of common ram */
 .label COMMON_RAM_16K     = %00000011
 
-// bit 2-3 Position of common ram
+/** Mask for bits 2-3 to disable common ram  */
 .label COMMON_RAM_UNUSED  = %00000000
+/** Mask for bits 2-3 to set common ram on bottom (near $0000) */
 .label COMMON_RAM_BOTTOM  = %00000100
+/** Mask for bits 2-3 to set common ram on top (near $FFFF) */
 .label COMMON_RAM_TOP     = %00001000
+/** Mask for bits 2-3 to set common ram on bottom and top */
 .label COMMON_RAM_BOTH    = COMMON_RAM_BOTTOM | COMMON_RAM_TOP
+
+/** Mask for bit 7 to set Vic bank on ram block 0 */
+.label VIC_BANK_ON_RAM_0  = %00000000
+/** Mask for bit 7 to set Vic bank on ram block 1 */
+.label VIC_BANK_ON_RAM_1  = %01000000
+/** Mask for bit 7 to set Vic bank on ram block 2 */
+.label VIC_BANK_ON_RAM_2  = %10000000
+/** Mask for bit 7 to set Vic bank on ram block 3 */
+.label VIC_BANK_ON_RAM_3  = %11000000
 
 }
 
-/*
-  Banking, RAM configurations
+/**
+  Macro for Mmu configuration.
 
-  Refer to IO_*, ROM_*, RAM* label to generate input value
+  @param[in] config Values for Mmu confiuration
 
-  Syntax: SetMMUConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM)
+  @note Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*
+  @code
+  SetMMUConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM)
+  @endcode
+
+  @note Use c128lib_SetMMUConfiguration in mmu-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetMMUConfiguration(config) {
     lda #config
@@ -236,3 +291,5 @@
 .assert "SetIOBank(1, 2)", { SetIOBank(1, 2) }, {
   lda #1; ldx #2; jsr $FF68
 }
+
+#import "common/lib/kernal.asm"
