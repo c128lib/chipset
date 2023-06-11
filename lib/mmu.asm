@@ -86,7 +86,6 @@
 /** Mask for bit 0 for selecting 8502 cpu to run  */
 .label CPU_8502           = %00000001
 
-// bit 3 Fast serial input/output
 /** Mask for bit 3 for selecting fast serial input */
 .label FASTSERIALINPUT    = %00000000
 /** Mask for bit 3 for selecting fast serial output */
@@ -107,7 +106,6 @@
 /** Mask for bit 6 for selecting 64 Kernal rom */
 .label KERNAL_64          = %01000000
 
-// bit 7 40/80 cols
 /** Mask for bit 7 for selecting 40/80 keyboard key switch status to 80 col */
 .label COLS_80            = %00000000
 /** Mask for bit 7 for selecting 40/80 keyboard key switch status to 40 col */
@@ -148,9 +146,6 @@
   @param[in] config Values for Mmu confiuration
 
   @note Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*
-  @code
-  SetMMUConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM)
-  @endcode
 
   @note Use c128lib_SetMMUConfiguration in mmu-global.asm
 
@@ -219,10 +214,19 @@
     sta Mmu.LOAD_CONFIGURATION
 }
 
-/*
+/**
   Set mode configuration register.
 
-  Syntax: SetModeConfig(Mmu.CPU_8502 | Mmu.KERNAL_C64)
+  @param[in] config Values for confiuration register
+
+  @note Config parameter can be filled with Mmu.CPU_*, Mmu.FASTSERIAL*, Mmu.GAME_*, Mmu.EXROM_*, Mmu.KERNAL_*, Mmu.COLS_*
+
+  @note Use c128lib_SetModeConfig in mmu-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetModeConfig(config) {
     lda #config
@@ -234,7 +238,7 @@
   lda #%11111001; sta $d505
 }
 
-/*
+/**
   Configure common RAM amount.
 
   RAM Bank 0 is always the visible RAM bank.
@@ -242,7 +246,16 @@
   For ex. if you choose 4K common ram at top and bottom
   you'll have 4K up and 4K bottom.
 
-  Syntax:    SetCommonRAM(Mmu.COMMON_RAM_4K | Mmu.COMMON_RAM_BOTH)
+  @param[in] config Values for common ram configuration
+
+  @note Config parameter can be filled with Mmu.COMMON_RAM_*
+
+  @note Use c128lib_SetCommonRAM in mmu-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetCommonRAM(config) {
     lda #config
@@ -276,12 +289,20 @@
   lda $d506;and #%10111111;ora #%01111111;sta $d506
 }
 
-/*
+/**
   Sets RAM bank that will be involved in I/O.
   Also sets bank where the filename will be found.
   Use the Basic bank definitions. (0-15)
 
-  Syntax:    SetIOBank(15, 15)
+  @param[in] bank Values for setting bank
+  @param[in] bankname Values filename
+
+  @note Use c128lib_SetIOBank in mmu-global.asm
+
+  @remark Register .A and .X will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetIOBank(bank, bankname) {
   lda #bank
