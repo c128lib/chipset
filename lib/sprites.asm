@@ -1,9 +1,12 @@
-/*
- * c128lib - Sprites
- */
-#importonce
+/**
+  @file sprites.asm
+  @brief Sprites module
 
-#import "vic2.asm"
+  @copyright MIT Licensed
+  @date 2022
+*/
+
+#importonce
 
 .filenamespace c128lib
 
