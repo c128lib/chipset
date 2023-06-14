@@ -123,64 +123,6 @@ Functions</h2></td></tr>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT Licensed </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a6e51f0f2789797000537f67fb1a51f7b" name="a6e51f0f2789797000537f67fb1a51f7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e51f0f2789797000537f67fb1a51f7b">&#9670;&#160;</a></span>c128lib_disableCIAInterrupts()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_disableCIAInterrupts </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a96c7a31536dc51ecdc7f47e13bdcbd05" name="a96c7a31536dc51ecdc7f47e13bdcbd05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96c7a31536dc51ecdc7f47e13bdcbd05">&#9670;&#160;</a></span>c128lib_GetFirePressedPort1()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_GetFirePressedPort1 </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Check if joystick port 1 fire button is pressed. Accumulator will be 0 if button is pressed</p>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
-<dl class="section attention"><dt>Attention</dt><dd>Using control port 1 for joystick input can have an undesiderable side effect. Since the input lines of that port are also used for reading the keyboard, the keyscan routine ($C55D) has no way to tell whether the port lines are beign grounded by keypresses of joystick presses. As a result, moving a joystick effectively generates a keypress, and certain keypresses produce the same effect as moving the joystick.</dd></dl>
-<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
-
-</div>
-</div>
-<a id="a0a20b24b923eefc2320221728819cf1c" name="a0a20b24b923eefc2320221728819cf1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a20b24b923eefc2320221728819cf1c">&#9670;&#160;</a></span>c128lib_GetFirePressedPort2()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_GetFirePressedPort2 </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Check if joystick port 2 fire button is pressed. Accumulator will be 0 if button is pressed</p>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
-<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
-
-</div>
-</div>
 <a id="a4149c348405ab27bd8108fa711e0a70e" name="a4149c348405ab27bd8108fa711e0a70e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4149c348405ab27bd8108fa711e0a70e">&#9670;&#160;</a></span>c128lib_SetVICBank()</h2>
 
@@ -277,13 +219,71 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a96c7a31536dc51ecdc7f47e13bdcbd05" name="a96c7a31536dc51ecdc7f47e13bdcbd05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96c7a31536dc51ecdc7f47e13bdcbd05">&#9670;&#160;</a></span>c128lib_GetFirePressedPort1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_GetFirePressedPort1 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check if joystick port 1 fire button is pressed. Accumulator will be 0 if button is pressed</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section attention"><dt>Attention</dt><dd>Using control port 1 for joystick input can have an undesiderable side effect. Since the input lines of that port are also used for reading the keyboard, the keyscan routine ($C55D) has no way to tell whether the port lines are beign grounded by keypresses of joystick presses. As a result, moving a joystick effectively generates a keypress, and certain keypresses produce the same effect as moving the joystick.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
+<a id="a0a20b24b923eefc2320221728819cf1c" name="a0a20b24b923eefc2320221728819cf1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a20b24b923eefc2320221728819cf1c">&#9670;&#160;</a></span>c128lib_GetFirePressedPort2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_GetFirePressedPort2 </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check if joystick port 2 fire button is pressed. Accumulator will be 0 if button is pressed</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
+<a id="a6e51f0f2789797000537f67fb1a51f7b" name="a6e51f0f2789797000537f67fb1a51f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e51f0f2789797000537f67fb1a51f7b">&#9670;&#160;</a></span>c128lib_disableCIAInterrupts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_disableCIAInterrupts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="cia-global_8asm.html">cia-global.asm</a></li>
-    <li class="footer">Generated on Sun Jun 11 2023 20:29:19 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Wed Jun 14 2023 20:45:03 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

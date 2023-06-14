@@ -114,24 +114,6 @@ Functions</h2></td></tr>
 <tr class="separator:a20bb607ea450a330ceb33b9ef73775f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aaf50d7c48fdc7ce8ab6c1cb831bf4064" name="aaf50d7c48fdc7ce8ab6c1cb831bf4064"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf50d7c48fdc7ce8ab6c1cb831bf4064">&#9670;&#160;</a></span>c128lib_SetBankConfiguration()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_SetBankConfiguration </td>
-          <td>(</td>
-          <td class="paramtype">config&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a33e9daff46f2f31773e8701df11939c0" name="a33e9daff46f2f31773e8701df11939c0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a33e9daff46f2f31773e8701df11939c0">&#9670;&#160;</a></span>c128lib_SetCommonRAM()</h2>
 
@@ -160,44 +142,6 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespaceMmu_html"><div class="ttname"><a href="namespaceMmu.html">Mmu</a></div><div class="ttdef"><b>Definition</b> mmu.asm:11</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
-<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
-
-</div>
-</div>
-<a id="ab8b073d245551d77f3f3d15852da1fae" name="ab8b073d245551d77f3f3d15852da1fae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab8b073d245551d77f3f3d15852da1fae">&#9670;&#160;</a></span>c128lib_SetIOBank()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_SetIOBank </td>
-          <td>(</td>
-          <td class="paramtype">bank&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bankname&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets RAM bank that will be involved in I/O. Also sets bank where the filename will be found. Use the Basic bank definitions. (0-15)</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">bank</td><td>Values for setting bank </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">bankname</td><td>Values filename</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A and .X will be modified. Flags N and Z will be affected.</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
@@ -250,6 +194,80 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aaf50d7c48fdc7ce8ab6c1cb831bf4064" name="aaf50d7c48fdc7ce8ab6c1cb831bf4064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf50d7c48fdc7ce8ab6c1cb831bf4064">&#9670;&#160;</a></span>c128lib_SetBankConfiguration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_SetBankConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">config&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a862b501960555b7d32dca12ce2c92b85" name="a862b501960555b7d32dca12ce2c92b85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a862b501960555b7d32dca12ce2c92b85">&#9670;&#160;</a></span>c128lib_SetVICRAMBank()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_SetVICRAMBank </td>
+          <td>(</td>
+          <td class="paramtype">value&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab8b073d245551d77f3f3d15852da1fae" name="ab8b073d245551d77f3f3d15852da1fae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8b073d245551d77f3f3d15852da1fae">&#9670;&#160;</a></span>c128lib_SetIOBank()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_SetIOBank </td>
+          <td>(</td>
+          <td class="paramtype">bank&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bankname&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets RAM bank that will be involved in I/O. Also sets bank where the filename will be found. Use the Basic bank definitions. (0-15)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bank</td><td>Values for setting bank </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bankname</td><td>Values filename</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A and .X will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+
+</div>
+</div>
 <a id="a20bb607ea450a330ceb33b9ef73775f7" name="a20bb607ea450a330ceb33b9ef73775f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20bb607ea450a330ceb33b9ef73775f7">&#9670;&#160;</a></span>c128lib_SetModeConfig()</h2>
 
@@ -280,31 +298,13 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a862b501960555b7d32dca12ce2c92b85" name="a862b501960555b7d32dca12ce2c92b85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a862b501960555b7d32dca12ce2c92b85">&#9670;&#160;</a></span>c128lib_SetVICRAMBank()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_SetVICRAMBank </td>
-          <td>(</td>
-          <td class="paramtype">value&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></li>
-    <li class="footer">Generated on Sun Jun 11 2023 20:29:19 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Wed Jun 14 2023 20:45:03 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>
