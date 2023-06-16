@@ -104,6 +104,7 @@
   @since 0.6.0
 */
 .macro SetSpriteXPosition(spriteNo, x) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   .if (x > 255) {
     lda #<x
     sta spriteXReg(spriteNo)
@@ -115,6 +116,8 @@
     sta spriteXReg(spriteNo)
   }
 }
+.asserterror "SetSpriteXPosition(-1, 10)", { SetSpriteXPosition(-1, 10) }
+.asserterror "SetSpriteXPosition(8, 10)", { SetSpriteXPosition(8, 10) }
 .assert "SetSpriteXPosition stores X in SPRITE_X reg", { SetSpriteXPosition(3, 5) }, {
   lda #$05
   sta $d006
@@ -142,6 +145,7 @@
   @since 0.6.0
 */
 .macro SetSpriteXPositionWithShadow(spriteNo, x) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   .if (x > 255) {
     lda #<x
     sta spriteShadowXReg(spriteNo)
@@ -153,6 +157,8 @@
     sta spriteShadowXReg(spriteNo)
   }
 }
+.asserterror "SetSpriteXPositionWithShadow(-1, 10)", { SetSpriteXPositionWithShadow(-1, 10) }
+.asserterror "SetSpriteXPositionWithShadow(8, 10)", { SetSpriteXPositionWithShadow(8, 10) }
 .assert "SetSpriteXPositionWithShadow stores X in SPRITE_X reg", { SetSpriteXPositionWithShadow(3, 5) }, {
   lda #$05
   sta $11dc
@@ -179,9 +185,12 @@
   @since 0.6.0
 */
 .macro SetSpriteYPosition(spriteNo, y) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   lda #y
   sta spriteYReg(spriteNo)
 }
+.asserterror "SetSpriteYPosition(-1, 10)", { SetSpriteYPosition(-1, 10) }
+.asserterror "SetSpriteYPosition(8, 10)", { SetSpriteYPosition(8, 10) }
 .assert "SetSpriteYPosition stores Y in SPRITE_Y reg", { SetSpriteYPosition(3, 5) },  {
   lda #$05
   sta $D007
@@ -201,9 +210,12 @@
   @since 0.6.0
 */
 .macro SetSpriteYPositionWithShadow(spriteNo, y) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   lda #y
   sta spriteShadowYReg(spriteNo)
 }
+.asserterror "SetSpriteYPositionWithShadow(-1, 10)", { SetSpriteYPositionWithShadow(-1, 10) }
+.asserterror "SetSpriteYPositionWithShadow(8, 10)", { SetSpriteYPositionWithShadow(8, 10) }
 .assert "SetSpriteYPositionWithShadow stores Y in SPRITE_Y reg", { SetSpriteYPositionWithShadow(3, 5) },  {
   lda #$05
   sta $11dd
@@ -224,6 +236,7 @@
   @since 0.6.0
 */
 .macro SetSpritePosition(spriteNo, x, y) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   .if (x <= 255) {
     lda #x
     sta spriteXReg(spriteNo)
@@ -241,6 +254,8 @@
     sta spriteYReg(spriteNo)
   }
 }
+.asserterror "SetSpritePosition(-1, 10, 10)", { SetSpritePosition(-1, 10, 10) }
+.asserterror "SetSpritePosition(8, 10, 10)", { SetSpritePosition(8, 10, 10) }
 .assert "SetSpritePosition stores position in SPRITE_* reg (x and y equals)", { SetSpritePosition(3, 5, 5) }, {
   lda #$05
   sta $d006
@@ -277,6 +292,7 @@
   @since 0.6.0
 */
 .macro SetSpritePositionWithShadow(spriteNo, x, y) {
+  .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
   .if (x <= 255) {
     lda #x
     sta spriteShadowXReg(spriteNo)
@@ -294,6 +310,8 @@
     sta spriteShadowYReg(spriteNo)
   }
 }
+.asserterror "SetSpritePositionWithShadow(-1, 10, 10)", { SetSpritePositionWithShadow(-1, 10, 10) }
+.asserterror "SetSpritePositionWithShadow(8, 10, 10)", { SetSpritePositionWithShadow(8, 10, 10) }
 .assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y equals)", { SetSpritePositionWithShadow(3, 5, 5) }, {
   lda #$05
   sta $11dc
@@ -471,9 +489,12 @@
   @since 0.6.0
 */
 .macro SpriteColor(spriteNo, color) {
+    .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
     lda #color
     sta Vic2.SPRITE_0_COLOR + spriteNo
 }
+.asserterror "SpriteColor(-1, 10)", { SpriteColor(-1, 10) }
+.asserterror "SpriteColor(8, 10)", { SpriteColor(8, 10) }
 .assert "SpriteColor(2, WHITE)", { SpriteColor(2, WHITE) }, {
   lda #1; sta $D029
 }
