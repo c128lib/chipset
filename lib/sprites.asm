@@ -10,8 +10,12 @@
 
 .filenamespace c128lib
 
-/* 
+/**
   Calculates sprite X position register address
+
+  @param[in] spriteNo Number of the sprite x-coordinate to get
+
+  @since 0.6.0
 */
 .function spriteXReg(spriteNo) {
   .return Vic2.VIC2 + spriteNo * 2
@@ -19,8 +23,12 @@
 .assert "Reg address for sprite0 X pos", spriteXReg(0), $d000
 .assert "Reg address for sprite7 X pos", spriteXReg(7), $d00e
 
-/* 
+/**
   Calculates sprite X position shadow register address
+
+  @param[in] spriteNo Number of the sprite x-coordinate to get
+
+  @since 0.6.0
 */
 .function spriteShadowXReg(spriteNo) {
   .return Vic2.SHADOW_VIC2 + spriteNo * 2
@@ -28,9 +36,12 @@
 .assert "Shadow reg address for sprite0 X pos", spriteShadowXReg(0), $11d6
 .assert "Shadow reg address for sprite7 X pos", spriteShadowXReg(7), $11e4
 
-
-/* 
+/**
   Calculates sprite Y position register address
+
+  @param[in] spriteNo Number of the sprite x-coordinate to get
+
+  @since 0.6.0
 */
 .function spriteYReg(spriteNo) {
   .return spriteXReg(spriteNo) + 1
@@ -38,8 +49,12 @@
 .assert "Reg address for sprite0 Y pos", spriteYReg(0), $d001
 .assert "Reg address for sprite7 Y pos", spriteYReg(7), $d00f
 
-/* 
+/**
   Calculates sprite Y position shadow register address
+
+  @param[in] spriteNo Number of the sprite x-coordinate to get
+
+  @since 0.6.0
 */
 .function spriteShadowYReg(spriteNo) {
   .return spriteShadowXReg(spriteNo) + 1
@@ -48,8 +63,12 @@
 .assert "Shadow reg address for sprite7 Y pos", spriteShadowYReg(7), $11e5
 
 
-/* 
-  Calculates sprite bit position
+/**
+  Generates a mask for a specific sprite
+
+  @param[in] spriteNo Number of the sprite for mask generation
+
+  @since 0.6.0
 */
 .function spriteMask(spriteNo) {
   .return pow(2, spriteNo)
@@ -57,9 +76,12 @@
 .assert "Bit mask for sprite 0", spriteMask(0), %00000001
 .assert "Bit mask for sprite 7", spriteMask(7), %10000000
 
-
-/* 
+/**
   Calculate sprite color register address
+
+  @param[in] spriteNo Number of the sprite color address
+
+  @since 0.6.0
 */
 .function spriteColorReg(spriteNo) {
   .return Vic2.SPRITE_0_COLOR + spriteNo
@@ -68,9 +90,18 @@
 .assert "Reg address for sprite7 color", spriteColorReg(7), $d02e
 
 
-/* 
+/**
   Sets X position of given sprite (uses sprite MSB register if necessary)
-  MOD: A
+
+  @param[in] spriteNo Number of the sprite to move
+  @param[in] x X position of sprite
+
+  @note Use c128lib_SetSpriteXPosition in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetSpriteXPosition(spriteNo, x) {
   .if (x > 255) {
@@ -84,22 +115,31 @@
     sta spriteXReg(spriteNo)
   }
 }
-.assert "SetSpriteXPosition stores X in SPRITE_X reg", { SetSpriteXPosition(3, 5) }, { 
+.assert "SetSpriteXPosition stores X in SPRITE_X reg", { SetSpriteXPosition(3, 5) }, {
   lda #$05
-  sta $d006 
+  sta $d006
 }
 .assert "SetSpriteXPosition stores X in SPRITE_X and MSB regs", { SetSpriteXPosition(3, 257) },  {
   lda #$01
-  sta $d006 
+  sta $d006
   lda $d010
   ora #%00001000
   sta $d010
 }
 
-/* 
+/**
   Sets X position of given sprite (uses sprite MSB register if necessary)
-  with shadow registers.
-  MOD: A
+  using shadow registers
+
+  @param[in] spriteNo Number of the sprite to move
+  @param[in] x X position of sprite
+
+  @note Use c128lib_SetSpriteXPositionWithShadow in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetSpriteXPositionWithShadow(spriteNo, x) {
   .if (x > 255) {
@@ -113,21 +153,30 @@
     sta spriteShadowXReg(spriteNo)
   }
 }
-.assert "SetSpriteXPositionWithShadow stores X in SPRITE_X reg", { SetSpriteXPositionWithShadow(3, 5) }, { 
+.assert "SetSpriteXPositionWithShadow stores X in SPRITE_X reg", { SetSpriteXPositionWithShadow(3, 5) }, {
   lda #$05
-  sta $11dc 
+  sta $11dc
 }
 .assert "SetSpriteXPositionWithShadow stores X in SPRITE_X and MSB regs", { SetSpriteXPositionWithShadow(3, 257) },  {
   lda #$01
-  sta $11dc 
+  sta $11dc
   lda $11e6
   ora #%00001000
   sta $11e6
 }
 
-/* 
-  Sets Y position of given sprite
-  MOD: A
+/**
+  Sets y position of given sprite
+
+  @param[in] spriteNo Number of the sprite to move
+  @param[in] y Y position of sprite
+
+  @note Use c128lib_SetSpriteYPosition in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetSpriteYPosition(spriteNo, y) {
   lda #y
@@ -138,9 +187,18 @@
   sta $D007
 }
 
-/* 
-  Sets Y position of given sprite with shadow registers
-  MOD: A
+/**
+  Sets y position of given sprite using shadow registers
+
+  @param[in] spriteNo Number of the sprite to move
+  @param[in] y Y position of sprite
+
+  @note Use c128lib_SetSpriteYPositionWithShadow in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetSpriteYPositionWithShadow(spriteNo, y) {
   lda #y
@@ -151,9 +209,19 @@
   sta $11dd
 }
 
-/* 
-  Sets X,Y position of given sprite
-  MOD A
+/**
+  Sets x and y position of given sprite
+
+  @param[in] spriteNo Number of the sprite to move
+  @param[in] x X position of sprite
+  @param[in] y Y position of sprite
+
+  @note Use c128lib_SetSpritePosition in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetSpritePosition(spriteNo, x, y) {
   .if (x <= 255) {
@@ -173,30 +241,40 @@
     sta spriteYReg(spriteNo)
   }
 }
-.assert "SetSpritePosition stores position in SPRITE_* reg (x and y equals)", { SetSpritePosition(3, 5, 5) }, { 
+.assert "SetSpritePosition stores position in SPRITE_* reg (x and y equals)", { SetSpritePosition(3, 5, 5) }, {
   lda #$05
-  sta $d006 
-  sta $d007 
+  sta $d006
+  sta $d007
 }
-.assert "SetSpritePosition stores position in SPRITE_* reg (x and y not equals)", { SetSpritePosition(3, 5, 15) }, { 
+.assert "SetSpritePosition stores position in SPRITE_* reg (x and y not equals)", { SetSpritePosition(3, 5, 15) }, {
   lda #$05
-  sta $d006 
+  sta $d006
   lda #15
-  sta $d007 
+  sta $d007
 }
 .assert "SetSpritePosition stores position in SPRITE_* and MSB regs", { SetSpritePosition(3, 300, 15) },  {
   lda #44
-  sta $d006 
+  sta $d006
   lda $d010
   ora #%00001000
   sta $d010
   lda #15
-  sta $d007 
+  sta $d007
 }
 
-/* 
-  Sets X,Y position of given sprite with shadow registers
-  MOD A
+/**
+  Sets x and y position of given sprite using shadow registers
+
+  @param[in] spriteNo Number of the sprite to move
+  @param[in] x X position of sprite
+  @param[in] y Y position of sprite
+
+  @note Use c128lib_SetSpritePositionWithShadow in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SetSpritePositionWithShadow(spriteNo, x, y) {
   .if (x <= 255) {
@@ -216,41 +294,46 @@
     sta spriteShadowYReg(spriteNo)
   }
 }
-.assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y equals)", { SetSpritePositionWithShadow(3, 5, 5) }, { 
+.assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y equals)", { SetSpritePositionWithShadow(3, 5, 5) }, {
   lda #$05
-  sta $11dc 
-  sta $11dd 
+  sta $11dc
+  sta $11dd
 }
-.assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y not equals)", { SetSpritePositionWithShadow(3, 5, 15) }, { 
+.assert "SetSpritePositionWithShadow stores position in SPRITE_* reg (x and y not equals)", { SetSpritePositionWithShadow(3, 5, 15) }, {
   lda #$05
-  sta $11dc 
+  sta $11dc
   lda #15
-  sta $11dd 
+  sta $11dd
 }
 .assert "SetSpritePositionWithShadow stores position in SPRITE_* and MSB regs", { SetSpritePositionWithShadow(3, 300, 15) },  {
   lda #44
-  sta $11dc 
+  sta $11dc
   lda $11e6
   ora #%00001000
   sta $11e6
   lda #15
-  sta $11dd 
+  sta $11dd
 }
 
 .function GetSpriteMovementStartingAddress(spriteNo) {
   .return Vic2.SPRITE_MOTION_0 + (Vic2.SPRITE_MOTION_OFFSET * spriteNo);
 }
 
-/*
+/**
   Define sprite movement
 
-  Params:
-  spriteNo - number of sprite (0..7)
-  speed - speed of sprite
-  quadrant - determines main direction of sprite (use SPRITE_MAIN_DIR_* labels)
-  deltaX - move sprite on X each interrupt
-  deltaY - move sprite on Y each interrupt
+  @param[in] spriteNo Number of the sprite to set movement
+  @param[in] speed Speed of sprite
+  @param[in] quadrant Determines main direction of sprite (use SPRITE_MAIN_DIR_* labels)
+  @param[in] deltaX move sprite on X each interrupt
+  @param[in] deltaY move sprite on Y each interrupt
 
+  @note Use c128lib_SpriteMove in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteMove(spriteNo, speed, quadrant, deltaX, deltaY) {
   .errorif (spriteNo < 0 || spriteNo > 7), "spriteNo must be from 0 to 7"
@@ -283,15 +366,21 @@
 .asserterror "SpriteMove(0, 0, 4, $1234, $beef)", { SpriteMove(0, 0, 4, $1234, $beef) }
 .assert "SpriteMove(0, 1, SPRITE_MAIN_DIR_UP, $1234, $beef)", { SpriteMove(0, 1, Vic2.SPRITE_MAIN_DIR_UP, $1234, $beef) }, {
   lda #1; sta $117E; lda #0; sta $1180; lda #$34; sta $1181; lda #$12; sta $1182; lda #$ef; sta $1183; lda #$be; sta $1184;
-  lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188 
+  lda #0; sta $117F; sta $1185; sta $1186; sta $1187; sta $1188
 }
 
-/*
+/**
   Enable one or more sprite.
 
-  Params:
-  mask - sprite mask (use SPRITE_MASK_* eventually with | to enable more sprite at once)
+  @param[in] mask Sprite mask
+    (use SPRITE_MASK_* eventually with | to enable more sprite at once)
 
+  @note Use c128lib_SpriteMove in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteEnable(mask) {
     lda Vic2.SPRITE_ENABLE
@@ -302,12 +391,18 @@
   lda $D015; ora #%10001001; sta $D015
 }
 
-/*
+/**
   Disable one or more sprite.
 
-  Params:
-  mask - sprite mask (use SPRITE_MASK_* eventually with | to disable more sprite at once)
+  @param[in] mask Sprite mask
+    (use SPRITE_MASK_* eventually with | to disable more sprite at once)
 
+  @note Use c128lib_SpriteDisable in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteDisable(mask) {
     lda Vic2.SPRITE_ENABLE
@@ -318,12 +413,18 @@
   lda $D015; and #%01110110; sta $D015
 }
 
-/*
+/**
   Enable multicolor setting for one or more sprite.
 
-  Params:
-  mask - sprite mask (use SPRITE_MASK_* eventually with | to enable setting for more sprite at once)
+  @param[in] mask Sprite mask
+    (use SPRITE_MASK_* eventually with | to set multicolor on more sprite at once)
 
+  @note Use c128lib_SpriteEnableMulticolor in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteEnableMulticolor(mask) {
     lda Vic2.SPRITE_COL_MODE
@@ -334,12 +435,18 @@
   lda $D01C; ora #%10001001; sta $D01C
 }
 
-/*
+/**
   Disable multicolor setting for one or more sprite.
 
-  Params:
-  mask - sprite mask (use SPRITE_MASK_* eventually with | to disable setting for more sprite at once)
+  @param[in] mask Sprite mask
+    (use SPRITE_MASK_* eventually with | to unset multicolor on more sprite at once)
 
+  @note Use c128lib_SpriteDisableMulticolor in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteDisableMulticolor(mask) {
     lda Vic2.SPRITE_COL_MODE
@@ -350,13 +457,18 @@
   lda $D01C; and #%01110110; sta $D01C
 }
 
-/*
-  Set main color for a sprite
+/**
+  Disable multicolor setting for one or more sprite.
 
-  Params:
-  spriteNo - sprite number (from 0 to 7)
-  color - color to set
+  @param[in] spriteNo Number of the sprite to set movement
+  @param[in] color Color to set
 
+  @note Use c128lib_SpriteColor in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteColor(spriteNo, color) {
     lda #color
@@ -366,12 +478,17 @@
   lda #1; sta $D029
 }
 
-/*
+/**
   Set sprite multi color 0
 
-  Params:
-  color - color to set
+  @param[in] color Color to set
 
+  @note Use c128lib_SpriteMultiColor0 in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteMultiColor0(color) {
     lda #color
@@ -381,12 +498,17 @@
   lda #1; sta $D025
 }
 
-/*
+/**
   Set sprite multi color 1
 
-  Params:
-  color - color to set
+  @param[in] color Color to set
 
+  @note Use c128lib_SpriteMultiColor1 in sprites-global.asm
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @since 0.6.0
 */
 .macro SpriteMultiColor1(color) {
     lda #color
@@ -405,3 +527,5 @@
   .assert "Multicolor sprite line length must be 12", data.size(), 12
   .byte convertMultic(data.substring(0, 4)), convertMultic(data.substring(4, 8)), convertMultic(data.substring(8,12))
 }
+
+#import "vic2.asm"
