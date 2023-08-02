@@ -1,80 +1,138 @@
-/*
- * c128lib - Vic2
- *
- * References available at
- * https://c128lib.github.io/Reference/Vic
- * https://c128lib.github.io/Reference/D000
-*/
-#importonce
+/**
+  @file vic2.asm
+  @brief Vic2 module
 
-#import "common/lib/common.asm"
+  @copyright MIT Licensed
+  @date 2022
+*/
+
+#importonce
 
 .filenamespace c128lib
 
 .namespace Vic2 {
 
+/** Vic2 first register */
 .label VIC2                 = $D000
+/** Sprite 0 x-coordinate */
 .label SPRITE_0_X           = VIC2 + $00
+/** Sprite 0 y-coordinate */
 .label SPRITE_0_Y           = VIC2 + $01
+/** Sprite 1 x-coordinate */
 .label SPRITE_1_X           = VIC2 + $02
+/** Sprite 1 y-coordinate */
 .label SPRITE_1_Y           = VIC2 + $03
+/** Sprite 2 x-coordinate */
 .label SPRITE_2_X           = VIC2 + $04
+/** Sprite 2 y-coordinate */
 .label SPRITE_2_Y           = VIC2 + $05
+/** Sprite 3 x-coordinate */
 .label SPRITE_3_X           = VIC2 + $06
+/** Sprite 3 y-coordinate */
 .label SPRITE_3_Y           = VIC2 + $07
+/** Sprite 4 x-coordinate */
 .label SPRITE_4_X           = VIC2 + $08
+/** Sprite 4 y-coordinate */
 .label SPRITE_4_Y           = VIC2 + $09
+/** Sprite 5 x-coordinate */
 .label SPRITE_5_X           = VIC2 + $0A
+/** Sprite 5 y-coordinate */
 .label SPRITE_5_Y           = VIC2 + $0B
+/** Sprite 6 x-coordinate */
 .label SPRITE_6_X           = VIC2 + $0C
+/** Sprite 6 y-coordinate */
 .label SPRITE_6_Y           = VIC2 + $0D
+/** Sprite 7 x-coordinate */
 .label SPRITE_7_X           = VIC2 + $0E
+/** Sprite 7 y-coordinate */
 .label SPRITE_7_Y           = VIC2 + $0F
+/** Sprite msb for setting x pos over 255 px */
 .label SPRITE_MSB_X         = VIC2 + $10
+/** Vertical smooth scrolling and control register */
 .label CONTROL_1            = VIC2 + $11
+/** Raster compare register */
 .label RASTER               = VIC2 + $12
+/** Light pen horizontal position */
 .label LIGHTPEN_X           = VIC2 + $13
+/** Light pen vertical position */
 .label LIGHTPEN_Y           = VIC2 + $14
+/** Sprite enable register */
 .label SPRITE_ENABLE        = VIC2 + $15
+/** Horizontal smooth scrolling and control register */
 .label CONTROL_2            = VIC2 + $16
+/** Sprite vertical expansion register */
 .label SPRITE_EXPAND_Y      = VIC2 + $17
+/** Screen and character base address register */
 .label MEMORY_CONTROL       = VIC2 + $18
+/** Interrupt register */
 .label IRR                  = VIC2 + $19
+/** Interrupt enable register */
 .label IMR                  = VIC2 + $1A
+/** Sprite-to-foreground priority register */
 .label SPRITE_PRIORITY      = VIC2 + $1B
+/** Sprite multicolor mode register */
 .label SPRITE_COL_MODE      = VIC2 + $1C
+/** Sprite horizontal expansion register */
 .label SPRITE_EXPAND_X      = VIC2 + $1D
+/** Sprite-to-sprite collision register */
 .label SPRITE_2S_COLLISION  = VIC2 + $1E
+/** Sprite-foreground collision register */
 .label SPRITE_2B_COLLISION  = VIC2 + $1F
+/** Border color register */
 .label BORDER_COL           = VIC2 + $20
+/** Background color register 0 */
 .label BG_COL_0             = VIC2 + $21
+/** Background color register 1 */
 .label BG_COL_1             = VIC2 + $22
+/** Background color register 2 */
 .label BG_COL_2             = VIC2 + $23
+/** Background color register 3 */
 .label BG_COL_3             = VIC2 + $24
+/** Sprite multicolor color 0 register */
 .label SPRITE_COL_0         = VIC2 + $25
+/** Sprite multicolor color 1 register */
 .label SPRITE_COL_1         = VIC2 + $26
+/** Sprite 0 color */
 .label SPRITE_0_COLOR       = VIC2 + $27
+/** Sprite 1 color */
 .label SPRITE_1_COLOR       = VIC2 + $28
+/** Sprite 2 color */
 .label SPRITE_2_COLOR       = VIC2 + $29
+/** Sprite 3 color */
 .label SPRITE_3_COLOR       = VIC2 + $2A
+/** Sprite 4 color */
 .label SPRITE_4_COLOR       = VIC2 + $2B
+/** Sprite 5 color */
 .label SPRITE_5_COLOR       = VIC2 + $2C
+/** Sprite 6 color */
 .label SPRITE_6_COLOR       = VIC2 + $2D
+/** Sprite 7 color */
 .label SPRITE_7_COLOR       = VIC2 + $2E
+/** Extended keyboard scan-line control register */
 .label XSCAN                = VIC2 + $2F
+/** Processor clock rate control register */
 .label CLKRATE              = VIC2 + $30
 
 /*
   Vic-II sprite movement
 */
+/** Sprite 0 movement control data */
 .label SPRITE_MOTION_0      = $117E
+/** Sprite 1 movement control data */
 .label SPRITE_MOTION_1      = $1189
+/** Sprite 2 movement control data */
 .label SPRITE_MOTION_2      = $1194
+/** Sprite 3 movement control data */
 .label SPRITE_MOTION_3      = $119F
+/** Sprite 4 movement control data */
 .label SPRITE_MOTION_4      = $11AA
+/** Sprite 5 movement control data */
 .label SPRITE_MOTION_5      = $11B5
+/** Sprite 6 movement control data */
 .label SPRITE_MOTION_6      = $11C0
+/** Sprite 7 movement control data */
 .label SPRITE_MOTION_7      = $11CB
+/** Offset between sprite control data pointers */
 .label SPRITE_MOTION_OFFSET = $0B
 
 .label SPRITE_MAIN_DIR_UP   = $00
@@ -97,27 +155,49 @@
 /*
   Vic-II shadow registers
 */
+/** Vic2 first shadow register */
 .label SHADOW_VIC2          = $11D6
+/** Sprite 0 shadow register x-coordinate */
 .label SHADOW_SPRITE_0_X    = SHADOW_VIC2 + $00
+/** Sprite 0 shadow register y-coordinate */
 .label SHADOW_SPRITE_0_Y    = SHADOW_VIC2 + $01
+/** Sprite 1 shadow register x-coordinate */
 .label SHADOW_SPRITE_1_X    = SHADOW_VIC2 + $02
+/** Sprite 1 shadow register y-coordinate */
 .label SHADOW_SPRITE_1_Y    = SHADOW_VIC2 + $03
+/** Sprite 2 shadow register x-coordinate */
 .label SHADOW_SPRITE_2_X    = SHADOW_VIC2 + $04
+/** Sprite 2 shadow register y-coordinate */
 .label SHADOW_SPRITE_2_Y    = SHADOW_VIC2 + $05
+/** Sprite 3 shadow register x-coordinate */
 .label SHADOW_SPRITE_3_X    = SHADOW_VIC2 + $06
+/** Sprite 3 shadow register y-coordinate */
 .label SHADOW_SPRITE_3_Y    = SHADOW_VIC2 + $07
+/** Sprite 4 shadow register x-coordinate */
 .label SHADOW_SPRITE_4_X    = SHADOW_VIC2 + $08
+/** Sprite 4 shadow register y-coordinate */
 .label SHADOW_SPRITE_4_Y    = SHADOW_VIC2 + $09
+/** Sprite 5 shadow register x-coordinate */
 .label SHADOW_SPRITE_5_X    = SHADOW_VIC2 + $0A
+/** Sprite 5 shadow register y-coordinate */
 .label SHADOW_SPRITE_5_Y    = SHADOW_VIC2 + $0B
+/** Sprite 6 shadow register x-coordinate */
 .label SHADOW_SPRITE_6_X    = SHADOW_VIC2 + $0C
+/** Sprite 6 shadow register y-coordinate */
 .label SHADOW_SPRITE_6_Y    = SHADOW_VIC2 + $0D
+/** Sprite 7 shadow register x-coordinate */
 .label SHADOW_SPRITE_7_X    = SHADOW_VIC2 + $0E
+/** Sprite 7 shadow register y-coordinate */
 .label SHADOW_SPRITE_7_Y    = SHADOW_VIC2 + $0F
+/** Sprite shadow register msb for setting x pos over 255 px */
 .label SHADOW_SPRITE_MSB_X  = SHADOW_VIC2 + $10
+/** Sprite-to-sprite collision shadow register */
 .label SHADOW_SPRITE_2S_COLLISION = SHADOW_VIC2 + $11
+/** Sprite-to-background collision shadow register */
 .label SHADOW_SPRITE_2B_COLLISION = SHADOW_VIC2 + $12
+/** Light pen horizontal position shadow register */
 .label SHADOW_LIGHTPEN_X    = SHADOW_VIC2 + $13
+/** Light pen vertical position shadow register */
 .label SHADOW_LIGHTPEN_Y    = SHADOW_VIC2 + $14
 
 .label COLOR_RAM            = $D800
@@ -126,16 +206,22 @@
 .label RASTER_MAX_PAL       = 312
 .label RASTER_MAX_NTSC      = 263
 
-// CONTROL_1 bits
+/** Extra bit for raster register */
 .label CONTROL_1_RASTER8  = %10000000
+/** Extended background color mode */
 .label CONTROL_1_ECM      = %01000000
+/** Char mode or bitmapped mode */
 .label CONTROL_1_BMM      = %00100000
+/** Enable or disable Vic screen */
 .label CONTROL_1_DEN      = %00010000
+/** Vertical screen row count */
 .label CONTROL_1_RSEL     = %00001000
 
-// CONTROL_2 bits
+/** Reset bit */
 .label CONTROL_2_RES      = %00100000
+/** Multicolor mode */
 .label CONTROL_2_MCM      = %00010000
+/** Horizontal screen column count */
 .label CONTROL_2_CSEL     = %00001000
 
 // IRR bits
@@ -709,3 +795,5 @@
   lda store
   sta (charPointer),y
 }
+
+#import "common/lib/common.asm"
