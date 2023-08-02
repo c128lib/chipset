@@ -170,6 +170,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Go to 40 columns mode</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -187,6 +189,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Go to 80 columns mode</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -215,6 +219,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Calculates memory offset of text cell specified by given coordinates on 80 cols screen</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xPos</td><td>X coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yPos</td><td>Y coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Memory offset of <a class="el" href="namespaceVdc.html">Vdc</a> specified coordinate</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -243,6 +257,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Calculate byte with hi nibble to foreground color and low nibble to background color.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">background</td><td>Background color </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">foreground</td><td>Foreground color</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -288,6 +311,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the address start of <a class="el" href="namespaceVdc.html">Vdc</a> display memory data. This is stored in <a class="el" href="namespaceVdc.html">Vdc</a> register SCREEN_MEMORY_STARTING_HIGH_ADDRESS and SCREEN_MEMORY_STARTING_LOW_ADDRESS. The 16-bit value is stored in $FB and $FC.</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -306,6 +331,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set the pointer to the RAM area that is to be updated. The update pointer is stored in <a class="el" href="namespaceVdc.html">Vdc</a> register CURRENT_MEMORY_HIGH_ADDRESS and CURRENT_MEMORY_LOW_ADDRESS.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>Address of update area</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -324,6 +357,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Translates between Vic and <a class="el" href="namespaceVdc.html">Vdc</a> color codes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">viccolor</td><td>Vic color code to translate</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -341,6 +382,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Write a value into <a class="el" href="namespaceVdc.html">Vdc</a> register without using kernal routine instead of pure instruction. It needs register number in X and value to write in A. It costs 11 bytes and 14 cycles.</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -358,6 +401,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read a value from <a class="el" href="namespaceVdc.html">Vdc</a> register without using kernal routine instead of pure instruction. It needs register number in X and value is written in A. It costs 11 bytes and 14 cycles.</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -386,6 +431,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set background and foreground color, also disable bit 6 of HORIZONTAL_SMOOTH_SCROLLING register</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -414,6 +461,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set background and foreground color, also disable bit 6 of HORIZONTAL_SMOOTH_SCROLLING register. Use vars instead of labels.; Warning: high nibble of background must be 0, it's up to developer to check this.</p>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -454,6 +503,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from <a class="el" href="namespaceVdc.html">Vdc</a> internal memory and write it to Vic screen memory by using coordinates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xPos</td><td>X coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yPos</td><td>Y coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td><a class="el" href="namespaceVdc.html">Vdc</a> screen memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -488,6 +548,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from <a class="el" href="namespaceVdc.html">Vdc</a> internal memory and write it to Vic screen memory by using source address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td><a class="el" href="namespaceVdc.html">Vdc</a> memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Vic screen memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -528,6 +598,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from Vic screen memory and write it to <a class="el" href="namespaceVdc.html">Vdc</a> internal memory by using coordinates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xPos</td><td>X coord on Vic screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yPos</td><td>Y coord on Vic screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td><a class="el" href="namespaceVdc.html">Vdc</a> internal memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -562,6 +643,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from Vic screen memory and write it to <a class="el" href="namespaceVdc.html">Vdc</a> internal memory by using coordinates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td><a class="el" href="namespaceVdc.html">Vdc</a> memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Vic screen memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -590,6 +681,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Write a value into <a class="el" href="namespaceVdc.html">Vdc</a> register. It uses kernal routine instead of pure instruction. It costs 7 bytes and 12 cycles.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">register</td><td>Register to write on </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to write</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -608,6 +708,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read a value from <a class="el" href="namespaceVdc.html">Vdc</a> register. It uses kernal routine instead of pure instruction. It costs 7 bytes and 8 cycles.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">register</td><td>Register to read</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -831,7 +939,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></li>
-    <li class="footer">Generated on Sun Jun 18 2023 14:29:20 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Wed Aug 2 2023 14:14:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

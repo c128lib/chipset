@@ -97,6 +97,9 @@ $(document).ready(function(){initNavTree('vdc_8asm.html',''); initResizable(); }
   <div class="headertitle"><div class="title">vdc.asm File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="namespaceVdc.html">Vdc</a> module.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -204,8 +207,12 @@ Variables</h2></td></tr>
 <tr class="separator:a3b2e2404e3f9112a1678ed3283ee9db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e7dc71112610abceb41677dda3b4e6"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#a79e7dc71112610abceb41677dda3b4e6">TEXT_SCREEN_80_COL_WIDTH</a> = 80</td></tr>
 <tr class="separator:a79e7dc71112610abceb41677dda3b4e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea654eb6a9ebc271e98b8d58a51c56c2"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#aea654eb6a9ebc271e98b8d58a51c56c2">VDCADR</a></td></tr>
+<tr class="memitem:aea654eb6a9ebc271e98b8d58a51c56c2"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#aea654eb6a9ebc271e98b8d58a51c56c2">VDCADR</a> = $d600</td></tr>
 <tr class="separator:aea654eb6a9ebc271e98b8d58a51c56c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611aa51e963589f3c23f9b6284160f2e"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#a611aa51e963589f3c23f9b6284160f2e">VDCDAT</a> = $d601</td></tr>
+<tr class="separator:a611aa51e963589f3c23f9b6284160f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3ba1691e591d10057f92f0d70727ef"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#abc3ba1691e591d10057f92f0d70727ef">TOTALE_NUMBER_OF_HORIZONTAL_CHARACTER_POSITIONS</a> = $00</td></tr>
+<tr class="separator:abc3ba1691e591d10057f92f0d70727ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab821f9fa841c45484eaa2ebb8be4c973"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#ab821f9fa841c45484eaa2ebb8be4c973">NUMBER_OF_VISIBILE_HORIZONTAL_CHARACTER_POSITIONS</a> = $01</td></tr>
 <tr class="separator:ab821f9fa841c45484eaa2ebb8be4c973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0425dc0cf064f778eab954e58f17a3d7"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#a0425dc0cf064f778eab954e58f17a3d7">HORIZONTAL_SYNC_POSITION</a> = $02</td></tr>
@@ -287,7 +294,11 @@ Variables</h2></td></tr>
 <tr class="memitem:a72f90681f4ecc35cca5a812e15601ccb"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVdc.html#a72f90681f4ecc35cca5a812e15601ccb">ATTRIBUTE_BLINK</a> = %00010000</td></tr>
 <tr class="separator:a72f90681f4ecc35cca5a812e15601ccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="namespaceVdc.html">Vdc</a> module. </p>
+<dl class="section copyright"><dt>Copyright</dt><dd>MIT Licensed </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2022 </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a4933eeb9967b10432a9f17610ca5bc76" name="a4933eeb9967b10432a9f17610ca5bc76"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4933eeb9967b10432a9f17610ca5bc76">&#9670;&#160;</a></span>Go40()</h2>
 
@@ -302,6 +313,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Go to 40 columns mode</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_Go40 in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -319,6 +333,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Go to 80 columns mode</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_Go80 in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -375,6 +392,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Calculate byte with hi nibble to foreground color and low nibble to background color.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">background</td><td>Background color </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">foreground</td><td>Foreground color</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -403,6 +429,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set background and foreground color, also disable bit 6 of HORIZONTAL_SMOOTH_SCROLLING register</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetBackgroundForegroundColor in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -431,6 +460,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set background and foreground color, also disable bit 6 of HORIZONTAL_SMOOTH_SCROLLING register. Use vars instead of labels.; Warning: high nibble of background must be 0, it's up to developer to check this.</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetBackgroundForegroundColorWithVars in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -471,6 +503,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from <a class="el" href="namespaceVdc.html">Vdc</a> internal memory and write it to Vic screen memory by using coordinates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xPos</td><td>X coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yPos</td><td>Y coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Vic screen memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_ReadFromVdcMemoryByCoordinates in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -505,6 +549,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from <a class="el" href="namespaceVdc.html">Vdc</a> internal memory and write it to Vic screen memory by using source address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td><a class="el" href="namespaceVdc.html">Vdc</a> memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Vic screen memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_ReadFromVdcMemoryByAddress in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -545,6 +600,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from Vic screen memory and write it to <a class="el" href="namespaceVdc.html">Vdc</a> internal memory by using coordinates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xPos</td><td>X coord on Vic screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yPos</td><td>Y coord on Vic screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td><a class="el" href="namespaceVdc.html">Vdc</a> internal memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WriteToVdcMemoryByCoordinates in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -579,6 +646,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read from Vic screen memory and write it to <a class="el" href="namespaceVdc.html">Vdc</a> internal memory by using coordinates.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td><a class="el" href="namespaceVdc.html">Vdc</a> memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">destination</td><td>Vic screen memory absolute address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">qty</td><td>Number of byte to copy</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WriteToVdcMemoryByAddress in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -607,6 +685,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Calculates memory offset of text cell specified by given coordinates on 80 cols screen</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xPos</td><td>X coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">yPos</td><td>Y coord on <a class="el" href="namespaceVdc.html">Vdc</a> screen </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Memory offset of <a class="el" href="namespaceVdc.html">Vdc</a> specified coordinate</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WriteToVdcMemoryByAddress in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -624,6 +713,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Returns the address start of <a class="el" href="namespaceVdc.html">Vdc</a> display memory data. This is stored in <a class="el" href="namespaceVdc.html">Vdc</a> register SCREEN_MEMORY_STARTING_HIGH_ADDRESS and SCREEN_MEMORY_STARTING_LOW_ADDRESS. The 16-bit value is stored in $FB and $FC.</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_GetVdcDisplayStart in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -642,6 +734,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set the pointer to the RAM area that is to be updated. The update pointer is stored in <a class="el" href="namespaceVdc.html">Vdc</a> register CURRENT_MEMORY_HIGH_ADDRESS and CURRENT_MEMORY_LOW_ADDRESS.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>Address of update area</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetVdcUpdateAddress in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -660,6 +761,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Translates between Vic and <a class="el" href="namespaceVdc.html">Vdc</a> color codes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">viccolor</td><td>Vic color code to translate</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_GetVdcColor in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -677,6 +787,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Write a value into <a class="el" href="namespaceVdc.html">Vdc</a> register without using kernal routine instead of pure instruction. It needs register number in X and value to write in A. It costs 11 bytes and 14 cycles.</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WriteVdc in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -694,6 +807,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read a value from <a class="el" href="namespaceVdc.html">Vdc</a> register without using kernal routine instead of pure instruction. It needs register number in X and value is written in A. It costs 11 bytes and 14 cycles.</p>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_ReadVdc in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -722,6 +838,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Write a value into <a class="el" href="namespaceVdc.html">Vdc</a> register. It uses kernal routine instead of pure instruction. It costs 7 bytes and 12 cycles.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">register</td><td>Register to write on </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Value to write</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_WriteVdcWithKernal in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -740,6 +866,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Read a value from <a class="el" href="namespaceVdc.html">Vdc</a> register. It uses kernal routine instead of pure instruction. It costs 7 bytes and 8 cycles.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">register</td><td>Register to read</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_ReadVdcWithKernal in <a class="el" href="vdc-global_8asm.html">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -980,7 +1115,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="vdc_8asm.html">vdc.asm</a></li>
-    <li class="footer">Generated on Sun Jun 18 2023 14:29:20 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Wed Aug 2 2023 14:14:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

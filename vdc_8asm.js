@@ -49,6 +49,8 @@ var vdc_8asm =
     [ "MODE", "vdc_8asm.html#a3b2e2404e3f9112a1678ed3283ee9db1", null ],
     [ "TEXT_SCREEN_80_COL_WIDTH", "vdc_8asm.html#a79e7dc71112610abceb41677dda3b4e6", null ],
     [ "VDCADR", "vdc_8asm.html#aea654eb6a9ebc271e98b8d58a51c56c2", null ],
+    [ "VDCDAT", "vdc_8asm.html#a611aa51e963589f3c23f9b6284160f2e", null ],
+    [ "TOTALE_NUMBER_OF_HORIZONTAL_CHARACTER_POSITIONS", "vdc_8asm.html#abc3ba1691e591d10057f92f0d70727ef", null ],
     [ "NUMBER_OF_VISIBILE_HORIZONTAL_CHARACTER_POSITIONS", "vdc_8asm.html#ab821f9fa841c45484eaa2ebb8be4c973", null ],
     [ "HORIZONTAL_SYNC_POSITION", "vdc_8asm.html#a0425dc0cf064f778eab954e58f17a3d7", null ],
     [ "HORIZONTAL_VERTICAL_SYNC_WIDTH", "vdc_8asm.html#a164b35b3362e1d8e9e0b9b02900a2c1c", null ],
