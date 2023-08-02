@@ -1,40 +1,48 @@
-/*
- * c128lib - Vdc
- *
- * References available at
- * https://c128lib.github.io/Reference/Vdc
- * https://c128lib.github.io/Reference/D600
- *
- * Sources
- * https://gitlab.com/aaron-baugher/farming-game-128/-/blob/master/vdc80lib.a
-*/
-#importonce
+/**
+  @file vdc.asm
+  @brief Vdc module
 
-#import "common/lib/kernal.asm"
-#import "common/lib/screen-editor.asm"
+  @copyright MIT Licensed
+  @date 2022
+*/
+
+#importonce
 
 .filenamespace c128lib
 
 .namespace Vdc {
 
-/*
-  Vdc color codes
-*/
+/** Black color code */
 .label VDC_BLACK = 0
+/** Dark gray color code */
 .label VDC_DARK_GRAY = 1
+/** Dark blue color code */
 .label VDC_DARK_BLUE = 2
+/** Light blue color code */
 .label VDC_LIGHT_BLUE = 3
+/** Dark green color code */
 .label VDC_DARK_GREEN = 4
+/** Light green color code */
 .label VDC_LIGHT_GREEN = 5
+/** Dark cyan color code */
 .label VDC_DARK_CYAN = 6
+/** Light cyan color code */
 .label VDC_LIGHT_CYAN = 7
+/** Dark red color code */
 .label VDC_DARK_RED = 8
+/** Light red color code */
 .label VDC_LIGHT_RED = 9
+/** Dark purple color code */
 .label VDC_DARK_PURPLE = 10
+/** Light purple color code */
 .label VDC_LIGHT_PURPLE = 11
+/** Dark yellow color code */
 .label VDC_DARK_YELLOW = 12
+/** Light yellow color code */
 .label VDC_LIGHT_YELLOW = 13
+/** Light gray color code */
 .label VDC_LIGHT_GRAY = 14
+/** White color code */
 .label VDC_WHITE = 15
 
 .label COLOR80    = $ce5c
@@ -43,51 +51,84 @@
 
 .label TEXT_SCREEN_80_COL_WIDTH = 80
 
-/*
-  Vdc registers
-*/
-.label VDCADR     = $d600   // Vdc address/status register
-.label VDCDAT     = $d601   // Vdc data register
+/** Vdc address/status register */
+.label VDCADR     = $d600
+/** Vdc data register */
+.label VDCDAT     = $d601
 
-/*
-  Vdc internal registers
-*/
+/** Total number of horizontal character positions */
 .label TOTALE_NUMBER_OF_HORIZONTAL_CHARACTER_POSITIONS    = $00
+/** Number of visible horizontal character positions */
 .label NUMBER_OF_VISIBILE_HORIZONTAL_CHARACTER_POSITIONS  = $01
+/** Horizontal sync position */
 .label HORIZONTAL_SYNC_POSITION                           = $02
+/** Horizontal and vertical sync width */
 .label HORIZONTAL_VERTICAL_SYNC_WIDTH                     = $03
+/** Total number of screen rows */
 .label NUMBER_SCREEN_ROWS                                 = $04
+/** Vertical fine adjustment */
 .label VERTICAL_FINE_ADJUSTMENT                           = $05
+/** Number of visible screen rows */
 .label VISIBLE_SCREEN_ROWS                                = $06
+/** Vertical sync position */
 .label VERTICAL_SYNC_POSITION                             = $07
+/** Interlace mode control register */
 .label INTERLACE_MODE_CONTRO_POSITION                     = $08
+/** Number of scan lines per character */
 .label SCANLINES_PER_CHARACTER                            = $09
+/** Cursor mode control */
 .label CURSOR_MODE_CONTROL                                = $0A
+/** Ending scan line for cursor */
 .label ENDING_SCAN_LINE                                   = $0B
+/** Screen memory starting address (high byte) */
 .label SCREEN_MEMORY_STARTING_HIGH_ADDRESS                = $0C
+/** Screen memory starting address (low byte) */
 .label SCREEN_MEMORY_STARTING_LOW_ADDRESS                 = $0D
+/** Cursor position address (high byte) */
 .label CURSOR_POSITION_HIGH_ADDRESS                       = $0E
+/** Cursor position address (low byte) */
 .label CURSOR_POSITION_LOW_ADDRESS                        = $0F
+/** Light pen vertical position */
 .label LIGHT_PEN_VERTICAL_POSITION                        = $10
+/** Light pen horizontal position */
 .label LIGHT_PEN_HORIZONTAL_POSITION                      = $11
+/** Current memory address (high byte) */
 .label CURRENT_MEMORY_HIGH_ADDRESS                        = $12
+/** Current memory address (low byte) */
 .label CURRENT_MEMORY_LOW_ADDRESS                         = $13
+/** Attribute memory starting address (high byte) */
 .label ATTRIBUTE_MEMORY_HIGH_ADDRESS                      = $14
+/** Attribute memory starting address (low byte) */
 .label ATTRIBUTE_MEMORY_LOW_ADDRESS                       = $15
+/** Character horizontal size control register */
 .label CHARACTER_HORIZONTAL_SIZE_CONTROL                  = $16
+/** Character vertical size control register */
 .label CHARACTER_VERTICAL_SIZE_CONTROL                    = $17
+/** Vertical smooth scrolling and control register */
 .label VERTICAL_SMOOTH_SCROLLING                          = $18
+/** Horizontal smooth scrolling and control register */
 .label HORIZONTAL_SMOOTH_SCROLLING                        = $19
+/** Foreground/background color register */
 .label FOREGROUND_BACKGROUND_COLOR                        = $1A
+/** Address increment per row */
 .label ADDRESS_INCREMENT_PER_ROW                          = $1B
+/** Character set address and memory type register */
 .label CHARACTER_SET_ADDRESS                              = $1C
+/** Underline scan-line-position register */
 .label UNDERLINE_SCAN_LINE_POSITION                       = $1D
+/** Number of bytes for block write or copy */
 .label NUMBER_OF_BYTES_FOR_BLOCK_WRITE_OR_COPY            = $1E
+/** Memory read/write register */
 .label MEMORY_READ_WRITE                                  = $1F
+/** Block copy source address (high byte) */
 .label BLOCK_COPY_SOURCE_HIGH_ADDRESS                     = $20
+/** Block copy source address (low byte) */
 .label BLOCK_COPY_SOURCE_LOW_ADDRESS                      = $21
+/** Beginning position for horizontal blanking */
 .label BEGINNING_POSITION_FOR_HORIZONTAL_BLANKING         = $22
+/** Ending position for horizontal blanking */
 .label ENDING_POSITION_FOR_HORIZONTAL_BLANKING            = $23
+/** Number of memory refresh cycles per scan line */
 .label NUMBER_OF_MEMORY_REFRESH_CYCLER_PER_SCANLINE       = $24
 
 .label ATTRIBUTE_ALTERNATE  = %10000000;
@@ -127,7 +168,7 @@
 #define VDC_MOVESCREENPOINTERTO00
 #define VDC_WRITEBYTE
 #define VDC_REPEATBYTE
-/*
+/**
   Fill screen ram with a specific character.
 
   Params:
@@ -153,7 +194,7 @@ FillScreen:
 #define VDC_MOVEATTRIBUTEPOINTERTO00
 #define VDC_REPEATBYTE
 #define VDC_WRITEBYTE
-/*
+/**
   Fill attribute ram with a specific value.
 
   Params:
@@ -177,7 +218,7 @@ FillAttribute: {
 #endif
 
 #if VDC_MOVESCREENPOINTERTO00
-/*
+/**
   Move screen ram pointer to 0/0 on screen.
 */
 MoveScreenPointerTo00: {
@@ -192,7 +233,7 @@ MoveScreenPointerTo00: {
 #endif
 
 #if VDC_MOVEATTRIBUTEPOINTERTO00
-/*
+/**
   Move ram pointer to 0/0 in attribute memory.
 */
 MoveAttributePointerTo00: {
@@ -209,7 +250,7 @@ MoveAttributePointerTo00: {
 #if VDC_PRINTCHARATPOSITION
 #define VDC_POSITIONXY
 #define VDC_WRITEBYTE
-/*
+/**
   Print a char at specific coordinates in screen memory.
 
   Params:
@@ -227,7 +268,7 @@ PrintCharAtPosition: {
 #endif
 
 #if VDC_POSITIONXY
-/*
+/**
   Position the ram pointer at specific coordinates in screen memory.
 
   Params:
@@ -275,7 +316,7 @@ PositionXy: {
 #endif
 
 #if VDC_POSITIONATTRXY
-/*
+/**
   Position the ram pointer at specific coordinates in attribute memory.
 
   Params:
@@ -323,7 +364,7 @@ PositionAttrXy: {
 #endif
 
 #if VDC_REPEATBYTE
-/*
+/**
   Pass the number of times in A.
 */
 RepeatByte: {
@@ -340,7 +381,7 @@ RepeatByte: {
 #endif
 
 #if VDC_WRITEBYTE
-/*
+/**
   Write a specific byte to current ram pointer.
 
   Params:
@@ -354,7 +395,7 @@ WriteByte: {
 #endif
 
 #if VDC_SETRAMPOINTER
-/*
+/**
   Set ram pointer.
 
   Params:
@@ -372,7 +413,7 @@ SetRamPointer: {
 #endif
 
 #if VDC_INITTEXT
-/*
+/**
   Initialize Vdc for text display.
 */
 InitText: {
@@ -409,8 +450,12 @@ InitText: {
 
 }
 
-/*
+/**
   Go to 40 columns mode
+
+  @note Use c128lib_Go40 in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro Go40() {
   lda Vdc.MODE                // are we in 40 columns mode?
@@ -423,8 +468,12 @@ InitText: {
   lda $d7; bpl *+5; jsr $FF5F
 }
 
-/*
+/**
   Go to 80 columns mode
+
+  @note Use c128lib_Go80 in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro Go80() {
   lda Vdc.MODE                // are we in 80 columns mode?
@@ -441,17 +490,26 @@ InitText: {
   .return attributes + color;
 }
 
-/*
+/**
   Calculate byte with hi nibble to foreground color and low nibble
   to background color.
+
+  @param[in] background Background color
+  @param[in] foreground Foreground color
+
+  @since 0.6.0
 */
 .function CalculateBackgroundAndForeground(background, foreground) {
   .return ((foreground << 4) + background)
 }
 
-/*
+/**
   Set background and foreground color, also disable bit 6 of
   HORIZONTAL_SMOOTH_SCROLLING register
+
+  @note Use c128lib_SetBackgroundForegroundColor in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro SetBackgroundForegroundColor(background, foreground) {
     lda #0
@@ -477,11 +535,15 @@ InitText: {
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
-/*
+/**
   Set background and foreground color, also disable bit 6 of
   HORIZONTAL_SMOOTH_SCROLLING register. Use vars instead of labels.
   Warning: high nibble of background must be 0, it's up to developer
   to check this.
+
+  @note Use c128lib_SetBackgroundForegroundColorWithVars in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro SetBackgroundForegroundColorWithVars(background, foreground) {
     lda #0
@@ -514,15 +576,18 @@ InitText: {
     stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
-/*
+/**
   Read from Vdc internal memory and write it to Vic screen memory by
   using coordinates.
 
-  Params:
-  xPos - X coord on Vdc screen
-  yPos - Y coord on Vdc screen
-  destination - Vic screen memory absolute address
-  qty - number of byte to copy
+  @param[in] xPos X coord on Vdc screen
+  @param[in] yPos Y coord on Vdc screen
+  @param[in] destination Vic screen memory absolute address
+  @param[in] qty Number of byte to copy
+
+  @note Use c128lib_ReadFromVdcMemoryByCoordinates in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro ReadFromVdcMemoryByCoordinates(xPos, yPos, destination, qty) {
   .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
@@ -568,14 +633,17 @@ InitText: {
     ldy #0; jsr $CDD8; sta $beef, y; iny; cpy #255; bne *-9;
 }
 
-/*
+/**
   Read from Vdc internal memory and write it to Vic screen memory by
   using source address.
 
-  Params:
-    source - Vdc memory absolute address
-    destination - Vic screen memory absolute address
-    qty - number of byte to copy
+  @param[in] source Vdc memory absolute address
+  @param[in] destination Vic screen memory absolute address
+  @param[in] qty Number of byte to copy
+
+  @note Use c128lib_ReadFromVdcMemoryByAddress in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro ReadFromVdcMemoryByAddress(source, destination, qty) {
   .errorif (qty <= 0), "qty must be greater than 0"
@@ -608,15 +676,18 @@ InitText: {
     ldy #0; jsr $CDCA; sta $baab, y; iny; cpy #255; bne *-9;
 }
 
-/*
+/**
   Read from Vic screen memory and write it to Vdc internal memory by
   using coordinates.
 
-  Params:
-    xPos - X coord on Vic screen
-    yPos - Y coord on Vic screen
-    destination - Vdc internal memory absolute address
-    qty - number of byte to copy
+  @param[in] xPos X coord on Vic screen
+  @param[in] yPos Y coord on Vic screen
+  @param[in] destination Vdc internal memory absolute address
+  @param[in] qty Number of byte to copy
+
+  @note Use c128lib_WriteToVdcMemoryByCoordinates in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro WriteToVdcMemoryByCoordinates(source, xPos, yPos, qty) {
   .errorif (xPos == -1 && yPos != -1), "xPos and yPos must be -1 at same time"
@@ -662,14 +733,17 @@ InitText: {
     ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #255; bne *-9;
 }
 
-/*
+/**
   Read from Vic screen memory and write it to Vdc internal memory by
   using coordinates.
 
-  Params:
-    source - Vic screen memory absolute address
-    destination - Vdc internal memory absolute address
-    qty - number of byte to copy
+  @param[in] source Vdc memory absolute address
+  @param[in] destination Vic screen memory absolute address
+  @param[in] qty Number of byte to copy
+
+  @note Use c128lib_WriteToVdcMemoryByAddress in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro WriteToVdcMemoryByAddress(source, destination, qty) {
   .errorif (qty <= 0), "qty must be greater than 0"
@@ -702,27 +776,36 @@ InitText: {
     ldy #0; lda $beef, y; jsr $CDCA; iny; cpy #255; bne *-9;
 }
 
-/*
+/**
   Calculates memory offset of text cell specified by given coordinates
   on 80 cols screen
 
-  Params:
-    xPos - X coord
-    yPos - Y coord
+  @param[in] xPos X coord on Vdc screen
+  @param[in] yPos Y coord on Vdc screen
+  @return Memory offset of Vdc specified coordinate
+
+  @note Use c128lib_WriteToVdcMemoryByAddress in vdc-global.asm
+
+  @since 0.6.0
 */
 .function getTextOffset80Col(xPos, yPos) {
   .return xPos + Vdc.TEXT_SCREEN_80_COL_WIDTH * yPos
 }
 .assert "getTextOffset80Col(0,0) gives 0", getTextOffset80Col(0, 0), 0
-.assert "getTextOffset80Col(79,0) gives 39", getTextOffset80Col(79, 0), 79
+.assert "getTextOffset80Col(79,0) gives 79", getTextOffset80Col(79, 0), 79
 .assert "getTextOffset80Col(0,1) gives 80", getTextOffset80Col(0, 1), 80
 .assert "getTextOffset80Col(19,12) gives 979", getTextOffset80Col(19, 12), 979
-.assert "getTextOffset80Col(79,24) gives 1959", getTextOffset80Col(79, 24), 1999
+.assert "getTextOffset80Col(79,24) gives 1999", getTextOffset80Col(79, 24), 1999
 
-/*
+/**
   Returns the address start of Vdc display memory data. This
-  is stored in Vdc register 12 and 13.
+  is stored in Vdc register SCREEN_MEMORY_STARTING_HIGH_ADDRESS and 
+  SCREEN_MEMORY_STARTING_LOW_ADDRESS.
   The 16-bit value is stored in $FB and $FC.
+
+  @note Use c128lib_GetVdcDisplayStart in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro GetVdcDisplayStart() {
   ldx #Vdc.SCREEN_MEMORY_STARTING_HIGH_ADDRESS
@@ -734,10 +817,16 @@ InitText: {
   sta $fc
 }
 
-/*
+/**
   Set the pointer to the RAM area that is to be updated.
-  The update pointer is stored in Vdc register 18 and 19.
-  This will point register 18 and 19 to $1200.
+  The update pointer is stored in Vdc register CURRENT_MEMORY_HIGH_ADDRESS
+  and CURRENT_MEMORY_LOW_ADDRESS.
+
+  @param[in] address Address of update area
+
+  @note Use c128lib_SetVdcUpdateAddress in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro SetVdcUpdateAddress(address) {
   ldx #Vdc.CURRENT_MEMORY_HIGH_ADDRESS
@@ -747,14 +836,20 @@ InitText: {
   inx
   .var a1 = <address
   .var a2 = >address
-  .if( a1 != a2) {
+  .if (a1 != a2) {
     lda #<address // include if different from hi-byte.
   }
   WriteVdc()
 }
 
-/*
+/**
   Translates between Vic and Vdc color codes.
+
+  @param[in] viccolor Vic color code to translate
+
+  @note Use c128lib_GetVdcColor in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro GetVdcColor(viccolor) {
   ldx #viccolor
@@ -764,11 +859,15 @@ InitText: {
   ldx #0; lda $ce5c,x
 }
 
-/*
+/**
   Write a value into Vdc register without using kernal
   routine instead of pure instruction. It needs register
   number in X and value to write in A.
-  It costs 11 byte.
+  It costs 11 bytes and 14 cycles.
+
+  @note Use c128lib_WriteVdc in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro WriteVdc() {
     stx Vdc.VDCADR
@@ -780,11 +879,15 @@ InitText: {
   stx $d600; bit $d600; bpl *-3; sta $d601
 }
 
-/*
+/**
   Read a value from Vdc register without using kernal
   routine instead of pure instruction. It needs register
   number in X and value is written in A.
-  It costs 11 byte.
+  It costs 11 bytes and 14 cycles.
+
+  @note Use c128lib_ReadVdc in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro ReadVdc() {
     stx Vdc.VDCADR
@@ -796,10 +899,17 @@ InitText: {
   stx $d600; bit $d600; bpl *-3; lda $d601
 }
 
-/*
+/**
   Write a value into Vdc register. It uses kernal
   routine instead of pure instruction.
-  It costs 7 byte.
+  It costs 7 bytes and 12 cycles.
+
+  @param[in] register Register to write on
+  @param[in] value Value to write
+
+  @note Use c128lib_WriteVdcWithKernal in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro WriteVdcWithKernal(register, value) {
     ldx #register
@@ -810,10 +920,16 @@ InitText: {
   ldx #1; lda #2; jsr $CDCC
 }
 
-/*
+/**
   Read a value from Vdc register. It uses kernal
   routine instead of pure instruction.
-  It costs 7 byte.
+  It costs 7 bytes and 8 cycles.
+
+  @param[in] register Register to read
+
+  @note Use c128lib_ReadVdcWithKernal in vdc-global.asm
+
+  @since 0.6.0
 */
 .macro ReadVdcWithKernal(register) {
     ldx #register
@@ -933,3 +1049,6 @@ InitText: {
 //     jsr Vdc.Print80Str
 //   #endif
 // }
+
+#import "common/lib/kernal.asm"
+#import "common/lib/screen-editor.asm"
