@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.c64lib.retro-assembler" version "1.6.0"
+    id "com.github.c64lib.retro-assembler" version "1.7.3"
 }
 
 repositories {
@@ -18,5 +18,5 @@ retroProject {
     viceExecutable = 'x128.exe'
 
     libFromGitHub "c128lib/common", "0.6.0"
-    libFromGitHub "c128lib/128spec", "0.7.2"
+    libFromGitHub "c128lib/128spec", "0.7.3"
 }
