@@ -1,3 +1,11 @@
+/**
+  @file vdc-global.asm
+  @brief Vdc module
+
+  @copyright MIT Licensed
+  @date 2022
+*/
+
 #importonce
 
 #import "vdc.asm"
