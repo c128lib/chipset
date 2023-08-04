@@ -157,6 +157,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set border and background color with optimization if possible.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">borderColor</td><td>Border color to be set </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">backgroundColor</td><td>Background color to be set</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -193,6 +203,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set border color</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">borderColor</td><td>Border color to be set</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -211,6 +230,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set background color</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">backgroundColor</td><td>Background color to be set</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -257,6 +285,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set Basic IRQ routine active or not.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">active</td><td>Activate or deactivate basic irq</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Turning off the BASIC IRQ routine will give you direct access to the hardware registers, you should keep in mind that it will also effectively disable the BASIC statements MOVSPR, COLLISION, SOUND and PLAY</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -275,6 +313,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set screen editor IRQ routine active or not. This gives you direct control over the VIC chip register settings (D018), but disables BASIC'S ability to change display modes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">active</td><td>Activate or deactivate basic irq</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -293,6 +340,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Set screen memory and charset memory position by using shadow register.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">config</td><td>Screen memory and/or char memory configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Labels Vic2.CHAR* and Vic2.SCREEN_MEM* can ben used to compose.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -363,6 +419,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Configures VIC-II so that it fire IRQ when given "rasterLine" is drawn.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rasterLine</td><td>Line where irq should trigger</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -469,7 +534,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="vic2-global_8asm.html">vic2-global.asm</a></li>
-    <li class="footer">Generated on Wed Aug 2 2023 14:14:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Fri Aug 4 2023 07:15:58 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

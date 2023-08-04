@@ -346,8 +346,12 @@ Variables</h2></td></tr>
 <tr class="separator:aeb0db4252fe1ed36c13ec97891d20d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6b3203aa850f15894e32154a397761b"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#aa6b3203aa850f15894e32154a397761b">BASIC_IRQ_FLAG</a></td></tr>
 <tr class="separator:aa6b3203aa850f15894e32154a397761b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a412137751d7a24c1604ac63ca507eb44"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#a412137751d7a24c1604ac63ca507eb44">VIC_SCREEN_CHAR_SHADOW</a></td></tr>
+<tr class="memitem:a412137751d7a24c1604ac63ca507eb44"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#a412137751d7a24c1604ac63ca507eb44">VIC_SCREEN_CHAR_SHADOW</a> = $0A2C</td></tr>
 <tr class="separator:a412137751d7a24c1604ac63ca507eb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac424fab7a2be3203088d53d8dd409a49"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#ac424fab7a2be3203088d53d8dd409a49">VIC_BITMAP_VIDEO_SHADOW</a> = $0A2D</td></tr>
+<tr class="separator:ac424fab7a2be3203088d53d8dd409a49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acafba6ada49ca2eb26f9efb2d526d0a6"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#acafba6ada49ca2eb26f9efb2d526d0a6">CHAR_MEM_0000</a> = %00000000</td></tr>
+<tr class="separator:acafba6ada49ca2eb26f9efb2d526d0a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa41a042699f6fb89ed146dc483cadf46"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#aa41a042699f6fb89ed146dc483cadf46">CHAR_MEM_0800</a> = %00000010</td></tr>
 <tr class="separator:aa41a042699f6fb89ed146dc483cadf46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcb5661fc85dd4f1eb0fb2d22c0e4c62"><td class="memItemLeft" align="right" valign="top">label&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceVic2.html#adcb5661fc85dd4f1eb0fb2d22c0e4c62">CHAR_MEM_1000</a> = %00000100</td></tr>
@@ -1970,6 +1974,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Irq status </p>
 
 </div>
 </div>
@@ -1984,6 +1989,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Light pen signal </p>
 
 </div>
 </div>
@@ -1998,6 +2004,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sprite to sprite collision </p>
 
 </div>
 </div>
@@ -2012,6 +2019,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sprite to background collision </p>
 
 </div>
 </div>
@@ -2026,6 +2034,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Irq on raster line </p>
 
 </div>
 </div>
@@ -2040,6 +2049,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Light pen interrupt </p>
 
 </div>
 </div>
@@ -2054,6 +2064,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sprite to sprite collision interrupt </p>
 
 </div>
 </div>
@@ -2068,6 +2079,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Sprite to background collision interrupt </p>
 
 </div>
 </div>
@@ -2082,6 +2094,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Raster interrupt </p>
 
 </div>
 </div>
@@ -2235,15 +2248,42 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">label VIC_SCREEN_CHAR_SHADOW</td>
+          <td class="memname">label VIC_SCREEN_CHAR_SHADOW = $0A2C</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= $0A2C       </div>
-<div class="line">label VIC_BITMAP_VIDEO_SHADOW  = $0A2D       </div>
-<div class="line"> </div>
-<div class="line">label CHAR_MEM_0000        = %00000000</div>
-</div><!-- fragment -->
+<p>VIC text screen and character base </p>
+
+</div>
+</div>
+<a id="ac424fab7a2be3203088d53d8dd409a49" name="ac424fab7a2be3203088d53d8dd409a49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac424fab7a2be3203088d53d8dd409a49">&#9670;&#160;</a></span>VIC_BITMAP_VIDEO_SHADOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">label VIC_BITMAP_VIDEO_SHADOW = $0A2D</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>VIC bitmap and video matrix base </p>
+
+</div>
+</div>
+<a id="acafba6ada49ca2eb26f9efb2d526d0a6" name="acafba6ada49ca2eb26f9efb2d526d0a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acafba6ada49ca2eb26f9efb2d526d0a6">&#9670;&#160;</a></span>CHAR_MEM_0000</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">label CHAR_MEM_0000 = %00000000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Char memory on $0000 </p>
+
 </div>
 </div>
 <a id="aa41a042699f6fb89ed146dc483cadf46" name="aa41a042699f6fb89ed146dc483cadf46"></a>
@@ -2257,6 +2297,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $0800 </p>
 
 </div>
 </div>
@@ -2271,6 +2312,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $1000 </p>
 
 </div>
 </div>
@@ -2285,6 +2327,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $1800 </p>
 
 </div>
 </div>
@@ -2299,6 +2342,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $2000 </p>
 
 </div>
 </div>
@@ -2313,6 +2357,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $2800 </p>
 
 </div>
 </div>
@@ -2327,6 +2372,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $3000 </p>
 
 </div>
 </div>
@@ -2341,6 +2387,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Char memory on $0800 </p>
 
 </div>
 </div>
@@ -2355,6 +2402,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $0000 </p>
 
 </div>
 </div>
@@ -2369,6 +2417,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $0400 </p>
 
 </div>
 </div>
@@ -2383,6 +2432,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $0800 </p>
 
 </div>
 </div>
@@ -2397,6 +2447,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $0c00 </p>
 
 </div>
 </div>
@@ -2411,6 +2462,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $1000 </p>
 
 </div>
 </div>
@@ -2425,6 +2477,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $1400 </p>
 
 </div>
 </div>
@@ -2439,6 +2492,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $1800 </p>
 
 </div>
 </div>
@@ -2453,6 +2507,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $1c00 </p>
 
 </div>
 </div>
@@ -2467,6 +2522,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $2000 </p>
 
 </div>
 </div>
@@ -2481,6 +2537,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $2400 </p>
 
 </div>
 </div>
@@ -2495,6 +2552,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $2800 </p>
 
 </div>
 </div>
@@ -2509,6 +2567,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $2c00 </p>
 
 </div>
 </div>
@@ -2523,6 +2582,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $3000 </p>
 
 </div>
 </div>
@@ -2537,6 +2597,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $3400 </p>
 
 </div>
 </div>
@@ -2551,6 +2612,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $3800 </p>
 
 </div>
 </div>
@@ -2565,6 +2627,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Screen memory on $3c00 </p>
 
 </div>
 </div>
@@ -2579,6 +2642,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Bitmap memory on $0000 </p>
 
 </div>
 </div>
@@ -2593,6 +2657,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Bitmap memory on $2000 </p>
 
 </div>
 </div>
@@ -2602,7 +2667,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceVic2.html">Vic2</a></li>
-    <li class="footer">Generated on Wed Aug 2 2023 14:14:21 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
+    <li class="footer">Generated on Fri Aug 4 2023 07:15:58 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.7 </li>
   </ul>
 </div>
 </body>

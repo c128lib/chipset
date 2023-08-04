@@ -341,6 +341,8 @@ var namespaces_dup =
       [ "TEXT_SCREEN_WIDTH", "namespaceVic2.html#aeb0db4252fe1ed36c13ec97891d20d6c", null ],
       [ "BASIC_IRQ_FLAG", "namespaceVic2.html#aa6b3203aa850f15894e32154a397761b", null ],
       [ "VIC_SCREEN_CHAR_SHADOW", "namespaceVic2.html#a412137751d7a24c1604ac63ca507eb44", null ],
+      [ "VIC_BITMAP_VIDEO_SHADOW", "namespaceVic2.html#ac424fab7a2be3203088d53d8dd409a49", null ],
+      [ "CHAR_MEM_0000", "namespaceVic2.html#acafba6ada49ca2eb26f9efb2d526d0a6", null ],
       [ "CHAR_MEM_0800", "namespaceVic2.html#aa41a042699f6fb89ed146dc483cadf46", null ],
       [ "CHAR_MEM_1000", "namespaceVic2.html#adcb5661fc85dd4f1eb0fb2d22c0e4c62", null ],
       [ "CHAR_MEM_1800", "namespaceVic2.html#a040387ad8c4ac374f7da4da6c4bb32d5", null ],

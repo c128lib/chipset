@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['setbackgroundcolor_0',['SetBackgroundColor',['../vic2_8asm.html#aa2e022741fbdf6c6cb4087346a3dce3b',1,'vic2.asm']]],
+  ['setbackgroundcolor_0',['SetBackgroundColor',['../vic2_8asm.html#a805440d17d14e6a7222ad8e12e211785',1,'vic2.asm']]],
   ['setbackgroundforegroundcolor_1',['SetBackgroundForegroundColor',['../vdc_8asm.html#abbad20cacc437923fcfa0e51b73219be',1,'vdc.asm']]],
   ['setbackgroundforegroundcolorwithvars_2',['SetBackgroundForegroundColorWithVars',['../vdc_8asm.html#adde6b74d1b7467a788824871f376e7d5',1,'vdc.asm']]],
   ['setbankconfiguration_3',['SetBankConfiguration',['../mmu_8asm.html#afed26fccb43d0f7053fd361a273d0ed4',1,'mmu.asm']]],
   ['setbasicirqactivity_4',['SetBasicIrqActivity',['../vic2_8asm.html#af1e62f409e78ea1473db311501105202',1,'vic2.asm']]],
   ['setborderandbackgroundcolor_5',['SetBorderAndBackgroundColor',['../vic2_8asm.html#aaf271dfc5676d30854f6ee2ba9082f40',1,'vic2.asm']]],
-  ['setbordercolor_6',['SetBorderColor',['../vic2_8asm.html#af75eaab0d8fd9bcae8045411d20303db',1,'vic2.asm']]],
+  ['setbordercolor_6',['SetBorderColor',['../vic2_8asm.html#ad745239cfce1e840c94493ca9639e75e',1,'vic2.asm']]],
   ['setcommonram_7',['SetCommonRAM',['../mmu_8asm.html#a95264c496f278c41ef154133319b9d95',1,'mmu.asm']]],
   ['setinputchannel_8',['SetInputChannel',['../io_8asm.html#a167a1bde025f06c5714671cbf3ad009d',1,'io.asm']]],
   ['setiobank_9',['SetIOBank',['../mmu_8asm.html#adbec5b2bf8e11f3f7a06f7cec1d184c8',1,'mmu.asm']]],

@@ -1,8 +1,8 @@
 var vic2_8asm =
 [
     [ "SetBorderAndBackgroundColor", "vic2_8asm.html#aaf271dfc5676d30854f6ee2ba9082f40", null ],
-    [ "SetBorderColor", "vic2_8asm.html#af75eaab0d8fd9bcae8045411d20303db", null ],
-    [ "SetBackgroundColor", "vic2_8asm.html#aa2e022741fbdf6c6cb4087346a3dce3b", null ],
+    [ "SetBorderColor", "vic2_8asm.html#ad745239cfce1e840c94493ca9639e75e", null ],
+    [ "SetBackgroundColor", "vic2_8asm.html#a805440d17d14e6a7222ad8e12e211785", null ],
     [ "getTextOffset", "vic2_8asm.html#ad440bb847c466649947bcb26ac5eae9d", null ],
     [ "getTextMemory", "vic2_8asm.html#a011622c35d9995061dc97d7ec2043de7", null ],
     [ "SetBasicIrqActivity", "vic2_8asm.html#af1e62f409e78ea1473db311501105202", null ],
@@ -145,6 +145,8 @@ var vic2_8asm =
     [ "TEXT_SCREEN_WIDTH", "vic2_8asm.html#aeb0db4252fe1ed36c13ec97891d20d6c", null ],
     [ "BASIC_IRQ_FLAG", "vic2_8asm.html#aa6b3203aa850f15894e32154a397761b", null ],
     [ "VIC_SCREEN_CHAR_SHADOW", "vic2_8asm.html#a412137751d7a24c1604ac63ca507eb44", null ],
+    [ "VIC_BITMAP_VIDEO_SHADOW", "vic2_8asm.html#ac424fab7a2be3203088d53d8dd409a49", null ],
+    [ "CHAR_MEM_0000", "vic2_8asm.html#acafba6ada49ca2eb26f9efb2d526d0a6", null ],
     [ "CHAR_MEM_0800", "vic2_8asm.html#aa41a042699f6fb89ed146dc483cadf46", null ],
     [ "CHAR_MEM_1000", "vic2_8asm.html#adcb5661fc85dd4f1eb0fb2d22c0e4c62", null ],
     [ "CHAR_MEM_1800", "vic2_8asm.html#a040387ad8c4ac374f7da4da6c4bb32d5", null ],
