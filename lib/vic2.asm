@@ -224,17 +224,24 @@
 /** Horizontal screen column count */
 .label CONTROL_2_CSEL     = %00001000
 
-// IRR bits
+/** Irq status */
 .label IRR_IRQ            = %10000000
+/** Light pen signal */
 .label IRR_LIGHTPEN       = %00001000
+/** Sprite to sprite collision */
 .label IRR_SPR_SPR        = %00000100
+/** Sprite to background collision */
 .label IRR_SPR_BG         = %00000010
+/** Irq on raster line */
 .label IRR_RASTER         = %00000001
 
-// IMR bits
+/** Light pen interrupt */
 .label IMR_LIGHTPEN       = %00001000
+/** Sprite to sprite collision interrupt */
 .label IMR_SPR_SPR        = %00000100
+/** Sprite to background collision interrupt */
 .label IMR_SPR_BG         = %00000010
+/** Raster interrupt */
 .label IMR_RASTER         = %00000001
 
 // Graphic modes
@@ -257,48 +264,79 @@
 
 // TIP(intoinside): c128ProgrammersReferenceGuide has a wrong example on page 231
 // (manual page 223). $0A2C and $0A2D is wrongly written as $02AC and $02AC
-.label VIC_SCREEN_CHAR_SHADOW   = $0A2C       // VIC text screen and character base
-.label VIC_BITMAP_VIDEO_SHADOW  = $0A2D       // VIC bitmap and video matrix base
+/** VIC text screen and character base */
+.label VIC_SCREEN_CHAR_SHADOW   = $0A2C
+/** VIC bitmap and video matrix base */
+.label VIC_BITMAP_VIDEO_SHADOW  = $0A2D
 
+/** Char memory on $0000 */
 .label CHAR_MEM_0000        = %00000000
+/** Char memory on $0800 */
 .label CHAR_MEM_0800        = %00000010
+/** Char memory on $1000 */
 .label CHAR_MEM_1000        = %00000100
+/** Char memory on $1800 */
 .label CHAR_MEM_1800        = %00000110
+/** Char memory on $2000 */
 .label CHAR_MEM_2000        = %00001000
+/** Char memory on $2800 */
 .label CHAR_MEM_2800        = %00001010
+/** Char memory on $3000 */
 .label CHAR_MEM_3000        = %00001100
+/** Char memory on $0800 */
 .label CHAR_MEM_3800        = %00001110
 
+/** Screen memory on $0000 */
 .label SCREEN_MEM_0000      = %00000000
+/** Screen memory on $0400 */
 .label SCREEN_MEM_0400      = %00010000
+/** Screen memory on $0800 */
 .label SCREEN_MEM_0800      = %00100000
+/** Screen memory on $0c00 */
 .label SCREEN_MEM_0C00      = %00110000
+/** Screen memory on $1000 */
 .label SCREEN_MEM_1000      = %01000000
+/** Screen memory on $1400 */
 .label SCREEN_MEM_1400      = %01010000
+/** Screen memory on $1800 */
 .label SCREEN_MEM_1800      = %01100000
+/** Screen memory on $1c00 */
 .label SCREEN_MEM_1C00      = %01110000
+/** Screen memory on $2000 */
 .label SCREEN_MEM_2000      = %10000000
+/** Screen memory on $2400 */
 .label SCREEN_MEM_2400      = %10010000
+/** Screen memory on $2800 */
 .label SCREEN_MEM_2800      = %10100000
+/** Screen memory on $2c00 */
 .label SCREEN_MEM_2C00      = %10110000
+/** Screen memory on $3000 */
 .label SCREEN_MEM_3000      = %11000000
+/** Screen memory on $3400 */
 .label SCREEN_MEM_3400      = %11010000
+/** Screen memory on $3800 */
 .label SCREEN_MEM_3800      = %11100000
+/** Screen memory on $3c00 */
 .label SCREEN_MEM_3C00      = %11110000
 
+/** Bitmap memory on $0000 */
 .label BITMAP_MEM_0000      = %00000000
+/** Bitmap memory on $2000 */
 .label BITMAP_MEM_2000      = %00001000
 
 }
 
-/*
+/**
   Set border and background color with optimization if possible.
 
-  Params:
-    borderColor - borderColor to be set
-    backgroundColor - backgroundColor to be set
+  @param[in] borderColor Border color to be set
+  @param[in] backgroundColor Background color to be set
 
-  Mod: .A
+  @remark Register .A will be modified.
+
+  @note Use c128lib_SetBorderAndBackgroundColor in vic-global.asm
+
+  @since 0.6.0
 */
 .macro SetBorderAndBackgroundColor(borderColor, backgroundColor) {
   lda #borderColor
@@ -315,35 +353,41 @@
   lda #3; sta $D020; sta $D021
 }
 
-/*
+/**
   Set border color
 
-  Params:
-    color - color to be set
+  @param[in] borderColor Border color to be set
 
-  Mod: .A
+  @remark Register .A will be modified.
+
+  @note Use c128lib_SetBorderColor in vic-global.asm
+
+  @since 0.6.0
 */
-.macro SetBorderColor(color) {
-  lda #color
+.macro SetBorderColor(borderColor) {
+  lda #borderColor
   sta Vic2.BORDER_COL
 }
 .assert "SetBorderColor(borderColor)",  { SetBorderColor(1) }, {
   lda #1; sta $D020
 }
 
-/*
+/**
   Set background color
 
-  Params:
-    color - color to be set
+  @param[in] backgroundColor Background color to be set
 
-  Mod: .A
+  @remark Register .A will be modified.
+
+  @note Use c128lib_SetBackgroundColor in vic-global.asm
+
+  @since 0.6.0
 */
-.macro SetBackgroundColor(color) {
-  lda #color
+.macro SetBackgroundColor(backgroundColor) {
+  lda #backgroundColor
   sta Vic2.BG_COL_0
 }
-.assert "SetBackgroundColor(color)",  { SetBackgroundColor(1) }, {
+.assert "SetBackgroundColor(backgroundColor)",  { SetBackgroundColor(1) }, {
   lda #1; sta $D021
 }
 
@@ -377,16 +421,21 @@
 .assert "getTextMemory(15,7) returns $FE", getTextMemory(15, 7), %11111110
 .assert "getTextMemory(4,2) returns %01000100", getTextMemory(4, 2), %01000100
 
-/*
-  Set Basic IRQ routine active or not. Turning off the BASIC
+/**
+  Set Basic IRQ routine active or not.
+
+  @param[in] active Activate or deactivate basic irq
+
+  @remark Register .A will be modified.
+
+  @note Use c128lib_SetBasicIrqActivity in vic-global.asm
+
+  @note Turning off the BASIC
   IRQ routine will give you direct access to the hardware registers,
   you should keep in mind that it will also effectively disable the
   BASIC statements MOVSPR, COLLISION, SOUND and PLAY
 
-  Params:
-    active - activate or deactivate basic irq
-
-  Mod: .A
+  @since 0.6.0
 */
 .macro SetBasicIrqActivity(active) {
   .if (active == 0) {
@@ -403,15 +452,16 @@
   lda #0; sta $12FD
 }
 
-/*
+/**
   Set screen editor IRQ routine active or not. This gives you direct control
   over the VIC chip register settings (D018), but disables BASIC'S ability
   to change display modes.
 
-  Params:
-    active - activate or deactivate screen editor irq
+  @param[in] active Activate or deactivate basic irq
 
-  Mod: .A
+  @remark Register .A will be modified.
+
+  @since 0.6.0
 */
 .macro SetScreenEditorIrq(active) {
   .if (active == 0) {
@@ -428,16 +478,16 @@
   lda #0; sta $D8
 }
 
-/*
+/**
   Set screen memory and charset memory position by
   using shadow register.
 
-  Params:
-    config - screen memory and/or char memory configuration.
+  @param[in] config Screen memory and/or char memory configuration.
 
-  Mod: .A
+  @remark Register .A will be modified. Labels Vic2.CHAR* and
+  Vic2.SCREEN_MEM* can ben used to compose.
 
-  Remarks: labels Vic2.CHAR* and Vic2.SCREEN_MEM* can ben used to compone
+  @since 0.6.0
 */
 .macro SetScreenAndCharacterMemory(config) {
     lda #config
@@ -607,13 +657,14 @@
 //   lda CONTROL_1;and #%10011111;ora #%01000000;sta CONTROL_1
 // }
 
-/*
+/**
   Configures VIC-II so that it fire IRQ when given "rasterLine" is drawn.
 
-  Params:
-    rasterLine: link where irq should trigger
+  @param[in] rasterLine Line where irq should trigger
 
-  Mod: .A
+  @remark Register .A will be modified.
+
+  @since 0.6.0
 */
 .macro setRaster(rasterLine) {
   lda #<rasterLine
