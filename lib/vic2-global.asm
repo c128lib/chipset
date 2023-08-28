@@ -1,3 +1,33 @@
+/**
+ * @file vic2-global.asm
+ * @brief Vic2 module
+ * @details Macros for Vic2 support
+ *
+ * @copyright Copyright (c) 2023 c128lib - https://github.com/c128lib
+ *
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @date 2022
+ */
+
 #importonce
 
 #import "vic2.asm"
@@ -84,7 +114,7 @@
 .macro @c128lib_debugBorderStart() { debugBorderStart() }
 .macro @c128lib_debugBorderEnd() { debugBorderEnd() }
 /**
-  Configures VIC-II so that it fire IRQ when given "rasterLine" is drawn.
+  Configures Vic2 so that it fire IRQ when given "rasterLine" is drawn.
 
   @param[in] rasterLine Line where irq should trigger
 

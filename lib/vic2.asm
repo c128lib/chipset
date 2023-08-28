@@ -1,10 +1,32 @@
 /**
-  @file vic2.asm
-  @brief Vic2 module
-
-  @copyright MIT Licensed
-  @date 2022
-*/
+ * @file vic2.asm
+ * @brief Vic2 module
+ * @details Macros for Vic2 support
+ *
+ * @copyright Copyright (c) 2023 c128lib - https://github.com/c128lib
+ *
+ * MIT License
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @date 2022
+ */
 
 #importonce
 
@@ -12,110 +34,107 @@
 
 .namespace Vic2 {
 
-/** Vic2 first register */
+/** Vic2 first register https://c128lib.github.io/Reference/D000 */
 .label VIC2                 = $D000
-/** Sprite 0 x-coordinate */
+/** Sprite 0 x-coordinate https://c128lib.github.io/Reference/D000#D000 */
 .label SPRITE_0_X           = VIC2 + $00
-/** Sprite 0 y-coordinate */
+/** Sprite 0 y-coordinate https://c128lib.github.io/Reference/D000#D001 */
 .label SPRITE_0_Y           = VIC2 + $01
-/** Sprite 1 x-coordinate */
+/** Sprite 1 x-coordinate https://c128lib.github.io/Reference/D000#D002 */
 .label SPRITE_1_X           = VIC2 + $02
-/** Sprite 1 y-coordinate */
+/** Sprite 1 y-coordinate https://c128lib.github.io/Reference/D000#D003 */
 .label SPRITE_1_Y           = VIC2 + $03
-/** Sprite 2 x-coordinate */
+/** Sprite 2 x-coordinate https://c128lib.github.io/Reference/D000#D004 */
 .label SPRITE_2_X           = VIC2 + $04
-/** Sprite 2 y-coordinate */
+/** Sprite 2 y-coordinate https://c128lib.github.io/Reference/D000#D005 */
 .label SPRITE_2_Y           = VIC2 + $05
-/** Sprite 3 x-coordinate */
+/** Sprite 3 x-coordinate https://c128lib.github.io/Reference/D000#D006 */
 .label SPRITE_3_X           = VIC2 + $06
-/** Sprite 3 y-coordinate */
+/** Sprite 3 y-coordinate https://c128lib.github.io/Reference/D000#D007 */
 .label SPRITE_3_Y           = VIC2 + $07
-/** Sprite 4 x-coordinate */
+/** Sprite 4 x-coordinate https://c128lib.github.io/Reference/D000#D008 */
 .label SPRITE_4_X           = VIC2 + $08
-/** Sprite 4 y-coordinate */
+/** Sprite 4 y-coordinate https://c128lib.github.io/Reference/D000#D009 */
 .label SPRITE_4_Y           = VIC2 + $09
-/** Sprite 5 x-coordinate */
+/** Sprite 5 x-coordinate https://c128lib.github.io/Reference/D000#D00A */
 .label SPRITE_5_X           = VIC2 + $0A
-/** Sprite 5 y-coordinate */
+/** Sprite 5 y-coordinate https://c128lib.github.io/Reference/D000#D00B */
 .label SPRITE_5_Y           = VIC2 + $0B
-/** Sprite 6 x-coordinate */
+/** Sprite 6 x-coordinate https://c128lib.github.io/Reference/D000#D00C */
 .label SPRITE_6_X           = VIC2 + $0C
-/** Sprite 6 y-coordinate */
+/** Sprite 6 y-coordinate https://c128lib.github.io/Reference/D000#D00D */
 .label SPRITE_6_Y           = VIC2 + $0D
-/** Sprite 7 x-coordinate */
+/** Sprite 7 x-coordinate https://c128lib.github.io/Reference/D000#D00E */
 .label SPRITE_7_X           = VIC2 + $0E
-/** Sprite 7 y-coordinate */
+/** Sprite 7 y-coordinate https://c128lib.github.io/Reference/D000#D00F */
 .label SPRITE_7_Y           = VIC2 + $0F
-/** Sprite msb for setting x pos over 255 px */
+/** Sprite msb for setting x pos over 255 px https://c128lib.github.io/Reference/D000#D010 */
 .label SPRITE_MSB_X         = VIC2 + $10
-/** Vertical smooth scrolling and control register */
+/** Vertical smooth scrolling and control register https://c128lib.github.io/Reference/D000#D011 */
 .label CONTROL_1            = VIC2 + $11
-/** Raster compare register */
+/** Raster compare register https://c128lib.github.io/Reference/D000#D012 */
 .label RASTER               = VIC2 + $12
-/** Light pen horizontal position */
+/** Light pen horizontal position https://c128lib.github.io/Reference/D000#D013 */
 .label LIGHTPEN_X           = VIC2 + $13
-/** Light pen vertical position */
+/** Light pen vertical position https://c128lib.github.io/Reference/D000#D014 */
 .label LIGHTPEN_Y           = VIC2 + $14
-/** Sprite enable register */
+/** Sprite enable register https://c128lib.github.io/Reference/D000#D015 */
 .label SPRITE_ENABLE        = VIC2 + $15
-/** Horizontal smooth scrolling and control register */
+/** Horizontal smooth scrolling and control register https://c128lib.github.io/Reference/D000#D016 */
 .label CONTROL_2            = VIC2 + $16
-/** Sprite vertical expansion register */
+/** Sprite vertical expansion register https://c128lib.github.io/Reference/D000#D017 */
 .label SPRITE_EXPAND_Y      = VIC2 + $17
-/** Screen and character base address register */
+/** Screen and character base address register https://c128lib.github.io/Reference/D000#D018 */
 .label MEMORY_CONTROL       = VIC2 + $18
-/** Interrupt register */
+/** Interrupt register https://c128lib.github.io/Reference/D000#D019 */
 .label IRR                  = VIC2 + $19
-/** Interrupt enable register */
+/** Interrupt enable register https://c128lib.github.io/Reference/D000#D01A */
 .label IMR                  = VIC2 + $1A
-/** Sprite-to-foreground priority register */
+/** Sprite-to-foreground priority register https://c128lib.github.io/Reference/D000#D01B */
 .label SPRITE_PRIORITY      = VIC2 + $1B
-/** Sprite multicolor mode register */
+/** Sprite multicolor mode register https://c128lib.github.io/Reference/D000#D01C */
 .label SPRITE_COL_MODE      = VIC2 + $1C
-/** Sprite horizontal expansion register */
+/** Sprite horizontal expansion register https://c128lib.github.io/Reference/D000#D01D */
 .label SPRITE_EXPAND_X      = VIC2 + $1D
-/** Sprite-to-sprite collision register */
+/** Sprite-to-sprite collision register https://c128lib.github.io/Reference/D000#D01E */
 .label SPRITE_2S_COLLISION  = VIC2 + $1E
-/** Sprite-foreground collision register */
+/** Sprite-foreground collision register https://c128lib.github.io/Reference/D000#D01F */
 .label SPRITE_2B_COLLISION  = VIC2 + $1F
-/** Border color register */
+/** Border color register https://c128lib.github.io/Reference/D000#D020 */
 .label BORDER_COL           = VIC2 + $20
-/** Background color register 0 */
+/** Background color register 0 https://c128lib.github.io/Reference/D000#D021 */
 .label BG_COL_0             = VIC2 + $21
-/** Background color register 1 */
+/** Background color register 1 https://c128lib.github.io/Reference/D000#D022 */
 .label BG_COL_1             = VIC2 + $22
-/** Background color register 2 */
+/** Background color register 2 https://c128lib.github.io/Reference/D000#D023 */
 .label BG_COL_2             = VIC2 + $23
-/** Background color register 3 */
+/** Background color register 3 https://c128lib.github.io/Reference/D000#D024 */
 .label BG_COL_3             = VIC2 + $24
-/** Sprite multicolor color 0 register */
+/** Sprite multicolor color 0 register https://c128lib.github.io/Reference/D000#D025 */
 .label SPRITE_COL_0         = VIC2 + $25
-/** Sprite multicolor color 1 register */
+/** Sprite multicolor color 1 register https://c128lib.github.io/Reference/D000#D026 */
 .label SPRITE_COL_1         = VIC2 + $26
-/** Sprite 0 color */
+/** Sprite 0 color https://c128lib.github.io/Reference/D000#D027 */
 .label SPRITE_0_COLOR       = VIC2 + $27
-/** Sprite 1 color */
+/** Sprite 1 color https://c128lib.github.io/Reference/D000#D028 */
 .label SPRITE_1_COLOR       = VIC2 + $28
-/** Sprite 2 color */
+/** Sprite 2 color https://c128lib.github.io/Reference/D000#D029 */
 .label SPRITE_2_COLOR       = VIC2 + $29
-/** Sprite 3 color */
+/** Sprite 3 color https://c128lib.github.io/Reference/D000#D02A */
 .label SPRITE_3_COLOR       = VIC2 + $2A
-/** Sprite 4 color */
+/** Sprite 4 color https://c128lib.github.io/Reference/D000#D02B */
 .label SPRITE_4_COLOR       = VIC2 + $2B
-/** Sprite 5 color */
+/** Sprite 5 color https://c128lib.github.io/Reference/D000#D02C */
 .label SPRITE_5_COLOR       = VIC2 + $2C
-/** Sprite 6 color */
+/** Sprite 6 color https://c128lib.github.io/Reference/D000#D02D */
 .label SPRITE_6_COLOR       = VIC2 + $2D
-/** Sprite 7 color */
+/** Sprite 7 color https://c128lib.github.io/Reference/D000#D02E */
 .label SPRITE_7_COLOR       = VIC2 + $2E
-/** Extended keyboard scan-line control register */
+/** Extended keyboard scan-line control register https://c128lib.github.io/Reference/D000#D02F */
 .label XSCAN                = VIC2 + $2F
-/** Processor clock rate control register */
+/** Processor clock rate control register https://c128lib.github.io/Reference/D000#D030 */
 .label CLKRATE              = VIC2 + $30
 
-/*
-  Vic-II sprite movement
-*/
 /** Sprite 0 movement control data */
 .label SPRITE_MOTION_0      = $117E
 /** Sprite 1 movement control data */
@@ -152,52 +171,49 @@
 .label SPRITE_MASK_6 = %01000000
 .label SPRITE_MASK_7 = %10000000
 
-/*
-  Vic-II shadow registers
-*/
-/** Vic2 first shadow register */
+/** Vic2 first shadow register  https://c128lib.github.io/Reference/11D6 */
 .label SHADOW_VIC2          = $11D6
-/** Sprite 0 shadow register x-coordinate */
+/** Sprite 0 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11D6 */
 .label SHADOW_SPRITE_0_X    = SHADOW_VIC2 + $00
-/** Sprite 0 shadow register y-coordinate */
+/** Sprite 0 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11D7 */
 .label SHADOW_SPRITE_0_Y    = SHADOW_VIC2 + $01
-/** Sprite 1 shadow register x-coordinate */
+/** Sprite 1 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11D8 */
 .label SHADOW_SPRITE_1_X    = SHADOW_VIC2 + $02
-/** Sprite 1 shadow register y-coordinate */
+/** Sprite 1 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11D9 */
 .label SHADOW_SPRITE_1_Y    = SHADOW_VIC2 + $03
-/** Sprite 2 shadow register x-coordinate */
+/** Sprite 2 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11DA */
 .label SHADOW_SPRITE_2_X    = SHADOW_VIC2 + $04
-/** Sprite 2 shadow register y-coordinate */
+/** Sprite 2 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11DB */
 .label SHADOW_SPRITE_2_Y    = SHADOW_VIC2 + $05
-/** Sprite 3 shadow register x-coordinate */
+/** Sprite 3 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11DC */
 .label SHADOW_SPRITE_3_X    = SHADOW_VIC2 + $06
-/** Sprite 3 shadow register y-coordinate */
+/** Sprite 3 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11DD */
 .label SHADOW_SPRITE_3_Y    = SHADOW_VIC2 + $07
-/** Sprite 4 shadow register x-coordinate */
+/** Sprite 4 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11DE */
 .label SHADOW_SPRITE_4_X    = SHADOW_VIC2 + $08
-/** Sprite 4 shadow register y-coordinate */
+/** Sprite 4 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11DF */
 .label SHADOW_SPRITE_4_Y    = SHADOW_VIC2 + $09
-/** Sprite 5 shadow register x-coordinate */
+/** Sprite 5 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11E0 */
 .label SHADOW_SPRITE_5_X    = SHADOW_VIC2 + $0A
-/** Sprite 5 shadow register y-coordinate */
+/** Sprite 5 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11E1 */
 .label SHADOW_SPRITE_5_Y    = SHADOW_VIC2 + $0B
-/** Sprite 6 shadow register x-coordinate */
+/** Sprite 6 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11E2 */
 .label SHADOW_SPRITE_6_X    = SHADOW_VIC2 + $0C
-/** Sprite 6 shadow register y-coordinate */
+/** Sprite 6 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11E3 */
 .label SHADOW_SPRITE_6_Y    = SHADOW_VIC2 + $0D
-/** Sprite 7 shadow register x-coordinate */
+/** Sprite 7 shadow register x-coordinate https://c128lib.github.io/Reference/11D6#11E4 */
 .label SHADOW_SPRITE_7_X    = SHADOW_VIC2 + $0E
-/** Sprite 7 shadow register y-coordinate */
+/** Sprite 7 shadow register y-coordinate https://c128lib.github.io/Reference/11D6#11E5 */
 .label SHADOW_SPRITE_7_Y    = SHADOW_VIC2 + $0F
-/** Sprite shadow register msb for setting x pos over 255 px */
+/** Sprite shadow register msb for setting x pos over 255 px https://c128lib.github.io/Reference/11D6#11E6 */
 .label SHADOW_SPRITE_MSB_X  = SHADOW_VIC2 + $10
-/** Sprite-to-sprite collision shadow register */
+/** Sprite-to-sprite collision shadow register https://c128lib.github.io/Reference/11D6#11E7 */
 .label SHADOW_SPRITE_2S_COLLISION = SHADOW_VIC2 + $11
-/** Sprite-to-background collision shadow register */
+/** Sprite-to-background collision shadow register https://c128lib.github.io/Reference/11D6#11E8 */
 .label SHADOW_SPRITE_2B_COLLISION = SHADOW_VIC2 + $12
-/** Light pen horizontal position shadow register */
+/** Light pen horizontal position shadow register https://c128lib.github.io/Reference/11D6#11E9 */
 .label SHADOW_LIGHTPEN_X    = SHADOW_VIC2 + $13
-/** Light pen vertical position shadow register */
+/** Light pen vertical position shadow register https://c128lib.github.io/Reference/11D6#11EA */
 .label SHADOW_LIGHTPEN_Y    = SHADOW_VIC2 + $14
 
 .label COLOR_RAM            = $D800
@@ -334,7 +350,7 @@
 
   @remark Register .A will be modified.
 
-  @note Use c128lib_SetBorderAndBackgroundColor in vic-global.asm
+  @note Use c128lib_SetBorderAndBackgroundColor in vic2-global.asm
 
   @since 0.6.0
 */
@@ -360,7 +376,7 @@
 
   @remark Register .A will be modified.
 
-  @note Use c128lib_SetBorderColor in vic-global.asm
+  @note Use c128lib_SetBorderColor in vic2-global.asm
 
   @since 0.6.0
 */
@@ -379,7 +395,7 @@
 
   @remark Register .A will be modified.
 
-  @note Use c128lib_SetBackgroundColor in vic-global.asm
+  @note Use c128lib_SetBackgroundColor in vic2-global.asm
 
   @since 0.6.0
 */
@@ -428,7 +444,7 @@
 
   @remark Register .A will be modified.
 
-  @note Use c128lib_SetBasicIrqActivity in vic-global.asm
+  @note Use c128lib_SetBasicIrqActivity in vic2-global.asm
 
   @note Turning off the BASIC
   IRQ routine will give you direct access to the hardware registers,
@@ -461,6 +477,8 @@
 
   @remark Register .A will be modified.
 
+  @note Use c128lib_SetScreenEditorIrq in vic2-global.asm
+
   @since 0.6.0
 */
 .macro SetScreenEditorIrq(active) {
@@ -487,6 +505,8 @@
   @remark Register .A will be modified. Labels Vic2.CHAR* and
   Vic2.SCREEN_MEM* can ben used to compose.
 
+  @note Use c128lib_SetScreenAndCharacterMemory in vic2-global.asm
+
   @since 0.6.0
 */
 .macro SetScreenAndCharacterMemory(config) {
@@ -497,16 +517,18 @@
   lda #%11111110; sta $0A2C
 }
 
-/*
+/**
   Set screen memory and bitmap memory pointer by
   using shadow register.
 
-  Params:
-    config - screen memory and/or bitmap memory configuration.
+  @param[in] config Screen memory and/or bitmap memory configuration.
 
-  Mod: .A
+  @remark Register .A will be modified. Labels Vic2.CHAR* and
+  Vic2.SCREEN_MEM* can ben used to compose.
 
-  Remarks: labels Vic2.BITMAP* and Vic2.SCREEN_MEM* can ben used to compone
+  @note Use c128lib_SetScreenMemoryAndBitmapPointer in vic2-global.asm
+
+  @since 0.6.0
 */
 .macro SetScreenMemoryAndBitmapPointer(config) {
     lda #config
@@ -516,14 +538,15 @@
   lda #%11111000; sta $0A2D
 }
 
-/*
+/**
   Configures memory for text mode
 
-  Params:
-    video - location of video ram: 0..15
-    charSet - location of charset definition: 0..7
+  @param[in] video Location of video ram: 0..15
+  @param[in] charSet Location of charset definition: 0..7
 
-  Mod: .A
+  @remark Register .A will be modified
+
+  @since 0.6.0
 */
 .macro configureTextMemory(video, charSet) {
   lda #getTextMemory(video, charSet)
@@ -663,6 +686,8 @@
   @param[in] rasterLine Line where irq should trigger
 
   @remark Register .A will be modified.
+
+  @note Use c128lib_setRaster in vic2-global.asm
 
   @since 0.6.0
 */
