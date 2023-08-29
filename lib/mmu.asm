@@ -1,10 +1,31 @@
 /**
-  @file mmu.asm
-  @brief Mmu module
-
-  @copyright MIT Licensed
-  @date 2022
-*/
+ * @file mmu.asm
+ * @brief Mmu module
+ *
+ * @copyright Copyright (c) 2023 c128lib - https://github.com/c128lib
+ *
+ * MIT License
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @date 2022
+ */
 
 #importonce
 
@@ -12,39 +33,39 @@
 
 .namespace Mmu {
 
-/** Configuration register */
+/** Configuration register https://c128lib.github.io/Reference/D500#D500 */
 .label CONFIGURATION        = $D500
-/** Preconfiguration register A */
+/** Preconfiguration register A https://c128lib.github.io/Reference/D500#D501 */
 .label PRECONFIG_A          = $D501
-/** Preconfiguration register B */
+/** Preconfiguration register B https://c128lib.github.io/Reference/D500#D502 */
 .label PRECONFIG_B          = $D502
-/** Preconfiguration register C */
+/** Preconfiguration register C https://c128lib.github.io/Reference/D500#D503 */
 .label PRECONFIG_C          = $D503
-/** Preconfiguration register D */
+/** Preconfiguration register D https://c128lib.github.io/Reference/D500#D504 */
 .label PRECONFIG_D          = $D504
-/** Mode configuration register */
+/** Mode configuration register https://c128lib.github.io/Reference/D500#D505 */
 .label MODE_CONFIG          = $D505
-/** RAM configuration register */
+/** RAM configuration register https://c128lib.github.io/Reference/D500#D506 */
 .label RAM_CONFIG           = $D506
-/** Page 0 pointer */
+/** Page 0 pointer https://c128lib.github.io/Reference/D500#D507 */
 .label PAGE0_PAGE_POINTER   = $D507
-/** Page 0 block pointer */
+/** Page 0 block pointer https://c128lib.github.io/Reference/D500#D508 */
 .label PAGE0_BLOCK_POINTER  = $D508
-/** Page 1 pointer */
+/** Page 1 pointer https://c128lib.github.io/Reference/D500#D509 */
 .label PAGE1_PAGE_POINTER   = $D509
-/** Page 1 block pointer */
+/** Page 1 block pointer https://c128lib.github.io/Reference/D500#D50A */
 .label PAGE1_BLOCK_POINTER  = $D50A
-/** Version register */
+/** Version register https://c128lib.github.io/Reference/D500#D50B */
 .label MMU_VERSION          = $D50B
-/** Configuration register */
+/** Configuration register https://c128lib.github.io/Reference/FF00#FF00 */
 .label LOAD_CONFIGURATION   = $FF00
-/** Load configuration register A */
+/** Load configuration register A https://c128lib.github.io/Reference/FF00#FF01 */
 .label LOAD_PRECONFIG_A     = $FF01
-/** Load configuration register B */
+/** Load configuration register B https://c128lib.github.io/Reference/FF00#FF02 */
 .label LOAD_PRECONFIG_B     = $FF02
-/** Load configuration register C */
+/** Load configuration register C https://c128lib.github.io/Reference/FF00#FF03 */
 .label LOAD_PRECONFIG_C     = $FF03
-/** Load configuration register D */
+/** Load configuration register D https://c128lib.github.io/Reference/FF00#FF04 */
 .label LOAD_PRECONFIG_D     = $FF04
 
 /** Mask for configuration bit 0 to set ROM active on address $d000-$dfff */
@@ -141,176 +162,176 @@
 }
 
 /**
-  Macro for Mmu configuration.
+	Macro for Mmu configuration.
 
-  @param[in] config Values for Mmu confiuration
+	@param[in] config Values for Mmu confiuration
 
-  @note Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*
+	@note Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*
 
-  @note Use c128lib_SetMMUConfiguration in mmu-global.asm
+	@remark Register .A will be modified.
+	Flags N and Z will be affected.
 
-  @remark Register .A will be modified.
-  Flags N and Z will be affected.
+	@note Use c128lib_SetMMUConfiguration in mmu-global.asm
 
-  @since 0.6.0
+	@since 0.6.0
 */
 .macro SetMMUConfiguration(config) {
-    lda #config
-    sta Mmu.CONFIGURATION
+		lda #config
+		sta Mmu.CONFIGURATION
 }
 .assert "SetMMUConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) sets accumulator to 7f", { SetMMUConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM) }, {
-  lda #%01111111; sta $d500
+	lda #%01111111; sta $d500
 }
 
 /*
-  Banking, RAM configurations. Uses $FF00 instead of $D500.
+	Banking, RAM configurations. Uses $FF00 instead of $D500.
 
-  Refer to IO_*, ROM_*, RAM* label to generate input value
+	Refer to IO_*, ROM_*, RAM* label to generate input value
 
-  Syntax: SetMMULoadConfiguration(Mmu.RAM0 | Mmu.ROM_HI | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_ROM | Mmu.IO_ROM)
+	Syntax: SetMMULoadConfiguration(Mmu.RAM0 | Mmu.ROM_HI | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_ROM | Mmu.IO_ROM)
 */
 .macro SetMMULoadConfiguration(config) {
-    lda #config
-    sta Mmu.LOAD_CONFIGURATION
+		lda #config
+		sta Mmu.LOAD_CONFIGURATION
 }
 .assert "SetMMULoadConfiguration(RAM1 | ROM_HI_RAM | ROM_MID_RAM | ROM_LOW_RAM | IO_RAM) sets accumulator to 7f", { SetMMULoadConfiguration(Mmu.RAM1 | Mmu.ROM_HI_RAM | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_RAM | Mmu.IO_RAM) }, {
-  lda #%01111111; sta $ff00
+	lda #%01111111; sta $ff00
 }
 
 /*
-  Banking, RAM configurations
+	Banking, RAM configurations
 
-  bits:
-  0:   $d000-$dfff (i/o block, ram or rom)
-  1:   $4000-$7fff (lower basic rom)
-  2-3: $8000-$bfff (upper basic rom, monitor, internal/external ROM)
-  4-5: $c000-$ffff (char ROM, kernal, internal/external ROM, RAM)
-  6:   select RAM block
+	bits:
+	0:   $d000-$dfff (i/o block, ram or rom)
+	1:   $4000-$7fff (lower basic rom)
+	2-3: $8000-$bfff (upper basic rom, monitor, internal/external ROM)
+	4-5: $c000-$ffff (char ROM, kernal, internal/external ROM, RAM)
+	6:   select RAM block
 
-  Setting a bit means RAM, clearing means ROM.
-  Use the BASIC Bank configuration numbers.
+	Setting a bit means RAM, clearing means ROM.
+	Use the BASIC Bank configuration numbers.
 
-  Syntax: SetBankConfiguration(number)
+	Syntax: SetBankConfiguration(number)
 */
 .macro SetBankConfiguration(id) {
-    .if(id==0) {
-      lda #%00111111   // no roms, RAM 0
-    }
-    .if(id==1) {
-      lda #%01111111   // no roms, RAM 1
-    }
-    .if(id==12) {
-      lda #%00000110   // internal function ROM, Kernal and IO, RAM 0
-    }
-    .if(id==14) {
-      lda #%00000001   // all roms, char ROM, RAM 0
-    }
-    .if(id==15) {
-      lda #%00000000  // all roms, RAM 0. default setting.
-    }
-    .if(id==99) {
-      lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
-    }
-    sta Mmu.LOAD_CONFIGURATION
+		.if(id==0) {
+			lda #%00111111   // no roms, RAM 0
+		}
+		.if(id==1) {
+			lda #%01111111   // no roms, RAM 1
+		}
+		.if(id==12) {
+			lda #%00000110   // internal function ROM, Kernal and IO, RAM 0
+		}
+		.if(id==14) {
+			lda #%00000001   // all roms, char ROM, RAM 0
+		}
+		.if(id==15) {
+			lda #%00000000  // all roms, RAM 0. default setting.
+		}
+		.if(id==99) {
+			lda #%00001110  // IO, kernal, RAM0. No basic,48K RAM.
+		}
+		sta Mmu.LOAD_CONFIGURATION
 }
 
 /**
-  Set mode configuration register.
+	Set mode configuration register.
 
-  @param[in] config Values for confiuration register
+	@param[in] config Values for confiuration register
 
-  @note Config parameter can be filled with Mmu.CPU_*, Mmu.FASTSERIAL*, Mmu.GAME_*, Mmu.EXROM_*, Mmu.KERNAL_*, Mmu.COLS_*
+	@note Config parameter can be filled with Mmu.CPU_*, Mmu.FASTSERIAL*, Mmu.GAME_*, Mmu.EXROM_*, Mmu.KERNAL_*, Mmu.COLS_*
 
-  @note Use c128lib_SetModeConfig in mmu-global.asm
+	@note Use c128lib_SetModeConfig in mmu-global.asm
 
-  @remark Register .A will be modified.
-  Flags N and Z will be affected.
+	@remark Register .A will be modified.
+	Flags N and Z will be affected.
 
-  @since 0.6.0
+	@since 0.6.0
 */
 .macro SetModeConfig(config) {
-    lda #config
-    sta Mmu.MODE_CONFIG
+		lda #config
+		sta Mmu.MODE_CONFIG
 }
 .assert "SetModeConfig(CPU_8502 | FASTSERIALOUTPUT | GAME_HI | EXROM_HI | KERNAL_64 | COLS_40) sets accumulator to 0f", {
-    SetModeConfig(Mmu.CPU_8502 | Mmu.FASTSERIALOUTPUT | Mmu.GAME_HI | Mmu.EXROM_HI | Mmu.KERNAL_64 | Mmu.COLS_40)
+		SetModeConfig(Mmu.CPU_8502 | Mmu.FASTSERIALOUTPUT | Mmu.GAME_HI | Mmu.EXROM_HI | Mmu.KERNAL_64 | Mmu.COLS_40)
 }, {
-  lda #%11111001; sta $d505
+	lda #%11111001; sta $d505
 }
 
 /**
-  Configure common RAM amount.
+	Configure common RAM amount.
 
-  RAM Bank 0 is always the visible RAM bank.
-  Valid values are 1,4,8 and 16.
-  For ex. if you choose 4K common ram at top and bottom
-  you'll have 4K up and 4K bottom.
+	RAM Bank 0 is always the visible RAM bank.
+	Valid values are 1,4,8 and 16.
+	For ex. if you choose 4K common ram at top and bottom
+	you'll have 4K up and 4K bottom.
 
-  @param[in] config Values for common ram configuration
+	@param[in] config Values for common ram configuration
 
-  @note Config parameter can be filled with Mmu.COMMON_RAM_*
+	@remark Register .A will be modified.
+	Flags N and Z will be affected.
 
-  @note Use c128lib_SetCommonRAM in mmu-global.asm
+	@note Config parameter can be filled with Mmu.COMMON_RAM_*
 
-  @remark Register .A will be modified.
-  Flags N and Z will be affected.
+	@note Use c128lib_SetCommonRAM in mmu-global.asm
 
-  @since 0.6.0
+	@since 0.6.0
 */
 .macro SetCommonRAM(config) {
-    lda #config
-    sta Mmu.RAM_CONFIG
+		lda #config
+		sta Mmu.RAM_CONFIG
 }
 .assert "SetCommonRAM(COMMON_RAM_16K | COMMON_RAM_BOTH) sets accumulator to 0f", { SetCommonRAM(Mmu.COMMON_RAM_16K | Mmu.COMMON_RAM_BOTH) }, {
-  lda #%00001111; sta $d506
+	lda #%00001111; sta $d506
 }
 
 /*
-  Set RAM block that the VIC chip will use, bit 6 of MMUCR.
-  Only useful for text display. Pretty useless, really.
-  Kernal routines use RAM0, so you need to roll your own routines.
+	Set RAM block that the VIC chip will use, bit 6 of MMUCR.
+	Only useful for text display. Pretty useless, really.
+	Kernal routines use RAM0, so you need to roll your own routines.
 
-  Use SetVICBank() to set the 16k block that the VIC will use in that block.
+	Use SetVICBank() to set the 16k block that the VIC will use in that block.
 
-  Syntax:    SetVICRamBank(0 or 1)
+	Syntax:    SetVICRamBank(0 or 1)
 */
 .macro SetVICRAMBank(value) {
-    lda Mmu.RAM_CONFIG
-    and #%10111111       // clear bit 6
-    .if(value==1) {
-      ora #%01111111     // enable bit 6
-    }
-    sta Mmu.RAM_CONFIG
+		lda Mmu.RAM_CONFIG
+		and #%10111111       // clear bit 6
+		.if(value==1) {
+			ora #%01111111     // enable bit 6
+		}
+		sta Mmu.RAM_CONFIG
 }
 .assert "SetVICRAMBank(0) sets accumulator to 0f", { SetVICRAMBank(0) }, {
-  lda $d506;and #%10111111;sta $d506
+	lda $d506;and #%10111111;sta $d506
 }
 .assert "SetVICRAMBank(1) sets accumulator to 0f", { SetVICRAMBank(1) }, {
-  lda $d506;and #%10111111;ora #%01111111;sta $d506
+	lda $d506;and #%10111111;ora #%01111111;sta $d506
 }
 
 /**
-  Sets RAM bank that will be involved in I/O.
-  Also sets bank where the filename will be found.
-  Use the Basic bank definitions. (0-15)
+	Sets RAM bank that will be involved in I/O.
+	Also sets bank where the filename will be found.
+	Use the Basic bank definitions. (0-15)
 
-  @param[in] bank Values for setting bank
-  @param[in] bankname Values filename
+	@param[in] bank Values for setting bank
+	@param[in] bankname Values filename
 
-  @note Use c128lib_SetIOBank in mmu-global.asm
+	@remark Register .A and .X will be modified.
+	Flags N and Z will be affected.
 
-  @remark Register .A and .X will be modified.
-  Flags N and Z will be affected.
+	@note Use c128lib_SetIOBank in mmu-global.asm
 
-  @since 0.6.0
+	@since 0.6.0
 */
 .macro SetIOBank(bank, bankname) {
-  lda #bank
-  ldx #bankname
-  jsr c128lib.Kernal.SETBNK
+	lda #bank
+	ldx #bankname
+	jsr c128lib.Kernal.SETBNK
 }
 .assert "SetIOBank(1, 2)", { SetIOBank(1, 2) }, {
-  lda #1; ldx #2; jsr $FF68
+	lda #1; ldx #2; jsr $FF68
 }
 
 #import "common/lib/kernal.asm"
