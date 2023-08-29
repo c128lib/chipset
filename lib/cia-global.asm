@@ -1,10 +1,31 @@
 /**
-  @file cia-global.asm
-  @brief Cia module
-
-  @copyright MIT Licensed
-  @date 2022
-*/
+ * @file cia-global.asm
+ * @brief Cia module
+ *
+ * @copyright Copyright (c) 2023 c128lib - https://github.com/c128lib
+ *
+ * MIT License
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @date 2022
+ */
 
 #importonce
 
@@ -24,9 +45,49 @@
 */
 .macro @c128lib_SetVICBank(bank) { SetVICBank(bank) }
 
+/**
+  Waits until return is pressed. It means a wait
+  for a key down event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @since 0.6.0
+*/
 .macro @c128lib_WaitReturnPressed() { WaitReturnPressed() }
+/**
+  Waits until return is pressed and released. It means a wait
+  for a key down and a key up event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @since 0.6.0
+*/
 .macro @c128lib_WaitReturnPressedAndReleased() { WaitReturnPressedAndReleased() }
+/**
+  Waits until space is pressed. It means a wait
+  for a key down event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @since 0.6.0
+*/
 .macro @c128lib_WaitSpacePressed() { WaitSpacePressed() }
+/**
+  Waits until space is pressed and released. It means a wait
+  for a key down and a key up event.
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+  @remark Requires DETECTKEYPRESSED to be defined
+
+  @since 0.6.0
+*/
 .macro @c128lib_WaitSpacePressedAndReleased() { WaitSpacePressedAndReleased() }
 
 /**
