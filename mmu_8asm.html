@@ -238,7 +238,11 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespaceMmu.html">Mmu</a> module. </p>
-<dl class="section copyright"><dt>Copyright</dt><dd>MIT Licensed </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2023 c128lib - <a href="https://github.com/c128lib">https://github.com/c128lib</a></dd></dl>
+<p>MIT License</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 <dl class="section date"><dt>Date</dt><dd>2022 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a0e367e41fc25de49987703726aed4474" name="a0e367e41fc25de49987703726aed4474"></a>
@@ -263,10 +267,9 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*</dd>
-<dd>
-Use c128lib_SetMMUConfiguration in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM*</dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetMMUConfiguration in <a class="el" href="mmu-global_8asm.html" title="Mmu module.">mmu-global.asm</a></dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
@@ -331,7 +334,7 @@ Use c128lib_SetMMUConfiguration in <a class="el" href="mmu-global_8asm.html">mmu
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.CPU_*, Mmu.FASTSERIAL*, Mmu.GAME_*, Mmu.EXROM_*, Mmu.KERNAL_*, Mmu.COLS_*</dd>
 <dd>
-Use c128lib_SetModeConfig in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
+Use c128lib_SetModeConfig in <a class="el" href="mmu-global_8asm.html" title="Mmu module.">mmu-global.asm</a></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
@@ -360,10 +363,10 @@ Use c128lib_SetModeConfig in <a class="el" href="mmu-global_8asm.html">mmu-globa
   </table>
   </dd>
 </dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.COMMON_RAM_*</dd>
 <dd>
-Use c128lib_SetCommonRAM in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+Use c128lib_SetCommonRAM in <a class="el" href="mmu-global_8asm.html" title="Mmu module.">mmu-global.asm</a></dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
@@ -419,8 +422,8 @@ Use c128lib_SetCommonRAM in <a class="el" href="mmu-global_8asm.html">mmu-global
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetIOBank in <a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A and .X will be modified. Flags N and Z will be affected.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_SetIOBank in <a class="el" href="mmu-global_8asm.html" title="Mmu module.">mmu-global.asm</a></dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
@@ -431,7 +434,7 @@ Use c128lib_SetCommonRAM in <a class="el" href="mmu-global_8asm.html">mmu-global
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="mmu_8asm.html">mmu.asm</a></li>
-    <li class="footer">Generated on Mon Aug 28 2023 20:27:56 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Tue Aug 29 2023 20:56:39 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
