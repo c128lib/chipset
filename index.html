@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>c128lib Chipset: Main Page</title>
+<title>c128lib Chipset: c128lib/chipset</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,16 +89,138 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">c128lib Chipset Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">c128lib/chipset </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p><a class="anchor" id="md__2github_2workspace_2README"></a><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" style="pointer-events: none;" class="inline"/></a> <a href="https://circleci.com/gh/c128lib/chipset/tree/master"><img src="https://circleci.com/gh/c128lib/chipset/tree/master.svg?style=shield" alt="CircleCI" style="pointer-events: none;" class="inline"/></a> <a href="https://github.com/c128lib/chipset/releases"><img src="https://img.shields.io/github/v/release/c128lib/chipset.svg" alt="Latest release" style="pointer-events: none;" class="inline"/></a></p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Usage</h1>
+<p>If you need only labels, use:</p>
+<div class="fragment"><div class="line">#import &quot;./lib/mmu.asm&quot;</div>
+</div><!-- fragment --><p>If you need both labels and macros, use:</p>
+<div class="fragment"><div class="line">#import &quot;./lib/mmu-global.asm&quot;</div>
+</div><!-- fragment --><p>Not all files have *_global.asm.</p>
+<p>Labels are available by prefixing library name (c128lib) and namespace (for example, <a class="el" href="namespaceMmu.html">Mmu</a>):</p>
+<div class="fragment"><div class="line">sta c128lib.Mmu.LOAD_CONFIGURATION</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+Components</h1>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Cia</h2>
+<p><a href="https://en.wikipedia.org/wiki/MOS_Technology_CIA">https://en.wikipedia.org/wiki/MOS_Technology_CIA</a></p>
+<p>Namespace <b><a class="el" href="namespaceCia.html">Cia</a></b></p>
+<p>Labels $DC00-$DC0F (Cia1) and $DD00-$DD0F (Cia2).</p>
+<h3><a class="anchor" id="autotoc_md4"></a>
+Memory references</h3>
+<ul>
+<li><a href="https://c128lib.github.io/Reference/Cia">https://c128lib.github.io/Reference/Cia</a></li>
+<li><a href="https://c128lib.github.io/Reference/DC00">https://c128lib.github.io/Reference/DC00</a></li>
+<li><a href="https://c128lib.github.io/Reference/DD00">https://c128lib.github.io/Reference/DD00</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md5"></a>
+Mmu</h2>
+<p>Namespace <b><a class="el" href="namespaceMmu.html">Mmu</a></b></p>
+<p>Labels $D500-$D50B and $FF00-$FF04</p>
+<h3><a class="anchor" id="autotoc_md6"></a>
+Memory references</h3>
+<ul>
+<li><a href="https://c128lib.github.io/Reference/Mmu">https://c128lib.github.io/Reference/Mmu</a></li>
+<li><a href="https://c128lib.github.io/Reference/D500">https://c128lib.github.io/Reference/D500</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md7"></a>
+Mos8502</h2>
+<p><a href="https://en.wikipedia.org/wiki/MOS_Technology_8502">https://en.wikipedia.org/wiki/MOS_Technology_8502</a></p>
+<p>Namespace <b><a class="el" href="namespaceMos8502.html">Mos8502</a></b></p>
+<p>Labels $00-$01</p>
+<h3><a class="anchor" id="autotoc_md8"></a>
+Memory references</h3>
+<p>TBD</p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Sid</h2>
+<p><a href="https://en.wikipedia.org/wiki/MOS_Technology_6581">https://en.wikipedia.org/wiki/MOS_Technology_6581</a></p>
+<p>Namespace <b><a class="el" href="namespaceSid.html">Sid</a></b></p>
+<p>Labels $D400-$D41C</p>
+<h3><a class="anchor" id="autotoc_md10"></a>
+Memory references</h3>
+<ul>
+<li><a href="https://c128lib.github.io/Reference/Sid">https://c128lib.github.io/Reference/Sid</a></li>
+<li><a href="https://c128lib.github.io/Reference/D400">https://c128lib.github.io/Reference/D400</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md11"></a>
+Vdc</h2>
+<p><a href="https://en.wikipedia.org/wiki/MOS_Technology_8563">https://en.wikipedia.org/wiki/MOS_Technology_8563</a></p>
+<p>Namespace <b><a class="el" href="namespaceVdc.html">Vdc</a></b></p>
+<p>Labels $D600-$D601 and internal register $00-$24</p>
+<h3><a class="anchor" id="autotoc_md12"></a>
+Predefined routines</h3>
+<h4><a class="anchor" id="autotoc_md13"></a>
+FillScreen</h4>
+<p>Fill screen ram with a specific character.</p>
+<p>Preprocessor symbol: FILLSCREEN</p>
+<h4><a class="anchor" id="autotoc_md14"></a>
+FillAttribute</h4>
+<p>Fill attribute ram with a specific value.</p>
+<p>Preprocessor symbol: FILLATTRIBUTE</p>
+<h4><a class="anchor" id="autotoc_md15"></a>
+MoveScreenPointerTo00</h4>
+<p>Move screen ram pointer to 0/0 on screen.</p>
+<p>Preprocessor symbol: MOVESCREENPOINTERTO00</p>
+<h4><a class="anchor" id="autotoc_md16"></a>
+MoveAttributePointerTo00</h4>
+<p>Move ram pointer to 0/0 in attribute memory.</p>
+<p>Preprocessor symbol: MOVEATTRIBUTEPOINTERTO00</p>
+<h4><a class="anchor" id="autotoc_md17"></a>
+PrintCharAtPosition</h4>
+<p>Print a char at specific coordinates in screen memory.</p>
+<p>Preprocessor symbol: PRINTCHARATPOSITION</p>
+<h4><a class="anchor" id="autotoc_md18"></a>
+PositionXy</h4>
+<p>Position the ram pointer at specific coordinates in screen memory.</p>
+<p>Preprocessor symbol: POSITIONXY</p>
+<h4><a class="anchor" id="autotoc_md19"></a>
+PositionAttrXy</h4>
+<p>Position the ram pointer at specific coordinates in attribute memory.</p>
+<p>Preprocessor symbol: POSITIONATTRXY</p>
+<h4><a class="anchor" id="autotoc_md20"></a>
+RepeatByte</h4>
+<p>Pass the number of times in A.</p>
+<p>Preprocessor symbol: REPEATBYTE</p>
+<h4><a class="anchor" id="autotoc_md21"></a>
+WriteByte</h4>
+<p>Write a specific byte to current ram pointer.</p>
+<p>Preprocessor symbol: WRITEBYTE</p>
+<h4><a class="anchor" id="autotoc_md22"></a>
+SetRamPointer</h4>
+<p>Set ram pointer.</p>
+<p>Preprocessor symbol: SETRAMPOINTER</p>
+<h4><a class="anchor" id="autotoc_md23"></a>
+InitText</h4>
+<p>Initialize VDC for text display.</p>
+<p>Preprocessor symbol: INITTEXT</p>
+<h3><a class="anchor" id="autotoc_md24"></a>
+Memory references</h3>
+<ul>
+<li><a href="https://c128lib.github.io/Reference/Vdc">https://c128lib.github.io/Reference/Vdc</a></li>
+<li><a href="https://c128lib.github.io/Reference/D600">https://c128lib.github.io/Reference/D600</a></li>
+</ul>
+<h2><a class="anchor" id="autotoc_md25"></a>
+Vic-IIe</h2>
+<p><a href="https://en.wikipedia.org/wiki/MOS_Technology_VIC-II">https://en.wikipedia.org/wiki/MOS_Technology_VIC-II</a></p>
+<p>Namespace <b><a class="el" href="namespaceVic2.html">Vic2</a></b></p>
+<p>Labels $D000-$D030</p>
+<h3><a class="anchor" id="autotoc_md26"></a>
+Memory references</h3>
+<ul>
+<li><a href="https://c128lib.github.io/Reference/Vic">https://c128lib.github.io/Reference/Vic</a></li>
+<li><a href="https://c128lib.github.io/Reference/D000">https://c128lib.github.io/Reference/D000</a> </li>
+</ul>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Aug 29 2023 20:56:39 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sat Dec 2 2023 17:14:31 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

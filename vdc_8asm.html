@@ -713,9 +713,6 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Returns the address start of <a class="el" href="namespaceVdc.html">Vdc</a> display memory data. This is stored in <a class="el" href="namespaceVdc.html">Vdc</a> register SCREEN_MEMORY_STARTING_HIGH_ADDRESS and SCREEN_MEMORY_STARTING_LOW_ADDRESS. The 16-bit value is stored in $FB and $FC.</p>
-<dl class="section note"><dt>Note</dt><dd>Use c128lib_GetVdcDisplayStart in <a class="el" href="vdc-global_8asm.html" title="Vdc module.">vdc-global.asm</a></dd></dl>
-<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -893,6 +890,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Fill <a class="el" href="namespaceVdc.html">Vdc</a> screen with specific character.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">char</td><td>Charater used to fill screen</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Need VDC_FILLSCREEN to be defined</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Use c128lib_FillScreen in <a class="el" href="vdc-global_8asm.html" title="Vdc module.">vdc-global.asm</a></dd></dl>
+<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -1115,7 +1122,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="vdc_8asm.html">vdc.asm</a></li>
-    <li class="footer">Generated on Tue Aug 29 2023 20:56:39 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sat Dec 2 2023 17:14:31 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

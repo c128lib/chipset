@@ -149,7 +149,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.COMMON_RAM_* <div class="fragment"><div class="line"><a class="code hl_function" href="mmu-global_8asm.html#a33e9daff46f2f31773e8701df11939c0">c128lib_SetCommonRAM</a>(<a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.COMMON_RAM_16K | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.COMMON_RAM_BOTH)</div>
-<div class="ttc" id="ammu-global_8asm_html_a33e9daff46f2f31773e8701df11939c0"><div class="ttname"><a href="mmu-global_8asm.html#a33e9daff46f2f31773e8701df11939c0">c128lib_SetCommonRAM</a></div><div class="ttdeci">macro c128lib_SetCommonRAM(config)</div></div>
+<div class="ttc" id="ammu-global_8asm_html_a33e9daff46f2f31773e8701df11939c0"><div class="ttname"><a href="mmu-global_8asm.html#a33e9daff46f2f31773e8701df11939c0">c128lib_SetCommonRAM</a></div><div class="ttdeci">macro c128lib_SetCommonRAM(config)</div><div class="ttdef"><b>Definition</b> mmu-global.asm:52</div></div>
 <div class="ttc" id="anamespaceMmu_html"><div class="ttname"><a href="namespaceMmu.html">Mmu</a></div><div class="ttdef"><b>Definition</b> mmu.asm:32</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
@@ -172,18 +172,49 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Macro for <a class="el" href="namespaceMmu.html">Mmu</a> configuration.</p>
+<p>Banking and RAM configurations. Uses $FF00 instead of $D500.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">config</td><td>Values for <a class="el" href="namespaceMmu.html">Mmu</a> confiuration</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.IO_*, Mmu.ROM_LOW_*, Mmu.ROM_MID_*, Mmu.ROM_HI_*, Mmu.RAM* <div class="fragment"><div class="line"><a class="code hl_function" href="mmu-global_8asm.html#a70dc6e9f686455e98ff2ad8035b0fe05">c128lib_SetMMUConfiguration</a>(<a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.RAM1 | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.ROM_HI_RAM | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.ROM_MID_RAM | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.ROM_LOW_RAM | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.IO_RAM)</div>
-<div class="ttc" id="ammu-global_8asm_html_a70dc6e9f686455e98ff2ad8035b0fe05"><div class="ttname"><a href="mmu-global_8asm.html#a70dc6e9f686455e98ff2ad8035b0fe05">c128lib_SetMMUConfiguration</a></div><div class="ttdeci">macro c128lib_SetMMUConfiguration(config)</div></div>
-</div><!-- fragment --></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
-<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+<p>I/O block selection</p>
+<ul>
+<li>c128lib.Mmu.IO_ROM set I/O block visible on $D000-$DFFF</li>
+<li>c128lib.Mmu.IO_RAM set area on $D000-$DFFF dependant from c128lib.Mmu.ROM_HI selection</li>
+</ul>
+<p>If omitted, c128lib.Mmu.IO_ROM will be used.</p>
+<p>Low-ram selection</p>
+<ul>
+<li>c128lib.Mmu.ROM_LOW_ROM set active low rom BASIC ($4000-$7FFF)</li>
+<li>c128lib.Mmu.ROM_LOW_RAM set ram active on $4000-$7FFF</li>
+</ul>
+<p>If omitted, c128lib.Mmu.ROM_LOW_ROM will be used.</p>
+<p>Mid-ram selection</p>
+<ul>
+<li>c128lib.Mmu.ROM_MID_RAM set ram active on $8000-$AFFF and $B000-$BFFF</li>
+<li>c128lib.Mmu.ROM_MID_EXT set external function ROM</li>
+<li>c128lib.Mmu.ROM_MID_INT set internal function ROM</li>
+<li>c128lib.Mmu.ROM_MID_ROM set active rom BASIC ($8000-$AFFF) and monitor ROM ($B000-$BFFF)</li>
+</ul>
+<p>If omitted, c128lib.Mmu.ROM_MID_ROM will be used.</p>
+<p>Hi-ram selection</p>
+<ul>
+<li>c128lib.Mmu.ROM_HI_RAM set ram active on $C000-$CFFF, $D000-$DFFF and $E000-$FFFF</li>
+<li>c128lib.Mmu.ROM_HI_EXT set external function ROM</li>
+<li>c128lib.Mmu.ROM_HI_INT set internal function ROM</li>
+<li>c128lib.Mmu.ROM_HI set active rom for Screen editor ($C000-$CFFF), character ($D000-$DFFF), Kernal ($E000-$FFFF)</li>
+</ul>
+<p>If omitted, c128lib.Mmu.ROM_HI will be used.</p>
+<p>Bank selection</p>
+<ul>
+<li>c128lib.Mmu.RAM0 or c128lib.Mmu.RAM1 can be used to set ram bank 0 or 1. If omitted, bank 0 will be selected.</li>
+</ul>
+<div class="fragment"><div class="line"><a class="code hl_function" href="mmu-global_8asm.html#a4e5266f100b800a3513f982dfb34fa04">c128lib_SetMMULoadConfiguration</a>(c128lib.Mmu.RAM0 | c128lib.Mmu.ROM_HI | c128lib.Mmu.ROM_MID_RAM | c128lib.Mmu.ROM_LOW_ROM | c128lib.Mmu.IO_ROM)</div>
+<div class="ttc" id="ammu-global_8asm_html_a4e5266f100b800a3513f982dfb34fa04"><div class="ttname"><a href="mmu-global_8asm.html#a4e5266f100b800a3513f982dfb34fa04">c128lib_SetMMULoadConfiguration</a></div><div class="ttdeci">macro c128lib_SetMMULoadConfiguration(config)</div><div class="ttdef"><b>Definition</b> mmu-global.asm:105</div></div>
+</div><!-- fragment --><dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -302,7 +333,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>Config parameter can be filled with Mmu.CPU_*, Mmu.FASTSERIAL*, Mmu.GAME_*, Mmu.EXROM_*, Mmu.KERNAL_*, Mmu.COLS_* <div class="fragment"><div class="line"><a class="code hl_function" href="mmu-global_8asm.html#a20bb607ea450a330ceb33b9ef73775f7">c128lib_SetModeConfig</a>(<a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.CPU_* | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.FASTSERIAL* | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.GAME_* | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.EXROM_* | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.KERNAL_* | <a class="code hl_namespace" href="namespaceMmu.html">Mmu</a>.COLS_*)</div>
-<div class="ttc" id="ammu-global_8asm_html_a20bb607ea450a330ceb33b9ef73775f7"><div class="ttname"><a href="mmu-global_8asm.html#a20bb607ea450a330ceb33b9ef73775f7">c128lib_SetModeConfig</a></div><div class="ttdeci">macro c128lib_SetModeConfig(config)</div></div>
+<div class="ttc" id="ammu-global_8asm_html_a20bb607ea450a330ceb33b9ef73775f7"><div class="ttname"><a href="mmu-global_8asm.html#a20bb607ea450a330ceb33b9ef73775f7">c128lib_SetModeConfig</a></div><div class="ttdeci">macro c128lib_SetModeConfig(config)</div><div class="ttdef"><b>Definition</b> mmu-global.asm:139</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
@@ -315,7 +346,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></li>
-    <li class="footer">Generated on Tue Aug 29 2023 20:56:39 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sat Dec 2 2023 17:14:31 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

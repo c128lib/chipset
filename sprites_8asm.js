@@ -11,8 +11,8 @@ var sprites_8asm =
     [ "SetSpriteYPosition", "sprites_8asm.html#a547f8a875c6d10a0905efe7c5a49b4ab", null ],
     [ "SetSpriteYPositionWithShadow", "sprites_8asm.html#a5da15613576454c85e9fbb1b5e973efb", null ],
     [ "SetSpritePosition", "sprites_8asm.html#a6e1467f92f74dd051509c89af37f7dc7", null ],
-    [ "SetSpritePositionWithShadow", "sprites_8asm.html#ada697243163383e60d7ea174bf3ec9a0", null ],
-    [ "GetSpriteMovementStartingAddress", "sprites_8asm.html#a9b703731d869dbdfabc7cb7a63090e02", null ],
+    [ "SetSpritePositionWithShadow", "sprites_8asm.html#a555d98a6f57d64e95152b9c24dd36fa0", null ],
+    [ "GetSpriteMovementStartingAddress", "sprites_8asm.html#a27edcd052f2217b1b2d54d6410244c52", null ],
     [ "SpriteMove", "sprites_8asm.html#a7eadcac3839595110dc966b7d3a2fb06", null ],
     [ "SpriteEnable", "sprites_8asm.html#ae5260b1497f514dbdad27353a4f71921", null ],
     [ "SpriteDisable", "sprites_8asm.html#a96f227e221dd8dafa42753beb1b2a337", null ],
@@ -20,5 +20,7 @@ var sprites_8asm =
     [ "SpriteDisableMulticolor", "sprites_8asm.html#aa632748b29f29b73679a78c716f280a7", null ],
     [ "SpriteColor", "sprites_8asm.html#ac3cc18c0cd8064eebc204ff6d6c50ccc", null ],
     [ "SpriteMultiColor0", "sprites_8asm.html#a07d392b6b40acf6e9fa1e94119e146fc", null ],
-    [ "SpriteMultiColor1", "sprites_8asm.html#aa69b4d0b41f75640ffec4e1c140402fd", null ]
+    [ "SpriteMultiColor1", "sprites_8asm.html#aa69b4d0b41f75640ffec4e1c140402fd", null ],
+    [ "sh", "sprites_8asm.html#a351849d709b763b5507439134c70ff3f", null ],
+    [ "sm", "sprites_8asm.html#a0e3421599342e90b2541436d8c62a689", null ]
 ];
