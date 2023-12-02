@@ -939,6 +939,17 @@ InitText: {
   ldx #1; jsr $CDDA
 }
 
+/**
+  Fill Vdc screen with specific character.
+
+  @param[in] char Charater used to fill screen
+
+  @remarks Need VDC_FILLSCREEN to be defined
+
+  @note Use c128lib_FillScreen in vdc-global.asm
+
+  @since 0.6.0
+*/
 .macro FillScreen(char) {
 #if !VDC_FILLSCREEN
     .error "You should use #define VDC_FILLSCREEN"

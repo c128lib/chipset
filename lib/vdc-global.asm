@@ -179,6 +179,15 @@
 .macro @c128lib_ReadVdcWithKernal(register) { ReadVdcWithKernal(register) }
 
 // .macro @c128lib_Print80Str(address) { Print80Str(address) }
+/**
+  Fill Vdc screen with specific character.
+
+  @param[in] char Charater used to fill screen
+
+  @remarks Need VDC_FILLSCREEN to be defined
+
+  @since 0.6.0
+*/
 .macro @c128lib_FillScreen(char) { FillScreen(char) }
 .macro @c128lib_FillAttribute(byte) { FillAttribute(byte) }
 .macro @c128lib_MoveAttributePointerTo00() { MoveAttributePointerTo00() }
