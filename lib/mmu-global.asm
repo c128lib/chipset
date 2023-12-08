@@ -55,13 +55,11 @@
 */
 .macro @c128lib_SetCommonRAM(config) { SetCommonRAM(config) }
 
+.macro @c128lib_SetMMUConfiguration(config) { SetMMUConfiguration(config) }
 /**
   Banking and RAM configurations. Uses $FF00 instead of $D500.
 
   @param[in] config Values for Mmu confiuration
-
-  @remark Register .A will be modified.
-  Flags N and Z will be affected.
 
   I/O block selection
 
@@ -99,13 +97,15 @@
 
   - c128lib.Mmu.RAM0 or c128lib.Mmu.RAM1 can be used to set ram bank 0 or 1. If omitted, bank 0 will be selected.
 
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
   @code
   c128lib_SetMMULoadConfiguration(c128lib.Mmu.RAM0 | c128lib.Mmu.ROM_HI | c128lib.Mmu.ROM_MID_RAM | c128lib.Mmu.ROM_LOW_ROM | c128lib.Mmu.IO_ROM)
   @endcode
 
   @since 0.6.0
 */
-.macro @c128lib_SetMMUConfiguration(config) { SetMMUConfiguration(config) }
 .macro @c128lib_SetMMULoadConfiguration(config) { SetMMULoadConfiguration(config) }
 .macro @c128lib_SetBankConfiguration(config) { SetBankConfiguration(config) }
 .macro @c128lib_SetVICRAMBank(value) { SetVICRAMBank(value) }

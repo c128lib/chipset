@@ -186,9 +186,6 @@
 
   @param[in] config Values for Mmu confiuration
 
-  @remark Register .A will be modified.
-  Flags N and Z will be affected.
-
   I/O block selection
 
   - Mmu.IO_ROM set I/O block visible on $D000-$DFFF
@@ -225,11 +222,10 @@
 
   - Mmu.RAM0 or Mmu.RAM1 can be used to set ram bank 0 or 1. If omitted, bank 0 will be selected.
 
-  @note Use c128lib_SetMMULoadConfiguration in mmu-global.asm
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
 
-  @code
-  SetMMULoadConfiguration(Mmu.RAM0 | Mmu.ROM_HI | Mmu.ROM_MID_RAM | Mmu.ROM_LOW_ROM | Mmu.IO_ROM)
-  @endcode
+  @note Use c128lib_SetMMULoadConfiguration in mmu-global.asm
 
   @since 0.6.0
 */

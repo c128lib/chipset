@@ -100,8 +100,52 @@
 
   @param[in] config Screen memory and/or char memory configuration.
 
-  @remark Register .A will be modified. Labels Vic2.CHAR* and
-  Vic2.SCREEN_MEM* can ben used to compose.
+  Character memory selection
+
+  - c128lib.Vic2.CHAR_MEM_0000 Character memory on $0000
+  - c128lib.Vic2.CHAR_MEM_0800 Character memory on $0800
+  - c128lib.Vic2.CHAR_MEM_1000 Character memory on $1000
+  - c128lib.Vic2.CHAR_MEM_1800 Character memory on $1800
+  - c128lib.Vic2.CHAR_MEM_2000 Character memory on $2000
+  - c128lib.Vic2.CHAR_MEM_2800 Character memory on $2800
+  - c128lib.Vic2.CHAR_MEM_3000 Character memory on $3000
+  - c128lib.Vic2.CHAR_MEM_3800 Character memory on $3800
+
+  If omitted, c128lib.Vic2.CHAR_MEM_0000 will be used.
+
+  Character memory offset must be added to current bank selected.
+  For ex. if Vic bank 1 ($4000) is selected, CHAR_MEM_0800 will point to $4000 + $0800
+
+  Screen memory selection
+
+  - c128lib.Vic2.SCREEN_MEM_0000 Screen memory on $0000
+  - c128lib.Vic2.SCREEN_MEM_0400 Screen memory on $0400
+  - c128lib.Vic2.SCREEN_MEM_0800 Screen memory on $0800
+  - c128lib.Vic2.SCREEN_MEM_0C00 Screen memory on $0c00
+  - c128lib.Vic2.SCREEN_MEM_1000 Screen memory on $1000
+  - c128lib.Vic2.SCREEN_MEM_1400 Screen memory on $1400
+  - c128lib.Vic2.SCREEN_MEM_1800 Screen memory on $1800
+  - c128lib.Vic2.SCREEN_MEM_1C00 Screen memory on $1c00
+  - c128lib.Vic2.SCREEN_MEM_2000 Screen memory on $2000
+  - c128lib.Vic2.SCREEN_MEM_2400 Screen memory on $2400
+  - c128lib.Vic2.SCREEN_MEM_2800 Screen memory on $2800
+  - c128lib.Vic2.SCREEN_MEM_2C00 Screen memory on $2c00
+  - c128lib.Vic2.SCREEN_MEM_3000 Screen memory on $3000
+  - c128lib.Vic2.SCREEN_MEM_3400 Screen memory on $3400
+  - c128lib.Vic2.SCREEN_MEM_3800 Screen memory on $3800
+  - c128lib.Vic2.SCREEN_MEM_3C00 Screen memory on $3c00
+
+  If omitted, c128lib.Vic2.SCREEN_MEM_0000 will be used.
+
+  Screen memory offset must be added to current bank selected.
+  For ex. if Vic bank 1 ($4000) is selected, SCREEN_MEM_0C00 will point to $4000 + $0c00
+
+  @remark Register .A will be modified.
+  Flags N and Z will be affected.
+
+  @code
+  c128lib_SetScreenAndCharacterMemory(c128lib.Vic2.CHAR_MEM_2800 | c128lib.Vic2.SCREEN_MEM_0400)
+  @endcode
 
   @since 0.6.0
 */

@@ -502,8 +502,47 @@
 
   @param[in] config Screen memory and/or char memory configuration.
 
-  @remark Register .A will be modified. Labels Vic2.CHAR* and
-  Vic2.SCREEN_MEM* can ben used to compose.
+  Character memory selection
+
+  - Vic2.CHAR_MEM_0000 Character memory on $0000
+  - Vic2.CHAR_MEM_0800 Character memory on $0800
+  - Vic2.CHAR_MEM_1000 Character memory on $1000
+  - Vic2.CHAR_MEM_1800 Character memory on $1800
+  - Vic2.CHAR_MEM_2000 Character memory on $2000
+  - Vic2.CHAR_MEM_2800 Character memory on $2800
+  - Vic2.CHAR_MEM_3000 Character memory on $3000
+  - Vic2.CHAR_MEM_3800 Character memory on $3800
+
+  If omitted, Vic2.CHAR_MEM_0000 will be used.
+
+  Character memory offset must be added to current bank selected.
+  For ex. if Vic bank 1 ($4000) is selected, CHAR_MEM_0800 will point to $4000 + $0800
+
+  Screen memory selection
+
+  - Vic2.SCREEN_MEM_0000 Screen memory on $0000
+  - Vic2.SCREEN_MEM_0400 Screen memory on $0400
+  - Vic2.SCREEN_MEM_0800 Screen memory on $0800
+  - Vic2.SCREEN_MEM_0C00 Screen memory on $0c00
+  - Vic2.SCREEN_MEM_1000 Screen memory on $1000
+  - Vic2.SCREEN_MEM_1400 Screen memory on $1400
+  - Vic2.SCREEN_MEM_1800 Screen memory on $1800
+  - Vic2.SCREEN_MEM_1C00 Screen memory on $1c00
+  - Vic2.SCREEN_MEM_2000 Screen memory on $2000
+  - Vic2.SCREEN_MEM_2400 Screen memory on $2400
+  - Vic2.SCREEN_MEM_2800 Screen memory on $2800
+  - Vic2.SCREEN_MEM_2C00 Screen memory on $2c00
+  - Vic2.SCREEN_MEM_3000 Screen memory on $3000
+  - Vic2.SCREEN_MEM_3400 Screen memory on $3400
+  - Vic2.SCREEN_MEM_3800 Screen memory on $3800
+  - Vic2.SCREEN_MEM_3C00 Screen memory on $3c00
+
+  If omitted, Vic2.SCREEN_MEM_0000 will be used.
+
+  Screen memory offset must be added to current bank selected.
+  For ex. if Vic bank 1 ($4000) is selected, SCREEN_MEM_0C00 will point to $4000 + $0c00
+
+  @remark Register .A will be modified.
 
   @note Use c128lib_SetScreenAndCharacterMemory in vic2-global.asm
 
