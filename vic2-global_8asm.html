@@ -359,8 +359,44 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Labels Vic2.CHAR* and Vic2.SCREEN_MEM* can ben used to compose.</dd></dl>
-<dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
+<p>Character memory selection</p>
+<ul>
+<li>c128lib.Vic2.CHAR_MEM_0000 Character memory on $0000</li>
+<li>c128lib.Vic2.CHAR_MEM_0800 Character memory on $0800</li>
+<li>c128lib.Vic2.CHAR_MEM_1000 Character memory on $1000</li>
+<li>c128lib.Vic2.CHAR_MEM_1800 Character memory on $1800</li>
+<li>c128lib.Vic2.CHAR_MEM_2000 Character memory on $2000</li>
+<li>c128lib.Vic2.CHAR_MEM_2800 Character memory on $2800</li>
+<li>c128lib.Vic2.CHAR_MEM_3000 Character memory on $3000</li>
+<li>c128lib.Vic2.CHAR_MEM_3800 Character memory on $3800</li>
+</ul>
+<p>If omitted, c128lib.Vic2.CHAR_MEM_0000 will be used.</p>
+<p>Character memory offset must be added to current bank selected. For ex. if Vic bank 1 ($4000) is selected, CHAR_MEM_0800 will point to $4000 + $0800</p>
+<p>Screen memory selection</p>
+<ul>
+<li>c128lib.Vic2.SCREEN_MEM_0000 Screen memory on $0000</li>
+<li>c128lib.Vic2.SCREEN_MEM_0400 Screen memory on $0400</li>
+<li>c128lib.Vic2.SCREEN_MEM_0800 Screen memory on $0800</li>
+<li>c128lib.Vic2.SCREEN_MEM_0C00 Screen memory on $0c00</li>
+<li>c128lib.Vic2.SCREEN_MEM_1000 Screen memory on $1000</li>
+<li>c128lib.Vic2.SCREEN_MEM_1400 Screen memory on $1400</li>
+<li>c128lib.Vic2.SCREEN_MEM_1800 Screen memory on $1800</li>
+<li>c128lib.Vic2.SCREEN_MEM_1C00 Screen memory on $1c00</li>
+<li>c128lib.Vic2.SCREEN_MEM_2000 Screen memory on $2000</li>
+<li>c128lib.Vic2.SCREEN_MEM_2400 Screen memory on $2400</li>
+<li>c128lib.Vic2.SCREEN_MEM_2800 Screen memory on $2800</li>
+<li>c128lib.Vic2.SCREEN_MEM_2C00 Screen memory on $2c00</li>
+<li>c128lib.Vic2.SCREEN_MEM_3000 Screen memory on $3000</li>
+<li>c128lib.Vic2.SCREEN_MEM_3400 Screen memory on $3400</li>
+<li>c128lib.Vic2.SCREEN_MEM_3800 Screen memory on $3800</li>
+<li>c128lib.Vic2.SCREEN_MEM_3C00 Screen memory on $3c00</li>
+</ul>
+<p>If omitted, c128lib.Vic2.SCREEN_MEM_0000 will be used.</p>
+<p>Screen memory offset must be added to current bank selected. For ex. if Vic bank 1 ($4000) is selected, SCREEN_MEM_0C00 will point to $4000 + $0c00</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_function" href="vic2-global_8asm.html#ac7bc583c36627928a8a4bc8cb70a9cda">c128lib_SetScreenAndCharacterMemory</a>(c128lib.Vic2.CHAR_MEM_2800 | c128lib.Vic2.SCREEN_MEM_0400)</div>
+<div class="ttc" id="avic2-global_8asm_html_ac7bc583c36627928a8a4bc8cb70a9cda"><div class="ttname"><a href="vic2-global_8asm.html#ac7bc583c36627928a8a4bc8cb70a9cda">c128lib_SetScreenAndCharacterMemory</a></div><div class="ttdeci">macro c128lib_SetScreenAndCharacterMemory(config)</div><div class="ttdef"><b>Definition</b> vic2-global.asm:146</div></div>
+</div><!-- fragment --><dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
 </div>
 </div>
@@ -546,7 +582,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="vic2-global_8asm.html">vic2-global.asm</a></li>
-    <li class="footer">Generated on Sat Dec 2 2023 17:14:31 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun Dec 10 2023 15:19:28 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

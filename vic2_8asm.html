@@ -685,7 +685,41 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Labels Vic2.CHAR* and Vic2.SCREEN_MEM* can ben used to compose.</dd></dl>
+<p>Character memory selection</p>
+<ul>
+<li><a class="el" href="namespaceVic2.html#acafba6ada49ca2eb26f9efb2d526d0a6">Vic2.CHAR_MEM_0000</a> Character memory on $0000</li>
+<li><a class="el" href="namespaceVic2.html#aa41a042699f6fb89ed146dc483cadf46">Vic2.CHAR_MEM_0800</a> Character memory on $0800</li>
+<li><a class="el" href="namespaceVic2.html#adcb5661fc85dd4f1eb0fb2d22c0e4c62">Vic2.CHAR_MEM_1000</a> Character memory on $1000</li>
+<li><a class="el" href="namespaceVic2.html#a040387ad8c4ac374f7da4da6c4bb32d5">Vic2.CHAR_MEM_1800</a> Character memory on $1800</li>
+<li><a class="el" href="namespaceVic2.html#ad775a5ef093e13dc7c2d092dce40b1cf">Vic2.CHAR_MEM_2000</a> Character memory on $2000</li>
+<li><a class="el" href="namespaceVic2.html#aa3edb1648073e578f9b1ec08365b0159">Vic2.CHAR_MEM_2800</a> Character memory on $2800</li>
+<li><a class="el" href="namespaceVic2.html#a43c79a5a4decadff790f2ebdb3b94f36">Vic2.CHAR_MEM_3000</a> Character memory on $3000</li>
+<li><a class="el" href="namespaceVic2.html#af7ac126de1bf3685eaf5d8f2d8dcdcf9">Vic2.CHAR_MEM_3800</a> Character memory on $3800</li>
+</ul>
+<p>If omitted, <a class="el" href="namespaceVic2.html#acafba6ada49ca2eb26f9efb2d526d0a6">Vic2.CHAR_MEM_0000</a> will be used.</p>
+<p>Character memory offset must be added to current bank selected. For ex. if Vic bank 1 ($4000) is selected, CHAR_MEM_0800 will point to $4000 + $0800</p>
+<p>Screen memory selection</p>
+<ul>
+<li><a class="el" href="namespaceVic2.html#a0863b45461ac2e26469d809b2c913bb8">Vic2.SCREEN_MEM_0000</a> Screen memory on $0000</li>
+<li><a class="el" href="namespaceVic2.html#a602d5d2dd14ef1c0142307b916c3cd96">Vic2.SCREEN_MEM_0400</a> Screen memory on $0400</li>
+<li><a class="el" href="namespaceVic2.html#a0a0a218a1b000090f299d63fbf2113fd">Vic2.SCREEN_MEM_0800</a> Screen memory on $0800</li>
+<li><a class="el" href="namespaceVic2.html#afc2ee78a1a472ff8e0b3308697e6482d">Vic2.SCREEN_MEM_0C00</a> Screen memory on $0c00</li>
+<li><a class="el" href="namespaceVic2.html#acb63885c4e6e9262230ec95be04a0da4">Vic2.SCREEN_MEM_1000</a> Screen memory on $1000</li>
+<li><a class="el" href="namespaceVic2.html#a53ca47b040b802a33b7ad10bd3203cd8">Vic2.SCREEN_MEM_1400</a> Screen memory on $1400</li>
+<li><a class="el" href="namespaceVic2.html#ab76f00dabf200a73e6a094d466e0fcd5">Vic2.SCREEN_MEM_1800</a> Screen memory on $1800</li>
+<li><a class="el" href="namespaceVic2.html#a37dfbc02c8ef94ea3836906f667a1579">Vic2.SCREEN_MEM_1C00</a> Screen memory on $1c00</li>
+<li><a class="el" href="namespaceVic2.html#a4c9c3c8534fceb06dbe7f581285c2d5a">Vic2.SCREEN_MEM_2000</a> Screen memory on $2000</li>
+<li><a class="el" href="namespaceVic2.html#ab33c18ba62dc388df99d348d8af7c6d1">Vic2.SCREEN_MEM_2400</a> Screen memory on $2400</li>
+<li><a class="el" href="namespaceVic2.html#ae38519219126c8a6d46f7cc7623e7654">Vic2.SCREEN_MEM_2800</a> Screen memory on $2800</li>
+<li><a class="el" href="namespaceVic2.html#a37ba48d3d05a708932ec4f4e531c4498">Vic2.SCREEN_MEM_2C00</a> Screen memory on $2c00</li>
+<li><a class="el" href="namespaceVic2.html#a7f420a309cd20ecc0c8adef073105d73">Vic2.SCREEN_MEM_3000</a> Screen memory on $3000</li>
+<li><a class="el" href="namespaceVic2.html#ae0e5428ebf0752293196107aac9e6c09">Vic2.SCREEN_MEM_3400</a> Screen memory on $3400</li>
+<li><a class="el" href="namespaceVic2.html#a8c0ffd6e728deb628ad1c7f50fd960b5">Vic2.SCREEN_MEM_3800</a> Screen memory on $3800</li>
+<li><a class="el" href="namespaceVic2.html#a82725908b36696719cf95a718767fafb">Vic2.SCREEN_MEM_3C00</a> Screen memory on $3c00</li>
+</ul>
+<p>If omitted, <a class="el" href="namespaceVic2.html#a0863b45461ac2e26469d809b2c913bb8">Vic2.SCREEN_MEM_0000</a> will be used.</p>
+<p>Screen memory offset must be added to current bank selected. For ex. if Vic bank 1 ($4000) is selected, SCREEN_MEM_0C00 will point to $4000 + $0c00</p>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Use c128lib_SetScreenAndCharacterMemory in <a class="el" href="vic2-global_8asm.html" title="Vic2 module.">vic2-global.asm</a></dd></dl>
 <dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
 
@@ -996,7 +1030,7 @@ Variables</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="vic2_8asm.html">vic2.asm</a></li>
-    <li class="footer">Generated on Sat Dec 2 2023 17:14:31 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun Dec 10 2023 15:19:28 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

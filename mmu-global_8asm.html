@@ -172,6 +172,24 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4e5266f100b800a3513f982dfb34fa04" name="a4e5266f100b800a3513f982dfb34fa04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e5266f100b800a3513f982dfb34fa04">&#9670;&#160;</a></span>c128lib_SetMMULoadConfiguration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">macro c128lib_SetMMULoadConfiguration </td>
+          <td>(</td>
+          <td class="paramtype">config&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 <p>Banking and RAM configurations. Uses $FF00 instead of $D500.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -179,7 +197,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
 <p>I/O block selection</p>
 <ul>
 <li>c128lib.Mmu.IO_ROM set I/O block visible on $D000-$DFFF</li>
@@ -212,27 +229,10 @@ Functions</h2></td></tr>
 <ul>
 <li>c128lib.Mmu.RAM0 or c128lib.Mmu.RAM1 can be used to set ram bank 0 or 1. If omitted, bank 0 will be selected.</li>
 </ul>
+<dl class="section remark"><dt>Remarks</dt><dd>Register .A will be modified. Flags N and Z will be affected.</dd></dl>
 <div class="fragment"><div class="line"><a class="code hl_function" href="mmu-global_8asm.html#a4e5266f100b800a3513f982dfb34fa04">c128lib_SetMMULoadConfiguration</a>(c128lib.Mmu.RAM0 | c128lib.Mmu.ROM_HI | c128lib.Mmu.ROM_MID_RAM | c128lib.Mmu.ROM_LOW_ROM | c128lib.Mmu.IO_ROM)</div>
 <div class="ttc" id="ammu-global_8asm_html_a4e5266f100b800a3513f982dfb34fa04"><div class="ttname"><a href="mmu-global_8asm.html#a4e5266f100b800a3513f982dfb34fa04">c128lib_SetMMULoadConfiguration</a></div><div class="ttdeci">macro c128lib_SetMMULoadConfiguration(config)</div><div class="ttdef"><b>Definition</b> mmu-global.asm:105</div></div>
 </div><!-- fragment --><dl class="section since"><dt>Since</dt><dd>0.6.0 </dd></dl>
-
-</div>
-</div>
-<a id="a4e5266f100b800a3513f982dfb34fa04" name="a4e5266f100b800a3513f982dfb34fa04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e5266f100b800a3513f982dfb34fa04">&#9670;&#160;</a></span>c128lib_SetMMULoadConfiguration()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">macro c128lib_SetMMULoadConfiguration </td>
-          <td>(</td>
-          <td class="paramtype">config&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -346,7 +346,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="mmu-global_8asm.html">mmu-global.asm</a></li>
-    <li class="footer">Generated on Sat Dec 2 2023 17:14:31 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun Dec 10 2023 15:19:28 for c128lib Chipset by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
